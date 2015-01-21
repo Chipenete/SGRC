@@ -1,0 +1,152 @@
+<zk>
+<?page title="Auto Generated index.zul"?>
+<window title="Hello World!!" border="normal" width="500px" height="500px" >
+
+<menubar>
+	<menu label="File">
+		<menupopup>
+			<menuitem label="New" />
+			<menuseparator />
+			<menuitem label="Open" />
+		</menupopup>
+	</menu>
+	<menu label="About" >
+	<menupopup>
+	<menuitem label="mr.xpengwe" />
+	<menuitem label="Sera">
+		 <attribute name="onClick"><![CDATA[
+            
+            alert(username.getText().toString());
+       
+
+         ]]>
+         </attribute>
+	</menuitem>
+	</menupopup>
+	</menu>
+</menubar>
+<div>
+<separator></separator>
+<separator></separator>
+<label value="User Name: " /><textbox id="username" maxlength="10" constraint="no empty" width="305px">
+ <attribute name="onChanging"><![CDATA[
+
+            btn1.setVisible(true);
+          
+
+         ]]>
+         </attribute>
+
+</textbox>
+</div>
+<separator></separator>
+<div>
+<label value="Passsword:  " /><textbox id="text2" maxlength="10" constraint="no empty" width="305px"/>
+
+</div>
+<separator></separator>
+<separator></separator>
+
+<grid>
+		<columns>
+			<column label=""/>
+			<column label="">
+			<button label="Entrar" visible="false" id="btn1" >
+		 <attribute name="onClick"><![CDATA[
+            
+            alert(username.getText().toString());
+       
+
+         ]]>
+         </attribute>
+			</button>
+			
+			</column>
+		</columns>
+	
+	</grid>
+
+
+
+	<zscript><![CDATA[
+   
+   String [] elements = new String[] {"ZK", "AJAX",
+"FRAMEWORK"};
+]]>
+</zscript>
+
+<separator></separator>
+<separator></separator>
+
+<listbox width="100px">
+<listhead>
+		<listheader label="Que E" sort="auto" id="lista"/>
+		<listheader label="" sort="auto" />
+	</listhead>
+<listitem label="${each}" forEach="${elements}"/>
+
+</listbox>
+
+
+<button label="click" onClick=""/>
+
+
+..............................................................................................
+
+//<div align="center"> 
+
+<window title="Login" border="normal" width="400px" height="200px" onOK="login()" id="ds">
+
+
+<grid>
+		<rows>
+			<row>	
+			<label value="User Name:" />
+			
+			<textbox id="username"/>
+			</row>
+			
+			<row>
+			<label value="Password:" />
+			
+			<textbox id="password" constraint="no empty" type="password"/>
+			</row>
+			
+			
+			
+			<row align="center">
+			<button label="Entrar">
+			 <attribute name="onClick"><![CDATA[
+             login();
+
+         ]]>
+         </attribute>
+			</button>
+			</row>
+		</rows>
+	</grid>
+
+
+
+
+ </window>
+
+</div>
+<zscript>
+void login(){
+alert("Login feito com sucesso!!!!!	y999");
+            ds.setVisible(false);
+//Executions.sendRedirect("index.zul");
+
+
+}
+</zscript>//
+
+
+
+
+..................................................................................................
+
+</window>
+
+</zk>
