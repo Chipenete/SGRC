@@ -1,0 +1,30 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Items de Requisicao" border="normal" apply="mz.co.sgrc.controller.ItemRequisicaoFornecedorController" mode="highlighted" closable="true" width="60%">
+	<groupbox>
+	<listbox id="lb_itemRequisicao" mold="paging" rows="6" pageSize="6" checkmark="true" multiple="true">
+ 		
+ 			<listhead>
+ 				
+ 				<listheader width="30px"></listheader>
+ 				<listheader label="Quantidade"></listheader>
+ 				<listheader label="Tipo de combustivel"></listheader>
+ 				<listheader label="Remessada"></listheader>
+ 			
+ 			</listhead>
+ 			
+ 			<template name="model">
+ 			<listitem disabled="${each.remessada}">
+ 			<listcell></listcell>
+ 			<listcell> <label value="${each.quantidade}"/> </listcell>
+ 			<listcell> <label value="${each.combustivelString}"/> </listcell>
+ 			<listcell> <checkbox checked="${each.remessada}" disabled="true"></checkbox> </listcell>
+ 			</listitem>
+ 		</template>
+ 		</listbox>
+ 		<div align="right">
+ 		<button id="btn_remessaFornecedor">Remessar</button>
+ 		</div>
+ 	</groupbox>
+</window>
+</zk>

@@ -1,0 +1,40 @@
+<?page title="Method3" contentType="text/html;charset=UTF-8"?>
+<zk>
+
+    <window title="Menu" border="none" width="270px"
+        apply="mz.co.sgrc.controller.democomposer">
+        <groupbox width="250px" mold="3d">
+            <attribute name="onOpen"><![CDATA[
+    arrow1.setSclass("open-" + self.isOpen());
+]]></attribute>
+            <caption >
+                <div id="arrow1" class="open-true"></div>
+            </caption>
+
+            <vbox>
+                <button id = "Requisicao" label="Requisitar"  forward="onClick=onClickMenu()"
+                    style="padding-left: 10px; cursor: pointer" height="50px" width="95%" />
+            
+              <button id = "RequisicaoFornecedor" label="Requisicao Fornecedor"  forward="onClick=onClickMenu()"
+                    style="padding-left: 10px; cursor: pointer" height="50px" width="95%" />
+                    
+                 <button id = "GuiaRemessa" label="Guia de remessa"  forward="onClick=onClickMenu()"
+                    style="padding-left: 10px; cursor: pointer" height="50px" width="95%" />
+                    <separator bar="true" width="250px"/>
+                  
+                <button id = "Combustive" label="Registar abastecimento"   forward="onClick=onClickMenu()"
+                    style="padding-left: 10px; cursor: pointer" height="50px" width="95%" />
+                
+                        
+                <button id = "Cotas"  label="Cotas"  forward="onClick=onClickMenu()"
+                    style="padding-left: 10px; cursor: pointer" height="50px" width="95%" />
+                    
+                 <button id = "Parametrizacao" label="Parametrizacao"  forward="onClick=onClickMenu()"
+                    style="padding-left: 10px; cursor: pointer" height="50px" width="95%" />
+                    <separator bar="true" width="250px"/>
+                    
+            </vbox>
+        </groupbox>
+
+    </window>
+</zk>

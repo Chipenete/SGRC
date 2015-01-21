@@ -1,0 +1,32 @@
+<?page title="Sistema de Gestao de Requisicao de Combustivel" contentType="text/html;charset=UTF-8"?>
+<zk>
+
+
+    <window border="none" width="100%" height="100%" id="main" style="overflow:auto">
+     
+        <borderlayout id="mainlayout">
+            <north border="normal" height="10px">
+              
+            </north>
+            <west title=" " size="16%" flex="true" splittable="true"
+                collapsible="true">
+                <div id="nav" style="background:white; height:100%">
+                 <include src="navmenu.zul" /> 
+                 
+        
+                </div>
+            </west>
+            <center border="normal" style="overflow:auto">
+                <div height="99%" id="Screen"></div>
+            </center>
+       <!--    <south height="30px">
+                <div align="center">
+                   <label
+      value="Copyright © 2014 xxxxxxxx All Rights Reserved. Powered By xxxxx"
+                        sclass="loginlabel" />
+                </div>
+            </south> -->  
+        </borderlayout>
+    </window>
+</zk>
+

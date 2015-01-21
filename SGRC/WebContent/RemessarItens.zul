@@ -1,0 +1,66 @@
+<?page title="Remessar" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Remessar" border="normal" apply="mz.co.sgrc.controller.RemessarItensController"  mode="highlighted" closable="true" width="60%" >
+	
+	<groupbox>
+	<caption label="Itens de remessa"></caption>
+	<listbox id="lb_remessa"  mold="paging" rows="3" pageSize="3"  checkmark="true" multiple="true">
+	
+		<listhead>
+		
+			<listheader width="30px"></listheader>
+			<listheader label="Marca"/>
+			<listheader label="Matricula"/>
+			<listheader label="Combustivel"/>
+			<listheader label="Qntd requisitada" />
+			<listheader label="Qntd a remessar" />
+			
+			<listheader label="Remessada" width="80px"/>
+			
+		</listhead>
+		<template name="model">
+		<listitem disabled="${each.remessada}">
+		<listcell/>
+		<listcell><label value="${each.viatura.marca}"></label></listcell>
+		<listcell><label value="${each.viatura.matricula }"></label></listcell>
+		<listcell><label value="${each.combustivelString}"></label></listcell>
+		<listcell><label value="${each.quantidade_requisitada}"></label></listcell>
+		<listcell><doublebox constraint="no empty:Este Campo nao deve estar vazio"></doublebox><checkbox ></checkbox></listcell>
+		
+		<listcell><checkbox checked="${each.remessada}" disabled="${each.remessada}" ></checkbox></listcell>
+		
+		</listitem>	
+		</template>
+		
+		
+	</listbox>
+	
+	<separator></separator>
+	
+	
+	<grid>
+	
+	
+	<rows>
+	
+	
+		<row>
+		
+			<div></div>
+			<div></div>
+			<div></div>
+			
+			<div>
+			<button id="btn_remessas" label="Remessar" style="background:#A8B5EF"></button>
+			<button id="btn_cancelar" label="cancelar" style="background:#A8B5EF"></button>
+			</div>
+		</row>
+	
+	</rows>
+	
+	</grid>
+	
+	
+	</groupbox>
+</window>
+</zk>

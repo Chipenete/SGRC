@@ -1,0 +1,39 @@
+<?page title="Parametrizacao" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Parametrizacao" border="normal">
+
+
+<tabbox>
+	<tabs>
+		<tab label="Registar utilizador"/>
+		<tab label="Registar orgao" />
+		<tab label="Registar viatura" />
+		<tab label="Registar Fornecedor"/>
+		<tab label="Registar combustivel"/>
+		
+		
+	</tabs>
+	<tabpanels>
+		<tabpanel height="700px"><include src="Utilizador.zul"></include></tabpanel>
+		
+		<tabpanel height="700px" ><include src="Orgao.zul"></include></tabpanel>
+		
+		<tabpanel height="700px"><include src="RegistarViatura.zul"></include></tabpanel>
+		
+		<tabpanel height="700px"><include src="RegistarFornecedor.zul"></include></tabpanel>
+		
+		<tabpanel height="700px"><include src="TipoCombustivell.zul"></include></tabpanel>
+		
+		
+		
+	
+		
+		
+
+		
+	</tabpanels>
+</tabbox>
+ 	
+         
+</window>
+</zk>

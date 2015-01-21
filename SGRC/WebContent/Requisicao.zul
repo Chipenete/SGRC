@@ -1,0 +1,86 @@
+<?page title="Requisicao de Combustivel" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Requisicao de Combustivel" border="normal" height="800px" apply="mz.co.sgrc.controller.RequisicaoController" xmlns:h="xhtml" style="overflow:auto">
+<groupbox>
+
+
+<listbox id="lb_dados">
+<listhead>
+<listheader>Combustivel</listheader>
+<listheader>Quota mensal</listheader>
+<listheader>Quantidade actual</listheader>
+</listhead>
+</listbox>
+
+
+</groupbox>
+
+
+
+<groupbox>
+<caption label="Plano de Requisicao"></caption>
+<h:table width="100%">
+			<h:td>	
+			<groupbox>
+			<caption label="Viaturas"></caption>
+             <listbox id="lb_viaturaExistente" mold="paging" rows="4" pageSize="4" width="100%">
+             <listhead>
+		         <listheader label="Marca" sort="auto" />
+		         <listheader label="Matricula" sort="auto" />
+		          <listheader label="Adicionar" sort="auto" width="100px"/>
+	        </listhead>
+             </listbox>
+             </groupbox>
+          </h:td>   
+            
+		
+			
+			<h:td>
+			<listbox id="lb_viaturaRequisitar" mold="paging" rows="4" pageSize="4" width="100%">
+			<listhead>
+			<listheader label="Marca" sort="auto" />
+		    <listheader label="Matricula" sort="auto" />
+			<listheader label="Tipo de Combustivel" width="150px" />
+			<listheader label="Quantidade" sort="auto" />
+			<listheader label="Seleccionar?" sort="auto" width="90px"/>
+			<listheader label="Remover?" sort="auto" width="90px"/>
+	
+			</listhead>
+            
+	
+           </listbox>
+        
+           </h:td>
+           
+           </h:table>
+            
+</groupbox>
+           <separator></separator>
+			  <div align="right" >
+             <button id="btn_requisitar" label="Requisitar"  width="100px"/>
+             <button id="btn_cancelar" label="Cancelar"  width="100px" />
+              </div>
+            
+
+<groupbox>
+<caption label="Requisicao"></caption>
+<listbox id="lb_requisicao" mold="paging" rows="7" pageSize="6" >
+<listhead>
+<listheader sort="auto">Codigo</listheader>
+<listheader sort="auto">Data</listheader>
+<listheader sort="auto">Responsavel</listheader>
+<listheader sort="auto">Orgao</listheader>
+<listheader sort="auto">Remessada</listheader>
+<listheader width="7%" sort="auto">Ver itens</listheader>
+<listheader width="7%" sort="auto">Imprimir</listheader>
+</listhead>
+</listbox>
+</groupbox>
+
+
+
+
+
+
+</window>
+</zk>

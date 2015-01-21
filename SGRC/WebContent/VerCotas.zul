@@ -1,0 +1,21 @@
+<?page title="Visualizar cotas" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Visualizar cotas" border="normal" apply="mz.co.sgrc.controller.VerCotas" mode="highlighted" closable="true" width="35%">
+
+ <div align="Center"><textbox id="tb_orgao" width="80%"/></div>
+ 
+<groupbox> 
+<caption label="Cotas"></caption>
+<listbox id="lb_cotas">
+	<listhead>
+		<listheader label="Combustivel" sort="auto" />
+		<listheader label="Quota mensal" sort="auto" />
+		<listheader label="Quantidade Existente" sort="auto" />
+		
+	</listhead>
+
+</listbox>
+
+</groupbox>
+</window>
+</zk>

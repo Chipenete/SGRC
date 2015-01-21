@@ -1,0 +1,106 @@
+<?page title="Produtos" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window  title="Gerir Produto" border="normal" width="80%" apply="mz.co.sgrc.controller.ProdutoController" mode="highlighted" closable="true">
+ <grid>
+ 	<rows>
+ 	 	<row>
+ 	 		 <cell>
+ 	 		 	Nome: 
+ 	 		 </cell> 
+ 	 		 <cell>
+	 	 		 <textbox id="txt_nome" width="40%" placeholder="nome do produto" constraint="no empty: introduza o nome do produto"  />
+ 	 		 </cell>
+ 	 	</row>
+ 	 		
+ 	 	<row> 
+ 	 		 <cell>
+ 	 		 	Codigo:
+ 	 		</cell> 
+ 	 		 <cell>
+ 	 		 	<intbox id="itx_codigo" width="40%" placeholder="codigo do produto" constraint="no empty: introduza o codigo"/>
+ 	 		 </cell>
+ 	 	</row>
+ 	 	<row>
+ 	 		 <cell>
+ 	 		 	Preço Unitário:
+ 	 		 </cell>
+ 	 		 <cell>
+ 	 		 	<doublebox id="dbx_preco" width="40%" placeholder="preco do produto" constraint="no empty:introduza o preco"/>
+ 	 		 </cell>
+ 	 	</row>
+ 	 	
+ 	 	<row>
+ 	 		 <cell>
+ 	 		 	Stock:
+ 	 		 </cell>
+ 	 		 <cell>
+ 	 		 	<intbox id="itx_stock" width="40%" placeholder="produtos disponiveis" constraint="no empty:introduza o stock"/>
+ 	 		 </cell>
+ 	 	</row>
+ 	 	<row>
+ 	 		 <cell>
+ 	 		 	Categoria:
+ 	 		 </cell>
+ 	 		 <cell>
+ 	 		 	<combobox id="cbb_categoria" width="40%" autocomplete="true" placeholder="escolhe uma opção">
+ 	 		 	<template name="model">
+ 	 		 		<comboitem label="${each.nome}" value="${each}" >
+ 	 		 		</comboitem>
+ 	 		 	</template>
+ 	 		 	</combobox>
+ 	 		 <button id="btn_addCat">Nova Categoria</button>
+ 	 		 </cell>
+ 	 	</row>
+ 	 	
+ 	 	<row>
+ 	 		 <cell colspan="2">
+ 	 		 	<listbox id="lst_prods" mold="paging" rows="5" pageSize="5">
+ 	 		 		<listhead>
+ 	 		 		 <listheader label="Codigo" />
+ 	 		 		 <listheader label="Nome" />
+ 	 		 		 <listheader label="PrecoUnitario" />
+ 	 		 		 <listheader label="Stock" />
+ 	 		 		 <listheader label="Categoria" />
+ 	 		 		</listhead>
+ 	 		 			<template name="model">
+ 	 		 				<listitem value="${each}">
+ 	 		 					<listcell>
+ 	 		 					<label  value="${each.cod}"></label>
+ 	 		 					</listcell>
+ 	 		 					<listcell>
+ 	 		 					 <label value="${each.nome}"></label>
+ 	 		 					</listcell>
+ 	 		 					<listcell>
+ 	 		 					<label  value="${each.precoUnitario}"></label>
+ 	 		 					</listcell>
+ 	 		 					<listcell>
+ 	 		 					<label  value="${each.stock}"></label>
+ 	 		 					</listcell>
+ 	 		 					<listcell >
+ 	 		 					<label value="${each.categoria.nome}"></label>
+ 	 		 					</listcell>
+ 	 		 				</listitem>
+ 	 		 			</template>
+ 	 		 			<listfoot>
+ 	 		 				<listfooter>
+ 	 		 					<textbox id="txt_pesquisa"></textbox>
+ 	 		 				</listfooter>
+ 	 		 				<listfooter>
+ 	 		 					<button id="btn_pesquisa">
+ 	 		 						Pesquisar
+ 	 		 					</button>
+ 	 		 				</listfooter>
+ 	 		 			</listfoot>
+ 	 		 	</listbox>
+ 	 		 </cell>
+ 	 	</row>
+ 	</rows>
+ </grid>
+ <hlayout>
+ 	<button id="btn_novo" label="Novo" forward="onClickNovo"/>
+ 	<button id="btn_registar" label="Registar"/>
+ 	<button id="btn_alterar" label="Alterar"/>
+ 	<button id="btn_eliminar" label="Eliminar"/>
+ </hlayout>
+</window>
+</zk>

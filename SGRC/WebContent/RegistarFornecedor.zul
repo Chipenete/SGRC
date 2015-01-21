@@ -1,0 +1,129 @@
+<?page title="RegistarFornecedor" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="RegistarFornecedor" border="normal" height="500px" apply="mz.co.sgrc.controller.FornecedorController " >
+		<groupbox> 
+		<caption label="Dados do Fornecedor"></caption>
+		<div></div>
+		<grid>
+		
+		<rows>
+			<row>
+			<cell width="10%">	
+			<label value="Designacao:"/>
+			</cell>
+			<textbox id="designacao" width="80%" constraint="no empty:Esta campo nao deve estar vazio"/>
+			
+			
+			<cell align="right">
+			<label value="Telefone1:" />
+			</cell>
+			<intbox id="telefone1" width="80%" constraint="no empty:Esta campo nao deve estar vazio"/>
+			
+			</row>
+			
+			<row>
+			
+			<label value="Endereco:"/>
+			<textbox id="endereco" width="80%" constraint="no empty:Esta campo nao deve estar vazio"/>
+			
+			
+			<cell align="right">
+			<label value="Telefone2:"/>
+			</cell>
+			<intbox id="telefone2" width="80%" constraint="no empty:Esta campo nao deve estar vazio"/>
+			
+			</row>
+			
+			<row>
+			
+			<label value="Email:" />
+			<textbox id="email" width="80%" type="email" placeholder="Ex:joao@exemplo.com" constraint="no empty:Esta campo nao deve estar vazio"/>
+			
+			
+			<cell  width="40%" align="right">
+			<label value="Descricao:" />
+			</cell>
+			<textbox id="descricao" width="80%" height="30%" constraint="no empty:Esta campo nao deve estar vazio"/>
+			
+			</row>
+			
+			<row>
+			
+			<div></div>
+			<div></div>
+			<div></div>
+			
+			<div align="left">
+			<button id="btn_gravar" label="Gravar"  style="background:#A8B5EF"/>
+			<button id="btn_actualizar" label="Actualizar" onClick="" style="background:#A8B5EF"/>
+			<button id="btn_cancelar" label="Cancelar" onClick="" style="background:#A8B5EF"/>
+			<button id="btn_eliminar" label="Eliminar" style="background:#A8B5EF"/>
+			</div>
+			</row>
+			
+			<row></row>
+			
+			<row></row>
+		</rows>
+	    </grid>
+
+		</groupbox>
+		
+		<groupbox> 
+		<caption label="Fornecedores:"></caption>
+		<listbox id="lb_fornecedor" mold="paging" rows="9" pageSize="9">
+	<listhead>
+		<listheader label="Designacao" sort="auto" focus="false"/>
+		<listheader label="Endereco" sort="auto" />
+		<listheader label="Email"	sort="auto"/>
+		<listheader label="Telefone" sort="auto" />
+	</listhead>
+	<template name="model">
+	<listitem value="${each }">
+		<listcell> <label value="${each.designacao}">  </label> </listcell>
+		<listcell> <label value="${each.endereco }">  </label> </listcell>
+		<listcell> <label value="${each.email}">  </label> </listcell>
+		<listcell> <label value="${each.telefone1 }">  </label> </listcell>
+	</listitem>
+	
+	
+	
+	</template>
+	
+
+	
+</listbox>
+
+	
+	
+
+		</groupbox>
+		
+		<!-- 
+		<groupbox>
+		<caption label="Filtragem" />
+		
+		<grid>
+		
+		<rows>
+			<row>
+			<div>
+			<label value="Designacao:"/>
+			<textbox id="txt_pesquisar"/>
+			</div>
+			<div align="rigth">
+			<button id="btn_pesquisar" label="Pesquisar" />
+			</div>
+			</row>
+		</rows>
+		</grid>
+		
+		
+		</groupbox>
+	
+		 -->
+		
+		
+		
+</window>
+</zk>

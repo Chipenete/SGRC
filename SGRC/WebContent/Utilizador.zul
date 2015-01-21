@@ -1,0 +1,55 @@
+<?page title="Novo Utilizador" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Novo Utilizador" border="normal" apply="mz.co.sgrc.controller.UtilizadorController">
+	<vlayout>
+	<grid>
+		<rows>
+			<row>
+				<cell> <label value="Nome:"></label> </cell>
+				<cell> <textbox id="tb_nome" placeholder="Nome do utilizador" width="100%"></textbox> </cell>
+			</row>
+			
+			<row>
+				<cell> <label value="Senha:"></label> </cell>
+				<cell> <textbox id="tb_password" placeholder="Senha do utilizador" width="100%"></textbox> </cell>
+			</row>
+			
+			<row>
+			<cell><label value="Orgao:"></label></cell>
+				<combobox id="cbb_orgao" width="100%" autocomplete="true" placeholder="Escolhe um Orgao" >
+				<template name="model">
+				<comboitem label="${each.designacao}" value="${each}"></comboitem>
+				</template>
+			    </combobox>
+		    </row>	
+		</rows>
+	</grid>
+	<listbox id="lb_utilizador" mold="paging" rows="4" pageSize="4" height="150px">
+		<listhead>
+			<listheader>
+				Código
+			</listheader>
+			<listheader>
+				Nome
+			</listheader>
+		</listhead>
+		<template name="model">
+		<listitem value="${each}">
+			<listcell>
+				<label value="${each.id}"></label>
+			</listcell>
+			<listcell>
+				<label value="${each.nome}"></label>
+			</listcell>
+		</listitem>
+		</template>
+	</listbox>
+	<hlayout>
+	
+		<button id="btn_gravar">Gravar</button>
+		<button id="btn_actualizar" >Actualizar</button>
+		<button id="btn_cancelar">Cancelar</button>
+	</hlayout>
+	</vlayout>
+</window>
+</zk>

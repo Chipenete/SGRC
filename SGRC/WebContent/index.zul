@@ -1,0 +1,12 @@
+<?page title="Produtos "?>
+<window title="Menu" border="normal" width="100%" height="100%" 
+apply="mz.co.sgrc.controller.MenuController">
+
+<menubar width="100%">
+	<menu label="Registos">
+		<menupopup> <menuitem label="produto" forward="onClickOpenProd"></menuitem>
+					<menuitem label="categoria" forward="onClickOpenCat"></menuitem>
+		</menupopup>
+	</menu>
+</menubar>
+</window>

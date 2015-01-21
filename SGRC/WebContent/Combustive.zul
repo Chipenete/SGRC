@@ -1,0 +1,118 @@
+<?page title="Combustive" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Registar Abastecimento" border="normal" apply="mz.co.sgrc.controller.CombustiveController" >
+	
+	<separator></separator>
+	
+	<grid >
+		<rows>
+			<row>
+			<cell></cell>
+			<cell><label value="Gasolina:" /><textbox id="tb_quantidadeGasolina" disabled="true" focus="true"/></cell>	
+			<cell><label value="Gasoleo:"/><textbox id="tb_quantidadeGasoleo" disabled="true" focus="true"/></cell>
+			<cell><label value="Gas:"/><textbox id="tb_quantidadeGas" disabled="true" focus="true"/></cell>
+			<cell></cell>
+			</row>
+		</rows>
+	</grid>
+	
+	<separator></separator>
+		<separator></separator>
+	
+	<vlayout>
+	<grid>
+		
+		<rows>
+			<row>
+				<cell> <label value="Quantidade:"></label><doublebox id="db_quantidade" placeholder="Quantidade em litros" width="70%" constraint="no empty:Este campo nao deve estar vazio"></doublebox> </cell>
+				
+			
+				
+				<cell>
+				<label value="Fornecedor:"></label>
+				<combobox id="cbb_fornecedor" width="70%" autocomplete="true" placeholder="seleccione o fornecedor" constraint="no empty:Este campo nao deve estar vazio">
+				<template name="model">
+				<comboitem label="${each.designacao}" value="${each}"></comboitem>
+				</template>
+				</combobox>
+				</cell>
+				
+				<cell><label value="Combustivel:"></label> 
+				<combobox id="cbb_tipo" width="70%" autocomplete="true" placeholder="Escolhe um tipo" >
+				<template name="model">
+				<comboitem label="${each.designacao}" value="${each}"></comboitem>
+				</template>
+			    </combobox>
+			    </cell>
+				
+				
+				<cell>
+				<button id="btn_novo" visible="false">Novo Combustivel</button>
+				</cell>
+		    </row>
+		    <row>
+	
+		    </row>
+		
+		</rows>
+	</grid>
+	
+	<separator></separator>
+
+	
+
+	
+	<listbox id="lb_combustive" mold="paging" rows="9" pageSize="9">
+	
+		<listhead>
+		
+				<listheader label="Data" sort="auto(data)">
+			
+			</listheader>
+			<listheader label="Fornecedor" sort="auto(fornecedor)">
+				
+			</listheader>
+			<listheader label="Tipo de Combustivel" sort="auto(tcA)">
+				
+			</listheader>
+			<listheader label="Quanidade" sort="auto(quantidade)">
+			
+			</listheader>
+			
+		</listhead>
+		
+		<template name="model">
+		<listitem value="${each}">
+			
+			<listcell>
+				<label value="${each.data}"></label>
+			</listcell>
+			<listcell>
+				<label value="${each.fornecedor}"></label>
+			</listcell>
+			<listcell>
+				<label value="${each.tcA}"></label>
+			</listcell>
+			<listcell>
+			<label value="${each.quantidade}"></label>
+			</listcell>
+		</listitem>
+		</template>
+
+	</listbox>
+	</vlayout>
+	
+	<separator></separator>
+	<separator></separator>
+		    <div></div>
+		    <div></div>
+		    <div></div>
+		    <div>
+		   
+		<button id="btn_guardar">Gravar</button>
+		<button id="btn_cancelar" >Cancelar</button>
+		<button id="btn_actualizar"  visible="false">Actualizar</button>
+		
+		    </div>
+</window>
+</zk>

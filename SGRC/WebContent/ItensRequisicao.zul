@@ -1,0 +1,31 @@
+<?page title="Itens de Requisicao" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Itens de Requisicao" border="normal" apply="mz.co.sgrc.controller.Item_requisicaoController" mode="highlighted" closable="true" width="60%">
+
+
+<groupbox>
+<caption label="Itens de Requisicao"></caption>
+<listbox id="lb_visualizaRequisicoes" mold="paging" rows="6" pageSize="6" height="250px">
+	<listhead>
+		<listheader label="Marca" sort="auto" />
+		<listheader label="Matricula" sort="auto" />
+		<listheader label="Combustivel" sort="auto"/>
+		<listheader label="Qntd Requisitada" sort="auto" />
+		<listheader label="Qntd Remessada" sort="auto" />
+		<listheader label="Remessada" sort="auto" />
+	</listhead>
+	<template name="model">
+	<listitem value="${each}">
+	<listcell><label value="${each.viatura.marca}"></label></listcell>
+	<listcell><label value="${each.viatura.matricula}"></label></listcell>
+	<listcell><label value="${each.combustivelString}"></label></listcell>
+	<listcell><label value="${each.quantidade_requisitada}"></label></listcell>
+	<listcell><label value="${each.quantidade_remessada}"></label></listcell>
+	<listcell><checkbox checked="${each.remessada}" disabled="true"></checkbox></listcell>
+	</listitem>
+	</template>	
+</listbox>
+
+</groupbox>
+</window>
+</zk>

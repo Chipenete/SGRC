@@ -1,0 +1,45 @@
+<?page title="Categoria" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Categoria" border="normal" width="400px" height="300px" apply="mz.co.sgrc.controller.CategoriaController" mode="highlighted" closable="true" >
+	<vlayout>
+	<grid>
+		<columns>
+			<column>
+			</column>
+		</columns>
+		<rows>
+			<row>
+				<cell> <label value="Nome da categoria:"></label> </cell>
+				<cell> <textbox id="tb_nome" placeholder="nome da categoria" width="100%"></textbox> </cell>
+			</row>
+		</rows>
+	</grid>
+	<listbox id="lb_categoria" mold="paging" rows="4" pageSize="4" height="150px">
+		<listhead>
+			<listheader>
+				Código
+			</listheader>
+			<listheader>
+				Nome
+			</listheader>
+		</listhead>
+		<template name="model">
+		<listitem value="${each}">
+			<listcell>
+				<label value="${each.id}"></label>
+			</listcell>
+			<listcell>
+				<label value="${each.nome}"></label>
+			</listcell>
+		</listitem>
+		</template>
+	</listbox>
+	<hlayout>
+		<button id="bt_novo">Novo</button>
+		<button id="bt_guardar">Guardar</button>
+		<button id="bt_alterar" >Alterar</button>
+		<button id="bt_eliminar" >Eliminar</button>
+	</hlayout>
+	</vlayout>
+</window>
+</zk>

@@ -1,0 +1,45 @@
+<?page title="Novo Combustivel" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Novo Combustivel" border="normal" apply="mz.co.sgrc.controller.TipoCombustiveController"   closable="true">
+	<vlayout>
+	<grid>
+		<rows>
+			<row>
+				<cell width="20%"><div align="right"> <label value="Designacao:"></label></div> </cell>
+				<cell> <textbox id="tb_designacao" placeholder="designacao do orgao" width="500px" constraint="no empty:Este campo nao deve estar vazio"></textbox> </cell>
+				</row>
+				<row>
+					<cell width="20%"> <div align="right"><label value="Descricao:"></label> </div></cell>
+				<cell> <textbox id="tb_descricao" placeholder="descricao do orgao" width="500px" constraint="no empty:Este campo nao deve estar vazio"></textbox> </cell>
+			</row>
+		</rows>
+	</grid>
+	<listbox id="lb_tipoCombustive" mold="paging" rows="4" pageSize="4" height="150px">
+		<listhead>
+			<listheader>
+				Código
+			</listheader>
+			<listheader>
+				Designacao
+			</listheader>
+		</listhead>
+		<template name="model">
+		<listitem value="${each}">
+			<listcell>
+				<label value="${each.id}"></label>
+			</listcell>
+			<listcell>
+				<label value="${each.designacao}"></label>
+			</listcell>
+		</listitem>
+		</template>
+	</listbox>
+	<hlayout>
+	
+		<button id="btn_gravar">Gravar</button>
+		<button id="btn_actualizar" >Actualizar</button>
+		<button id="btn_cancelar">Cancelar</button>
+	</hlayout>
+	</vlayout>
+</window>
+</zk>

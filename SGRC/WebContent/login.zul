@@ -1,0 +1,23 @@
+
+<window  border="none" width="400px"  mode="modal" apply="mz.co.sgrc.controller.LoginController">
+  <groupbox>
+  <caption label="Aceder ao Sistema"></caption>
+<grid>
+
+<rows>
+<row>
+<label value="Utilizador:" style="float:right"></label>
+<textbox width="98%" constraint="no empty:Este campo nao deve estar vazio" id="tb_nome"></textbox>
+</row>
+<row>
+<label value="Senha:" style="float:right"></label>
+<textbox type="password" width="98%" constraint="no empty:Este campo nao deve estar vazio" id="tb_password"></textbox>
+</row>
+<row>
+<label></label>
+<button label="Entrar" style="float:left"  id="btn_entrar" width="150px"></button>
+</row>
+</rows>
+</grid>
+</groupbox>
+</window>

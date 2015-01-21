@@ -1,0 +1,41 @@
+<?page title="Historico" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Historico" border="normal" apply="mz.co.sgrc.controller.HistoricoController" mode="highlighted" closable="true" width="50%">
+
+    
+    <grid> 
+      <rows>
+         <row>
+         <cell>
+         <div align="right">
+	      <label value="Tipo de combustivel:" /> 
+	      </div>
+	      </cell>
+	      <cell>
+	       <combobox id="cbb_tipoCombustivelAtribuir" autocomplete="true" placeholder="Seleccione um tipo de combustivel" width="100%" constraint="no empty:Este campo nao deve estar vazio">
+	         <template name="model">
+		      <comboitem label="${each.designacao}"/>
+		       </template>
+		     </combobox>
+		     </cell>
+		     <cell> <button label="Procurar" id="btn_procurar" src="/icon-search.png" width="100px"/> </cell>
+		 </row>
+      </rows>
+   </grid> 
+
+
+<groupbox> 
+<caption label="Historial"></caption>
+<listbox id="lb_historico">
+	<listhead>
+		<listheader label="Data" sort="auto" />
+		<listheader label="Quantidade " sort="auto" />
+		<listheader label="Combustivel" sort="auto" />
+		<listheader label="Orgao" sort="auto" />
+	</listhead>
+
+</listbox>
+
+</groupbox>
+</window>
+</zk>

@@ -1,0 +1,117 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window id="janelaItemRequisicaoFornecedorController" title="new page title" border="normal"   apply="mz.co.sgrc.controller.RequisicaoFornecedorController">
+
+<!-- apply="mz.co.venda.controller.RequisicaoFornecedorController" -->
+<groupbox>
+<caption label="Plano de requisicao"></caption>
+	<grid>
+ 	
+ 		<rows>
+ 		
+ 			<row>
+ 			
+ 			<cell> <label value="Quantidade:"></label>
+ 			<doublebox id="dbx_quantidade" width="95%" placeholder="Digite a quantidade" constraint="no empty:este campo nao deve estar vazio"></doublebox>
+ 			</cell>
+ 			<cell>
+ 			<label value="CombustÃ­vel:"></label>
+ 			<combobox id="cbx_combustivel" width="95%" placeholder="seleccione o tipo de combustivel" constraint="no empty:Este campo nao deve estar vazio"></combobox>
+ 			</cell>
+ 			<cell><label value="Fornecedor:"></label>
+ 			<combobox id="cbx_fornecedor" width="95%" placeholder="seleccione o fornecedor" constraint="no empty:Este campo nao deve estar vazio"></combobox></cell>
+ 			<cell width="10%"><button id="btn_adicionar" label="Adicionar" width="90%"></button></cell>
+		 	<cell width="10%"><button id="btn_requisitar" label="Requisitar" width="90%"></button></cell>
+ 			</row>
+ 			
+ 			
+ 		
+ 		</rows>
+ 	
+ 	</grid>
+</groupbox>
+
+	<separator></separator>
+ 	<separator></separator>
+ 	<separator></separator>
+ 		
+ 	
+ 	
+ 	<groupbox>
+ 	<caption label="Itens de requisicao"></caption>
+ 		<listbox id="lb_itemRequisicao" mold="paging" rows="4" pageSize="4">
+ 		
+ 			<listhead>
+ 			
+ 				<listheader label="Quantidade"></listheader>
+ 				<listheader label="Tipo de combustivel"></listheader>
+ 				<listheader label="Remessada"></listheader>
+ 			
+ 			</listhead>
+ 			<template name="model">
+ 			<listitem value="${each}">
+ 			
+ 			<listcell> <label value="${each.quantidade}"/> </listcell>
+ 			<listcell> <label value="${each.combustivelString}"/> </listcell>
+ 			<listcell> <label value="${each.id}"/> </listcell>
+ 			
+ 			</listitem>
+ 		</template>
+ 		</listbox>
+ 		
+ 	<separator></separator>
+ 	<separator></separator>
+ 	<separator></separator>
+ 	</groupbox>
+ 	
+ 	<groupbox>
+ 	<caption label="Requisicao"></caption>
+ 	
+ 
+ <groupbox>
+ 	<caption label="Filtragem"></caption>
+ 	<grid>
+ 	
+ 		<rows>
+ 		
+ 			<row>
+ 	<cell><label value="Responsavel:"></label> <textbox id="txt_responsavel" width="420px"> </textbox></cell>
+ 	<cell>
+ 	<label value="Fornecedor:"></label> <textbox id="txt_fornecedor"  width="425px"></textbox>
+ 	
+ 	</cell>
+ 	<cell><button id="btn_pesquisar" label="Pesquisar"  src="/icon-search.png" height="30px" width="auto" style="border:5" ></button></cell>
+ 			</row>
+ 			
+ 		</rows>
+ 		
+ 	</grid>
+ 	</groupbox>
+ 	 	
+ 	<separator></separator>
+ 	
+ 	<listbox id="lb_requisicao" mold="paging" rows="6" pageSize="6">
+ 		
+ 			<listhead>
+ 				<listheader label="Data"></listheader>
+ 				<listheader label="Responsavel"></listheader>
+ 				<listheader label="Fornecedor"></listheader>
+ 				<listheader label="Remessada"></listheader>
+ 				<listheader label="Items"></listheader>
+ 				
+ 			</listhead>
+ 			
+ 			
+ 		
+ 		</listbox>
+ 	
+ 		
+ 	
+ 	</groupbox>
+ 	
+ 	
+
+
+
+</window>
+</zk>

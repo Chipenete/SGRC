@@ -1,0 +1,39 @@
+<?page title="menu" contentType="text/html;charset=UTF-8"?>
+<zk>
+<style src="/style.css" />
+    <window border="none" width="100%" height="100%">
+        <separator />
+        <div left="20px" height="25px">
+            <image src="/images/logo3a.jpg"
+                style="padding-left: 10px;" height="30px" width="auto" />
+        </div>
+        <separator />
+        <borderlayout>
+            <north id="north" border="0" height="9%" flex="true">
+                <div id="Menu" sclass="Mainmenudiv" height="90%">
+                    <include src="navmenu.zul" />
+                </div>
+            </north>
+            <west title=" " size="16%" flex="true" splittable="true"
+                collapsible="true">
+                <div id="nav" style="background:white; height:100%">
+                    
+                </div>
+            </west>
+            <center border="0">
+                <div height="99%" id="Screen">
+                    
+                </div>
+            </center>
+            <south height="70px">
+                <div align="center">
+                    <label
+                        value="Copyright © 2012 xxxxx All Rights Reserved. Powered By xxxx"
+                        sclass="loginlabel" />
+                </div>
+            </south>
+        </borderlayout>
+    </window>
+</zk>
+
+

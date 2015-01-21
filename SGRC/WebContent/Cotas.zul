@@ -1,0 +1,264 @@
+<?page title="Gerir Cotas" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Gerir Cotas" border="normal"  id="identificador" apply="mz.co.sgrc.controller.CotasController">
+
+
+     <tabbox>
+	     <tabs>
+		    <tab label="Criar" />
+		    <tab label="Atribuir" />
+		     <tab label="Visualuzar" />
+	     </tabs>
+ 	     <tabpanels>
+		    <tabpanel>
+		    
+		    <!--     .........................................Criar........................................................................ -->
+		          <groupbox>
+
+                   <caption label="Criar cotas"></caption>
+                   <grid>
+                         <rows>
+
+	                         <row>
+	                             <div align="right">
+	                               <label value="Tipo de combustivel:" />
+                              	</div>
+	                          <combobox id="cbb_tipoCombustivel" autocomplete="true" placeholder="Seleccione um tipo de combustivel" width="100%">
+	                            <template name="model">
+		                        <comboitem label="${each.designacao}"/>
+		                        </template>
+		                       </combobox>
+		
+	                           <div align="right">
+	                                 <label value="Quantidade:"/>
+	                           </div>
+	                           <doublebox id="db_quantidade"  width="70%" constraint="no empty:Este campo nao deve estar vazio"/>
+	                         </row>
+
+	                         <row>
+	
+	                            <div></div>
+                              	<div></div>
+	                            <div></div>
+	                            <div>
+	
+	                                 <button id = "btn_gravar" label="Gravar" width="45%"/>
+	                                <!--<button id = "btn_actualizar" label="Actualizar"/>  --> 
+	                                 <button id="btn_cancelar" label="cancelar" width="45%"/>
+	                                
+	                               
+	
+	                           </div>
+	
+	                         </row>
+                       </rows>
+
+            </grid>
+
+        </groupbox>
+
+
+       <groupbox>
+
+	       <caption label="Cotas existentes" />
+	
+	      <listbox id ="lb_cotasExistentes"  mold="paging" rows="9" pageSize="9" >
+	     	  <listhead>
+		       <listheader label="Cota" sort="auto" width="150px"/>
+			   <listheader label="Combustivel" sort="auto" />
+			   <listheader label="Quantidade" sort="auto" />
+		     </listhead>
+		    <template name="model">
+		    <listitem >
+		   	<listcell><label value="${each.id}"></label></listcell>
+			<listcell><label value="${each.tipoCombustive.designacao}"></label></listcell>
+			<listcell><label value="${each.quantidade}"></label></listcell>
+			
+		 </listitem>
+		 </template> 
+		
+	</listbox>
+	
+
+</groupbox>
+		
+		
+		
+		</tabpanel>
+		
+			    <!--     .........................................Atribuir........................................................................ -->
+		<tabpanel>
+	
+		
+		<div align="center">
+		<groupbox  width="100%">
+		<caption label="Seleccionar a Cota"/>
+		   <grid>
+		     <rows>
+		       <row>
+		
+		           <div align="right">
+	                               <label value="Tipo de combustivel:" />
+                              	</div>
+	                          <combobox id="cbb_tipoCombustivelAtribuir" autocomplete="true" placeholder="Seleccione um tipo de combustivel" width="100%">
+	                            <template name="model">
+		                        <comboitem label="${each.designacao}"/>
+		                        </template>
+		                       </combobox>
+		       
+		       
+		         <div align="right"> 
+		         <label value="Cota:"/></div>
+		        
+		            <combobox id = "cbb_cotasAtribuir" model="@load(vm.model)"          onChanging="@command('updateModel')"
+                     onOpen='if (event.isOpen()) {cotas.open(self, "after_start");cotas.setSclass("");} else cotas.close()'
+                     sclass="combobox-with-another-popup" 
+                     value="@load(vm.value)"
+                     popup="cotas, after_start" width="100%" placeholder="Seleccione a cota" />
+            
+          <!-- popup dos das cotas -->
+           <popup id="cotas" width="35%">
+           
+            <listbox id="lb_cotasAtribuir" >
+                <listhead>
+                    <listheader  label="Cota"/>
+                    <listheader  label="Combustivel"/>
+                    <listheader  label="Quantidade"/>
+                </listhead>
+                    <template name="model"> 
+                    <listitem>
+                    
+                        <listcell><label value="${each.id}"></label></listcell>
+			            <listcell><label value="${each.tipoCombustive.designacao}"></label></listcell>
+			            <listcell><label value="${each.quantidade}"></label></listcell>
+			       </listitem>
+                      </template>
+                    
+              
+            </listbox>
+        </popup>
+        
+        <!-- onChanging="@command('updateModel')" - display popup, update model -->
+        <!-- onOpen='if (event.isOpen()) {pp.open(self, "after_start");pp.setSclass("");} else pp.close()' - 
+            control open status manually, could be implemented with a custom component -->
+        <!-- sclass="combobox-with-another-popup" - hide original popup -->
+        <!-- value="@load(vm.value)" - update value when an item is selected -->
+        <!-- popup="pp, after_start" - use another popup -->
+        
+    
+		       </row>
+		       
+		     </rows>
+		  </grid>
+		</groupbox>
+		</div>
+		
+		
+		<separator></separator>
+		<separator></separator>
+		
+	<groupbox width="100%">
+	<caption label="Filtragem" />
+		<grid>
+		<rows>
+		
+		<row>
+	
+			
+			<cell><div align="right"><label value="Designacao:"/></div></cell>
+			
+			<cell><textbox id="tb_designacaoAtribuir" placeholder="Digite a desigancao do orgao" width="100%"></textbox></cell>
+			
+			<cell><button label="Procurar" id="btn_procurarAtribuir" src="/icon-search.png" width="100px"/> </cell>
+	   
+	    </row>
+			</rows>
+			</grid>
+	</groupbox>
+			
+				<separator></separator>
+				
+			<listbox id="lb_orgaosAtribuir"  mold="paging" rows="6" pageSize="7" checkmark="true" multiple="true">
+			
+				<listhead>
+				    <listheader width="30px"/>
+					
+					<listheader label="Orgao"/>
+			</listhead>
+			<template name="model">  			
+			<listitem> 
+			<listcell/>
+			
+		    <listcell> 
+			 <label value="${each.designacao}"></label> 
+	    	 </listcell> 
+	
+			</listitem> 
+ 			</template> 
+				
+			</listbox>
+		
+		    
+			
+			
+		<separator></separator>
+		<separator></separator>
+		<separator></separator>
+		         <div align="right">
+		             <button id = "btn1_gravar" label="Gravar" width="120px"/>
+	                 <button id="btn1_cancelar" label="cancelar" width="120px"/>
+	                <!-- <button id="btn1_historico1" label="Historico" width="120px"/> --> 
+	            </div>                  
+	                                
+	               <separator></separator>
+		           <separator></separator>  
+		   
+
+		                            
+		</tabpanel>
+		
+		   <!--     .........................................Visualizar........................................................................ -->
+		<tabpanel>
+		<groupbox width="100%">
+	    <caption label="Filtragem" />
+		<grid>
+		<rows>
+		
+		<row>
+	
+			
+			<cell><div align="right"><label value="Designacao:"/></div></cell>
+			
+			<cell><textbox id="tb_designacaoVisualizar" placeholder="Digite a desigancao do orgao" width="100%"></textbox></cell>
+			
+			<cell><button label="Procurar" id="btn_procurarVisualizar" src="/icon-search.png" width="100px"/> </cell>
+	   
+	    </row>
+			</rows>
+			</grid>
+	</groupbox>
+			
+				<separator></separator>
+				
+			<listbox id="lb_orgaosVisualizar"  mold="paging" rows="6" pageSize="7">
+			
+				<listhead>
+					
+					<listheader label="Orgao"/>
+					<listheader label="Cotas" width="90px"/>
+					<listheader label="Historico" width="105px"/>
+			</listhead>	
+			</listbox>
+	
+		
+		 
+		  
+		 
+		 
+		 
+		 </tabpanel>
+	</tabpanels>
+</tabbox>
+
+</window>
+</zk>

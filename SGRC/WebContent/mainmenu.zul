@@ -1,0 +1,6 @@
+<?page title="Main Menu" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Main Menu" border="normal">
+<label value="Welcome to ZK World" style="color:#696569; font-size:34px; font-weight:bold;"/>
+</window>
+</zk>

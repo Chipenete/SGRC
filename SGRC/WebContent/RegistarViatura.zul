@@ -1,0 +1,90 @@
+<?page title="Registar Viatura" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Registar Viatura" border="normal" apply="mz.co.sgrc.controller.ViaturaController" height="70%">
+
+<groupbox>
+
+<caption label="Registro de viatura"/>
+	
+	<grid>
+	<rows>
+		
+		<row>
+		
+		<cell>
+		<label value="Orgao:"/>
+		</cell>
+		
+		<cell>
+				<combobox id="cbb_orgao" width="100%" autocomplete="true" placeholder="Escolhe um Orgao" >
+				<template name="model">
+				<comboitem label="${each.designacao}" value="${each}"></comboitem>
+				</template>
+			    </combobox>
+		</cell>
+		
+		</row>
+		
+		<row>
+		
+		<cell>
+			<label value="Marca:"/>
+		</cell>
+		<cell>
+			<textbox id="txt_marca" width="70%"/>
+		</cell>
+		
+		</row>
+		
+		<row>
+		<cell>
+		<label value="Matricula:"/>
+		</cell>
+		<cell>
+		<textbox id="txt_matricula" width="70%"/>
+		</cell>
+		</row>
+		
+		<row>
+		<cell></cell>
+		<cell >
+		<div align="rigth">
+		<button id="btn_registar" label="Registar" />
+		<button id="btn_cancelar" label="Cancelar"/>
+		</div>
+		</cell>
+		</row>
+		
+	</rows>
+	</grid>
+	
+</groupbox>
+
+<groupbox>
+
+	<caption label="viaturas registradas"/>
+	
+	<listbox id="lb_viatura" mold="paging" rows="9" pageSize="9">
+	
+		<listhead>
+			<listheader label="Numero"></listheader>
+			<listheader label="marca"></listheader>
+			<listheader label="matricula"></listheader>
+		</listhead>
+		
+		<template name="model">
+		<listitem value="${each}">
+		<listcell ><label value="${each.id}"></label></listcell>
+		<listcell ><label value="${each.marca}"></label></listcell>
+		<listcell ><label value="${each.matricula}"></label></listcell>
+		</listitem>
+		</template>
+		
+	</listbox>
+
+
+</groupbox>
+
+
+</window>
+</zk>

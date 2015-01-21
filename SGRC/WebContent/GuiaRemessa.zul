@@ -1,0 +1,134 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Guia de remessa" border="normal" apply="mz.co.sgrc.controller.GuiaRemessaController">
+
+<groupbox>
+
+<caption label="Filtragem" />
+
+<grid>
+	<rows>
+	
+		<row>
+		
+		<cell>
+		<label value="Data:"/>
+		<datebox id="cbx_data"></datebox>
+		</cell>
+		
+		<cell>
+		<label value="Orgao:"/>
+		     <combobox id="cbb_orgaos" placeholder="Seleccione um Orgao" autocomplete="true">
+		             <template name="model">
+		             <comboitem label="${each.designacao}" value="${each}"/>
+		             </template>
+		        </combobox>
+		</cell>
+		
+		<cell>
+		<label value="Combustivel:"/>
+		<combobox id="cbb_tipoCombustivel" placeholder="Seleccione um tipo de combustivel" autocomplete="true">
+	    <template name="model">
+		<comboitem label="${each.designacao}" value="${each}"/>
+		</template>
+		</combobox>
+		</cell>
+		
+		<cell>
+		<button id="btn_procurar" label="Procurar"  src="/icon-search.png"  height="30px" width="auto"></button>
+		</cell>
+		
+		</row>
+		
+	
+	</rows>
+
+	</grid>
+
+	</groupbox>
+	
+	
+	<separator></separator>
+	<separator></separator>
+	
+	<groupbox>
+    <caption label="Requisicao"></caption>
+    <listbox id="lb_requisicao"  mold="paging" rows="4" pageSize="5">
+    <listhead>
+    <listheader sort="auto">Data</listheader>
+    <listheader>Responsavel</listheader>
+    <listheader>Orgao</listheader>
+    <listheader>Remessar</listheader>
+    <listheader width="7%">Ver itens</listheader>
+    </listhead>
+    </listbox>
+    </groupbox>
+	 
+	<separator></separator>
+	
+	<!-- <groupbox>
+	<caption label="Itens de remessa"></caption>
+	<listbox id="lb_remessas"  mold="paging" rows="3" pageSize="3"  checkmark="true" multiple="true">
+	
+		<listhead>
+		
+			<listheader width="30px"></listheader>
+			<listheader label="Marca"/>
+			<listheader label="Matricula"/>
+			<listheader label="Combustivel"/>
+			<listheader label="Quantidade"/>
+			<listheader label="Remessada"/>
+			
+		
+		</listhead>
+		
+	<template name="model">
+	
+		<listitem disabled="${each.remessada}">
+		<listcell/>
+	    <listcell><label value="${each.viatura.marca}"></label></listcell>
+	    <listcell><label value="${each.viatura.matricula}"></label></listcell>
+	    <listcell><label value="${each.combustivelString}"></label></listcell>
+	    <listcell>
+	    <label value="${each.quantidade_combustivel}"></label>
+
+	    </listcell>
+	    	<listcell><checkbox checked="${each.remessada}" disabled="true"></checkbox></listcell>
+    	 
+	    </listitem>
+		</template>
+	</listbox>
+	
+	<separator></separator>
+	<separator></separator>
+	
+
+	
+	
+	</groupbox> -->
+	
+	<grid>
+	
+	
+	<rows>
+	
+	
+		<row>
+		
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+			<div>
+			<button id="btn_remessas" label="Remessar" style="background:#A8B5EF"></button>
+			<button id="btn_cancelar" label="cancelar" style="background:#A8B5EF"></button>
+			</div>
+		</row>
+	
+	</rows>
+	
+	</grid>
+
+
+</window>
+</zk>
