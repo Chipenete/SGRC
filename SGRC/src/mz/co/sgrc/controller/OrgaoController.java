@@ -9,28 +9,33 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
-public class OrgaoController extends SelectorComposer <Component>{
+public class OrgaoController extends GenericForwardComposer{
 	
-	@Wire 
+	
 	private Textbox tb_designacao;
 	
-	@Wire
+	
 	private Listbox lb_orgao;
 	
-	@Wire
+	
 	private Button btn_gravar;
 	
-	@Wire
+	
 	private Button btn_actualizar;
 	
-	@Wire
+	
 	private Button btn_cancelar;
+	
+	Window win= new Window();
 	
 	private ListModelList <Orgao> listOrgao;
 	Orgao selectedOrgao;
@@ -55,7 +60,7 @@ public class OrgaoController extends SelectorComposer <Component>{
 		o.setDesignacao(tb_designacao.getText());
 		dao.create(o);
 		visualizarOrgao();
-		 Messagebox.show("Inserido com sucesso.");
+		Clients.showNotification("Inserido com sucesso", "info", win, "middle_center", 4000);
 		 limparCampos();
 	}
 	
@@ -65,7 +70,7 @@ public class OrgaoController extends SelectorComposer <Component>{
 			selectedOrgao.setDesignacao(tb_designacao.getText());
 			dao.update(selectedOrgao);
 			limparCampos();
-			Messagebox.show("Actualizado com sucesso");
+			Clients.showNotification("Actualizado com sucesso", "info", win, "middle_center", 2000);
 		}
 		
 	}
