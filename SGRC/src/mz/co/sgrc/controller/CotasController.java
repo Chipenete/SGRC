@@ -29,6 +29,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Doublebox;
@@ -124,7 +125,7 @@ public class CotasController extends SelectorComposer<Component>{
     @Wire
     private Textbox tb_designacaoAtribuir;
 	
-	
+	Window win= new Window();
 	
 	
 	
@@ -282,7 +283,7 @@ public class CotasController extends SelectorComposer<Component>{
 				 
 				
 				 preencherOrgaoAtribuir();
-				 Messagebox.show("Cota atribuida com sucesso.");
+				 Clients.showNotification("Cota atribuida com sucesso", "info", win, "middle_center", 4000);
 				 limpar1();
 				
 				 
@@ -456,7 +457,7 @@ public class CotasController extends SelectorComposer<Component>{
 				  c.setQuantidade(db_quantidade.getValue());
 				  c.setTipoCombustive(selectedTipoCombustivelCriar);
 				  cotasDAO.create(c);
-				  Messagebox.show("Cota criada Com sucesso.");
+				  Clients.showNotification("Cota criada com sucesso", "info", win, "middle_center", 4000);
 				  visualizarCotasCriar();
 				  //VisualizarCotasAtribuir();
 				  limpar();

@@ -11,11 +11,13 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 public class TipoCombustiveController extends SelectorComposer <Component>{
 	
@@ -39,6 +41,7 @@ public class TipoCombustiveController extends SelectorComposer <Component>{
 	@Wire
 	private Button btn_cancelar;
 	
+	Window win = new Window();
 	private ListModelList <TipoCombustive> listTipoCombustive;
 	TipoCombustive selectedTipoCombustive;
 	private TipoCombustiveDAO dao;
@@ -64,7 +67,7 @@ public class TipoCombustiveController extends SelectorComposer <Component>{
 		tc.setDescricao(tb_descricao.getText());
 		dao.create(tc);
 		visualizarTipoCombustive();
-		 Messagebox.show("Inserido com sucesso.");
+		Clients.showNotification("Inserido com sucesso", "info", win, "middle_center", 4000);
 		 limparCampos();
 	}
 	
@@ -75,7 +78,7 @@ public class TipoCombustiveController extends SelectorComposer <Component>{
 			selectedTipoCombustive.setDescricao(tb_descricao.getText());
 			dao.update(selectedTipoCombustive);
 			limparCampos();
-			Messagebox.show("Actualizado com sucesso");
+			Clients.showNotification("Actualizado com sucesso", "info", win, "middle_center", 2000);
 		}
 		
 	}

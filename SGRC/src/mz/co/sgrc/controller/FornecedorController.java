@@ -13,11 +13,13 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 public class FornecedorController extends SelectorComposer<Component> {
 	
@@ -60,6 +62,7 @@ public class FornecedorController extends SelectorComposer<Component> {
 	@Wire
 	private FornecedorDao dao;
 	
+	Window win= new Window();
 	Fornecedor selectedFornecedor;
 	ListModelList<Fornecedor> combModel;
 
@@ -86,7 +89,7 @@ public class FornecedorController extends SelectorComposer<Component> {
 		forn.setDescricao(descricao.getText());
 		dao.create(forn);
 		
-		
+		Clients.showNotification("Inserido com sucesso", "info", win, "middle_center", 4000);
 		limparCampos();
 		visualizaFornecedorTabela();
 		
@@ -127,7 +130,7 @@ public class FornecedorController extends SelectorComposer<Component> {
 			dao.update(selectedFornecedor);
 			limparCampos();
 			visualizaFornecedorTabela();
-			Messagebox.show("Actualizado com sucesso");
+			Clients.showNotification("Actualizado com sucesso", "info", win, "middle_center", 2000);
 			}
 			else
 				Messagebox.show("Nenhum fornecedor foi seleccionado");

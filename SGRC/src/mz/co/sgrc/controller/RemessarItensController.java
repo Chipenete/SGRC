@@ -30,6 +30,8 @@ import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.impl.LabelElement;
 
+import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
+
 public class RemessarItensController extends SelectorComposer<Component>{
 
 	@Wire
@@ -155,6 +157,9 @@ public class RemessarItensController extends SelectorComposer<Component>{
 				
 				if(cb_remessar.isChecked()){
 					
+					item_requisicao.setRemessada(true);
+					
+					item_requisicaoDAO.update(item_requisicao);
 					
 					QuantidadeFinal quantidadeFinal = new QuantidadeFinal();	
 					
@@ -163,8 +168,8 @@ public class RemessarItensController extends SelectorComposer<Component>{
 					
 					if(item_requisicao.getCombustivelString().equals("Gasolina") && quantidadeFinal.getQuantidadeGasolina()>=item_requisicao.getQuantidade_remessada()){
 					
-						item_requisicao.setRemessada(true);
-					    item_requisicaoDAO.update(item_requisicao);
+//					item_requisicao.setRemessada(true);
+					  item_requisicaoDAO.update(item_requisicao);
 					    
 					    quantidadeFinal.setQuantidadeGasolina(quantidadeFinal.getQuantidadeGasolina()-item_requisicao.getQuantidade_remessada());
 					    quantidadeFinalDAO.update(quantidadeFinal);
@@ -186,8 +191,8 @@ public class RemessarItensController extends SelectorComposer<Component>{
 				}
 				else  if(item_requisicao.getCombustivelString().equals("Gasoleo") && quantidadeFinal.getQuantidadeGasoleo()>=item_requisicao.getQuantidade_remessada()){
 					
-					item_requisicao.setRemessada(true);
-					item_requisicaoDAO.update(item_requisicao);
+//					item_requisicao.setRemessada(true);
+//					item_requisicaoDAO.update(item_requisicao);
 					quantidadeFinal.setQuantidadeGasoleo(quantidadeFinal.getQuantidadeGasoleo()-item_requisicao.getQuantidade_remessada());
 				    quantidadeFinalDAO.update(quantidadeFinal);
 				    
@@ -206,8 +211,8 @@ public class RemessarItensController extends SelectorComposer<Component>{
 				}
 				
 				else  if(item_requisicao.getCombustivelString().equals("Gas") && quantidadeFinal.getQuantidadeGas()>=item_requisicao.getQuantidade_remessada()){
-					item_requisicao.setRemessada(true);
-					item_requisicaoDAO.update(item_requisicao);
+//					item_requisicao.setRemessada(true);
+//					item_requisicaoDAO.update(item_requisicao);
 					quantidadeFinal.setQuantidadeGas(quantidadeFinal.getQuantidadeGas()-item_requisicao.getQuantidade_remessada());
 				    quantidadeFinalDAO.update(quantidadeFinal);
 				    
@@ -219,6 +224,7 @@ public class RemessarItensController extends SelectorComposer<Component>{
 				    Messagebox.show("Item remessado com sucesso");
 				    
 				    cb_remessar.setDisabled(true);
+			    	
 				}
 				else if(item_requisicao.getCombustivelString().equals("Gas") && quantidadeFinal.getQuantidadeGas()<item_requisicao.getQuantidade_remessada()){
 					

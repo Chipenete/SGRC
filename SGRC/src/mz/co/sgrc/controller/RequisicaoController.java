@@ -54,6 +54,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
@@ -101,6 +102,7 @@ public class RequisicaoController extends SelectorComposer<Component> {
 	@Wire
 	private CotasDAO cotasDAO;
 	
+	Window win= new Window();
 	
 	private TipoCombustive selectedTipocombustive;
 	
@@ -378,7 +380,7 @@ public class RequisicaoController extends SelectorComposer<Component> {
 		itemDAO.deleteAll();
 	
 		   alert("Requisicao feita com sucesso");
-		   //preencherItemRequisicao();
+		   Clients.showNotification("Requisicao feita com sucesso", "info", win, "middle_center", 4000);
 		
 	
 		}

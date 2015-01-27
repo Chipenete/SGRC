@@ -27,6 +27,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
@@ -37,6 +38,7 @@ import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 public class RequisicaoFornecedorController extends SelectorComposer<Component> {
 
@@ -84,6 +86,8 @@ public class RequisicaoFornecedorController extends SelectorComposer<Component> 
 	private Utilizador ut;
 	
 	private Orgao orgao;
+	
+	Window win= new Window();
 	
 	Item item = new Item();
 	
@@ -283,7 +287,7 @@ public class RequisicaoFornecedorController extends SelectorComposer<Component> 
 		limparItemRequisicao();
 		limparCampos();
 	
-		alert("Requisicao feita com sucesso");
+		Clients.showNotification("Requisicao feita com sucesso", "info", win, "middle_center", 4000);
 	}
 	
 

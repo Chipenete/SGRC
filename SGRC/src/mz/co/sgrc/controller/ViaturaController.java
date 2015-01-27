@@ -12,11 +12,13 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 public class ViaturaController extends SelectorComposer<Component>{
 	
@@ -38,7 +40,7 @@ public class ViaturaController extends SelectorComposer<Component>{
 	private OrgaoDAO d;
 	
 	
-	
+	Window win=new Window();
 	private ListModelList <Viatura> listViatura;
 	private ListModelList <Orgao> listOrgao;
 	private Viatura viatura;
@@ -66,6 +68,7 @@ public class ViaturaController extends SelectorComposer<Component>{
 		dao.create(v);
 		visualizarViaturas();
 		limparCampos();
+		Clients.showNotification("Inserido com sucesso", "info", win, "middle_center", 4000);
 		
 	}
 	
