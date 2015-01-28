@@ -16,7 +16,7 @@
 		</cell>
 		
 		<cell>
-				<combobox id="cbb_orgao" width="100%" autocomplete="true" placeholder="Escolhe um Orgao" >
+				<combobox id="cbx_orgao" width="100%" autocomplete="true" placeholder="Escolhe um Orgao" constraint="no empty:Este campo nao deve estar vazio" >
 				<template name="model">
 				<comboitem label="${each.designacao}" value="${each}"></comboitem>
 				</template>
@@ -31,7 +31,7 @@
 			<label value="Marca:"/>
 		</cell>
 		<cell>
-			<textbox id="txt_marca" width="70%"/>
+			<textbox id="txt_marca" width="70%" constraint="no empty:Este campo nao deve estar vazio" />
 		</cell>
 		
 		</row>
@@ -41,7 +41,7 @@
 		<label value="Matricula:"/>
 		</cell>
 		<cell>
-		<textbox id="txt_matricula" width="70%"/>
+		<textbox id="txt_matricula" width="70%" constraint="no empty:Este campo nao deve estar vazio"/>
 		</cell>
 		</row>
 		
@@ -64,7 +64,7 @@
 
 	<caption label="viaturas registradas"/>
 	
-	<listbox id="lb_viatura" mold="paging" rows="9" pageSize="9">
+	<listbox id="lbx_viatura" mold="paging" rows="9" pageSize="9">
 	
 		<listhead>
 			<listheader label="Numero"></listheader>

@@ -14,6 +14,7 @@ import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Intbox;
 import org.zkoss.zul.ListModelList;
@@ -21,52 +22,32 @@ import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
-public class FornecedorController extends SelectorComposer<Component> {
+public class FornecedorController extends GenericForwardComposer {
 	
-	@Wire
+
 	private Textbox designacao ;
-	
-	@Wire
 	private Textbox email;
-	
-	@Wire
 	private Textbox endereco;
-	
-	@Wire
 	private Textbox  descricao;
-	
-	@Wire
 	private Textbox txt_pesquisar;
 	
-	@Wire
 	private Intbox telefone1;
-	
-	@Wire
 	private Intbox telefone2;
 	
-	@Wire
 	private Button btn_gravar;
-	
-	@Wire
 	private Button  btn_cancelar;
-	
-	@Wire
 	private Button btn_actualizar;
-	
-	@Wire
 	private Button btn_pesquisar;
 	
-	@Wire
 	private Listbox lb_fornecedor;
 	
-	@Wire
 	private FornecedorDao dao;
 	
 	Window win= new Window();
 	Fornecedor selectedFornecedor;
 	ListModelList<Fornecedor> combModel;
 
-	
+	@Override
 	public void doAfterCompose (Component comp) throws Exception{
 		super.doAfterCompose(comp);
 		visualizaFornecedorTabela();
@@ -76,8 +57,8 @@ public class FornecedorController extends SelectorComposer<Component> {
 		dao = new FornecedorDao();
 	}
 	
-	@Listen ("onClick = #btn_gravar")
-	public void onClickGravar(){
+	
+	public void onClick$btn_gravar(){
 		
 		
 		Fornecedor forn= new Fornecedor();
@@ -118,8 +99,8 @@ public class FornecedorController extends SelectorComposer<Component> {
 		
 	}
 	
-	@Listen ("onClick = #btn_actualizar")
-	public void onClickActualizar(){
+	
+	public void onClick$btn_actualizar(){
 		if(selectedFornecedor != null){
 			selectedFornecedor.setDescricao(descricao.getText());
 			selectedFornecedor.setEndereco(endereco.getText());
@@ -137,15 +118,15 @@ public class FornecedorController extends SelectorComposer<Component> {
 		}
 	
 	
-	@Listen ("onClick = #btn_cancelar")
-	public void onClickCancelar(){
+	
+	public void onClick$btn_cancelar(){
 		
 		limparCampos();
 	
 	}
 	
-	@Listen ("onSelect = #lb_fornecedor")
-	public void onSelectFornecedor(){
+	
+	public void onSelect$lb_fornecedor(){
 		if(combModel.isSelectionEmpty())
 			selectedFornecedor=null;
 		else
@@ -167,8 +148,8 @@ public class FornecedorController extends SelectorComposer<Component> {
 		descricao.setText(selectedFornecedor.getDescricao());
 	}
 	
-	@Listen ("onClick = #btn_eliminar")
-	public void onClickEliminar(){
+	
+	public void onClick$btn_eliminar(){
 		
 		if(selectedFornecedor!=null){
 			dao.delete(selectedFornecedor);
@@ -181,8 +162,8 @@ public class FornecedorController extends SelectorComposer<Component> {
 	}
 	
 	
-	@Listen ("onClick = #btn_pesquisar")
-	public void onClickPesquisar(){
+	
+	public void onClick$btn_pesquisar(){
 			String designacao= txt_pesquisar.getText();
 			List<Fornecedor> fornecedores=dao.pesquisaFornecedor(designacao);
 			combModel= new ListModelList<Fornecedor> (fornecedores);

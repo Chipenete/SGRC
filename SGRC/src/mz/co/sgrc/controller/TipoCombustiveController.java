@@ -12,6 +12,7 @@ import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
@@ -19,40 +20,30 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
-public class TipoCombustiveController extends SelectorComposer <Component>{
+public class TipoCombustiveController extends GenericForwardComposer{
 	
 	
 
-	@Wire 
-	private Textbox tb_designacao;
-	
-	@Wire 
+	 
+	private Textbox tb_designacao; 
 	private Textbox tb_descricao;
-	
-	@Wire
 	private Listbox lb_tipoCombustive;
-	
-	@Wire
 	private Button btn_gravar;
-	
-	@Wire
 	private Button btn_actualizar;
-	
-	@Wire
 	private Button btn_cancelar;
 	
 	Window win = new Window();
 	private ListModelList <TipoCombustive> listTipoCombustive;
 	TipoCombustive selectedTipoCombustive;
-	private TipoCombustiveDAO dao;
+	private TipoCombustiveDAO tipoCombustiveDAO;
 	
 	
 	public TipoCombustiveController(){
 		
-		dao = new TipoCombustiveDAO();
+		tipoCombustiveDAO = new TipoCombustiveDAO();
 	}
 	
-
+	@Override
 	public void doAfterCompose (Component comp) throws Exception{
 		super.doAfterCompose(comp);
 		
@@ -60,38 +51,39 @@ public class TipoCombustiveController extends SelectorComposer <Component>{
 	
 	}
 	
-	@Listen("onClick = #btn_gravar")
-	public void onClickGravar(){
+	
+	public void onClick$btn_gravar(){
 		TipoCombustive tc = new TipoCombustive();
 		tc.setDesignacao(tb_designacao.getText());
 		tc.setDescricao(tb_descricao.getText());
-		dao.create(tc);
+		tipoCombustiveDAO.create(tc);
 		visualizarTipoCombustive();
 		Clients.showNotification("Inserido com sucesso", "info", win, "middle_center", 4000);
 		 limparCampos();
 	}
 	
-	@Listen("onClick = #btn_actualizar")
-	public void onclickActualizar(){
+	
+	public void onClick$btn_actualizar(){
 		if(selectedTipoCombustive != null){
 			selectedTipoCombustive.setDesignacao(tb_designacao.getText());
 			selectedTipoCombustive.setDescricao(tb_descricao.getText());
-			dao.update(selectedTipoCombustive);
+			tipoCombustiveDAO.update(selectedTipoCombustive);
 			limparCampos();
 			Clients.showNotification("Actualizado com sucesso", "info", win, "middle_center", 2000);
+			visualizarTipoCombustive();
 		}
 		
 	}
 	
-	@Listen("onClick = #btn_cancelar")
-	public void onclickCancelar(){
+	
+	public void onClick$btn_cancelar(){
 		
 		limparCampos();
 	}
 	
 	
-	@Listen ("onSelect = #lb_tipoCombustive")
-	public void doTipoCombustiveSelect (){
+	
+	public void onSelect$lb_tipoCombustive (){
 		if(listTipoCombustive.isSelectionEmpty()){
 		selectedTipoCombustive = null;
 		}
@@ -106,7 +98,7 @@ public class TipoCombustiveController extends SelectorComposer <Component>{
 	
 	
 	 public void visualizarTipoCombustive(){
-		 List <TipoCombustive> tipos = dao.findAll();
+		 List <TipoCombustive> tipos = tipoCombustiveDAO.findAll();
 		 listTipoCombustive = new ListModelList <TipoCombustive> (tipos); 
 		 lb_tipoCombustive.setModel(listTipoCombustive);
 		

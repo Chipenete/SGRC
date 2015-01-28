@@ -55,6 +55,7 @@ import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
@@ -67,39 +68,26 @@ import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Window;
 
-public class RequisicaoController extends SelectorComposer<Component> {
+public class RequisicaoController extends GenericForwardComposer{
 
-	@Wire
+	
 	private Listbox lb_dados;
-	@Wire
 	private Listbox lb_viaturaExistente;
-	@Wire
 	private Listbox lb_viaturaRequisitar;
-	@Wire
 	private Listbox lb_requisicao;
-	@Wire
+	
 	private Button btn_requisitar;
-	@Wire
 	private Button btn_cancelar;
-	@Wire
+	
 	private Listbox lb_visualizaRequisicoes;
 
-
-	@Wire
 	private ViaturaDAO viaturaDAO;
-	@Wire 
 	private TipoCombustiveDAO tipoCombustiveDAO; 
-	@Wire
 	private UtilizadorDAO utilizadorDAO;
-	@Wire
 	private Item_requisicaoDAO item_requisicaoDAO;
-	@Wire
 	private ItemDAO itemDAO;
-	@Wire
 	private RequisicaoDAO requisicaoDAO;
-	@Wire
 	private OrgaoDAO orgaoDAO;
-	@Wire
 	private CotasDAO cotasDAO;
 	
 	Window win= new Window();
@@ -140,7 +128,7 @@ public class RequisicaoController extends SelectorComposer<Component> {
 	
 	ListModelList <Item_requisicao> listItemRequisicao;
 	
-
+	@Override
 	public void doAfterCompose(Component comp) throws Exception {
 		super.doAfterCompose(comp);
 		
@@ -335,8 +323,7 @@ public class RequisicaoController extends SelectorComposer<Component> {
 
 	
 	
-	@Listen("onClick = #btn_requisitar")
-	public void onClickRequisitar(){
+	public void onClick$btn_requisitar(){
 		
 		Requisicao requisicao = new Requisicao();
 	
@@ -379,7 +366,6 @@ public class RequisicaoController extends SelectorComposer<Component> {
 		requisicaoDAO.update(requisicao);
 		itemDAO.deleteAll();
 	
-		   alert("Requisicao feita com sucesso");
 		   Clients.showNotification("Requisicao feita com sucesso", "info", win, "middle_center", 4000);
 		
 	
@@ -496,9 +482,8 @@ public class RequisicaoController extends SelectorComposer<Component> {
 	}
 	
 	
-	@Listen("onClick = #btn_imprimir")
-	public void g() throws SQLException, JRException{
-		alert("asd");
+	
+	public void onClick$btn_imprimir() throws SQLException, JRException{
 		gerarReports();
 		
 	}

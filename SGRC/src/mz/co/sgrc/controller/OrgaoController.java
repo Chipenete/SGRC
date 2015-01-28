@@ -6,6 +6,7 @@ import mz.co.sgrc.dao.OrgaoDAO;
 import mz.co.sgrc.model.Orgao;
 
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
@@ -23,16 +24,10 @@ public class OrgaoController extends GenericForwardComposer{
 	
 	private Textbox tb_designacao;
 	
-	
 	private Listbox lb_orgao;
 	
-	
 	private Button btn_gravar;
-	
-	
 	private Button btn_actualizar;
-	
-	
 	private Button btn_cancelar;
 	
 	Window win= new Window();
@@ -47,15 +42,14 @@ public class OrgaoController extends GenericForwardComposer{
 		dao = new OrgaoDAO();
 	}
 	
-	
+	@Override
 	public void doAfterCompose (Component comp) throws Exception{
 		super.doAfterCompose(comp);
 		visualizarOrgao();
-	
+		
 	}
 	
-	@Listen("onClick = #btn_gravar")
-	public void onClickGravar(){
+	public void onClick$btn_gravar(Event e) {
 		Orgao o = new Orgao();
 		o.setDesignacao(tb_designacao.getText());
 		dao.create(o);
@@ -64,27 +58,23 @@ public class OrgaoController extends GenericForwardComposer{
 		 limparCampos();
 	}
 	
-	@Listen("onClick = #btn_actualizar")
-	public void onclickActualizar(){
+	public void onClick$btn_actualizar(Event e) {
 		if(selectedOrgao != null){
 			selectedOrgao.setDesignacao(tb_designacao.getText());
 			dao.update(selectedOrgao);
 			limparCampos();
 			Clients.showNotification("Actualizado com sucesso", "info", win, "middle_center", 2000);
+			visualizarOrgao();
 		}
 		
 	}
 	
-	@Listen("onClick = #btn_cancelar")
-	public void onclickCancelar(){
-		
+	public void onClick$btn_cancelar(Event e) {
 		limparCampos();
 	}
 	
-	
-	@Listen ("onSelect = #lb_orgao")
-	public void doOrgaoSelect (){
-		if(listOrgao.isSelectionEmpty()){
+	public void onSelect$lb_orgao(Event e) {
+	if(listOrgao.isSelectionEmpty()){
 		selectedOrgao = null;
 		}
 		

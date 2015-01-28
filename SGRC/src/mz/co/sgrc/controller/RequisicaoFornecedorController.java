@@ -28,6 +28,7 @@ import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
@@ -40,87 +41,56 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
-public class RequisicaoFornecedorController extends SelectorComposer<Component> {
+public class RequisicaoFornecedorController extends GenericForwardComposer {
 
 	
-	@Wire
+	
 	private Doublebox dbx_quantidade;
 	
-	@Wire
 	private Button btn_adicionar;
-	@Wire
 	private Button btn_requisitar;
-	@Wire
 	private Button btn_pesquisar;
 	
-	@Wire
 	private Textbox txt_responsavel;
-	@Wire
 	private Textbox txt_fornecedor;
 	
-	@Wire
 	private Combobox cbx_combustivel;
-	@Wire
 	private Combobox cbx_fornecedor;
 	
-	@Wire
 	private Listbox lb_requisicao;
-	@Wire
 	private Listbox lb_itemRequisicao;
 	
-	@Wire
 	private RequisicaoFornecedorDAO rqDAO;
-	@Wire
 	private ItemRequisicaoFornecedorDAO itemDAO;
-	@Wire
 	private TipoCombustiveDAO dao;
-	@Wire
 	private FornecedorDao forDAO;
-	@Wire
 	private UtilizadorDAO u;
-	@Wire
 	private OrgaoDAO orgaoDAO;
-	@Wire
 	private RequisicaoFornecedorDAO requisicaoFornecedorDAO;
 	
 	private Utilizador ut;
-	
 	private Orgao orgao;
 	
 	Window win= new Window();
-	
 	Item item = new Item();
-	
 	Fornecedor selectedFornecedor = new Fornecedor();
-	
 	List <ItemRequisicaoFornecedor> lista;
 	List <Item> listaItem = new ArrayList <>();
-	
 	Listitem list = new Listitem();
-	
 	Checkbox check, check1;
-	
 	ItemRequisicaoFornecedor itemRequisicao;
-	
 	TipoCombustive selectedTipoCombustive = new TipoCombustive();
-	
-	
-	
-	
 	
 
 	List <ItemRequisicaoFornecedor> lista2 = new ArrayList<ItemRequisicaoFornecedor>();
 	
-	
-	
-
 	
 	ListModelList <ItemRequisicaoFornecedor> listItemFornecedor;
 	ListModelList <RequisicaoFornecedor> listRequisicoes, listRequisicoesPesquisa;
 	ListModelList <TipoCombustive> listCombustivel;
 	ListModelList <Fornecedor> listFornecedor;
 	
-	
+	@Override
 	public void doAfterCompose(Component comp) throws Exception{
 		super.doAfterCompose(comp);
 		prencherComboboxCombustivel();
@@ -144,9 +114,8 @@ public class RequisicaoFornecedorController extends SelectorComposer<Component> 
 	}
 
 	
-   @Listen ("onSelect = #cbx_fornecedor")
-		public void onEvent(Event arg0) throws Exception {
-			
+  
+   public void onSelect$cbx_fornecedor(Event e) {
 			// TODO Auto-generated method stub
 			if(listFornecedor.isSelectionEmpty()){
 				selectedFornecedor =null;
@@ -159,9 +128,7 @@ public class RequisicaoFornecedorController extends SelectorComposer<Component> 
     	
     	
 	@SuppressWarnings("unchecked")
-	@Listen("onClick = #btn_adicionar")
-	public void onClickAdicionar(){
-			
+	public void onClick$btn_adicionar(Event e) {
 			item = new Item();
 			item.setQuantidadeForn(dbx_quantidade.getValue());
 			item.setCombustivelString(cbx_combustivel.getText());
@@ -191,9 +158,7 @@ public class RequisicaoFornecedorController extends SelectorComposer<Component> 
 	
 	
 	@SuppressWarnings("unchecked")
-	@Listen("onClick = #btn_requisitar")
-	public void onClickRequisitar(){
-
+	public void onClick$btn_requisitar(Event e) {
 		listItemFornecedor =new ListModelList<>();
 		
 		lista = new ArrayList <ItemRequisicaoFornecedor>();
@@ -431,8 +396,8 @@ public class RequisicaoFornecedorController extends SelectorComposer<Component> 
 		list.setParent(lb_itemRequisicao);
 	}
 	
-	@Listen ("onClick = #btn_pesquisar")
-	public void onClickPesquisar () {
+	
+	public void onClick$btn_pesquisar(Event e) {
 		String nome = txt_fornecedor.getText();
 		List <RequisicaoFornecedor> requisicoes = rqDAO.pesquisaRequisicaoFornecedor(nome);
 		listRequisicoesPesquisa = new ListModelList<RequisicaoFornecedor> (requisicoes);

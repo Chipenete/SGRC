@@ -15,6 +15,8 @@ import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
@@ -22,22 +24,21 @@ import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
-public class ItemRequisicaoFornecedorController extends SelectorComposer<Component> {
+public class ItemRequisicaoFornecedorController extends GenericForwardComposer {
 
-	@Wire
 	private Listbox lb_itemRequisicao;
-	
-	@Wire
 	private Button btn_remessaFornecedor;
-	@Wire
+	
 	private ItemRequisicaoFornecedorDAO itemFornecedorDAO;
-	@Wire
+	
 	private Window janelaItemRequisicaoFornecedorController;
 	
 	private ListModelList listRequisicaoFornecedor;
 	
+	Window win= new Window();
 	RequisicaoFornecedor requisicaoFornecedor = (RequisicaoFornecedor) Executions.getCurrent().getDesktop().getSession().getAttribute("requisicaoFornecedor");
 	
+	@Override
 	public void doAfterCompose (Component comp) throws Exception{
 		super.doAfterCompose(comp);
 		itemFornecedorDAO = new ItemRequisicaoFornecedorDAO();
@@ -52,8 +53,8 @@ public class ItemRequisicaoFornecedorController extends SelectorComposer<Compone
 		lb_itemRequisicao.setModel(listRequisicaoFornecedor);
 	}
 	
-	@Listen ("onClick = #btn_remessaFornecedor")
-	public void onClickRemessaFornecedor(){
+	
+	public void onClick$btn_remessaFornecedor(){
 		
 		Set<Listitem> listRemessados = lb_itemRequisicao.getSelectedItems(); 
 		
@@ -67,7 +68,7 @@ public class ItemRequisicaoFornecedorController extends SelectorComposer<Compone
 			
 		}
 		
-		Messagebox.show("Itens Remessados com sucesso");
+		Clients.showNotification("Item remessado com sucesso", "info", win, "middle_center", 2000);
 		//janelaItemRequisicaoFornecedorController.isClosable();
 		mostrarItems();
 		listRequisicaoFornecedor.setMultiple(false);
