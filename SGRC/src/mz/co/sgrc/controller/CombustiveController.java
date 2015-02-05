@@ -23,9 +23,11 @@ import mz.co.sgrc.model.TipoCombustive;
 import org.zkoss.zhtml.Messagebox;
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Doublebox;
@@ -34,239 +36,183 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Textbox;
 
-public class CombustiveController extends SelectorComposer<Component>{
+public class CombustiveController extends GenericForwardComposer{
 	
-	
-	@Wire
-	private Textbox tb_quantidadeGasolina;
-	
-	@Wire
-	private Textbox tb_quantidadeGasoleo;
-	
-	@Wire
-	private Textbox tb_quantidadeGas;
-	
-	@Wire
-	private   Doublebox db_quantidade;
-	
-	@Wire
-	private Textbox tb_tipo;
-	
-	@Wire
-	private Combobox cbb_tipo;
-	
-	@Wire
-	private Combobox cbb_fornecedor;
-	
-	@Wire
+	private Textbox txt_quantidadeGasolina;
+	private Textbox txt_quantidadeGasoleo;
+	private Textbox txt_quantidadeGas;
+	private Doublebox dbx_quantidade;
+	private Textbox txt_tipo;
+	private Combobox cbx_tipoCombustive;
+	private Combobox cbx_fornecedor;
 	private Button btn_novo;
-	
-	@Wire
 	private Button btn_guardar;
-	
-	@Wire
 	private Button btn_actualizar;
-	
-	@Wire
 	private Button btn_cancelar;
+	private Listbox lbx_cota;
+	private Listbox lbx_combustive;
+	private CombustiveDAO _combustiveDao;
+	private TipoCombustiveDAO _tipoCombustiveDao;
+	private FornecedorDao _fornecedorDao;
+	private QuantidadeFinalDAO _quantidadeFinalDao;
+	private boolean _novoCombustive;
 	
-	@Wire
-	private CombustiveDAO dao;
-	
-	@Wire
-	private TipoCombustiveDAO d;
-	
-	@Wire
-	private FornecedorDao daofor;
-	
-	@Wire
-	private QuantidadeFinalDAO quantidadeFinalDAO;
-	
-	@Wire 
-	private Listbox lb_cota;
-	
-	@Wire 
-	private Listbox lb_combustive;
-	
-	Fornecedor selectedFornecedor;
-    Combustive selectedCombustive;
-    TipoCombustive selectedTipoCombustive;
-    ListModelList <Fornecedor> listFornecedor;
-	ListModelList <Combustive> combbModel;
-	ListModelList <TipoCombustive> listTipoCombustive;
-	
-	private boolean novoCombustive;
-	
-
-	
-	private ListModelList<Combustive> combModel;
+	Fornecedor _selectedFornecedor;
+    Combustive _selectedCombustive;
+    TipoCombustive _selectedTipoCombustive;
+    ListModelList <Fornecedor> _listModelFornecedor;
+	ListModelList <Combustive> _listModelCombustive;
+	ListModelList <TipoCombustive> _listModelTipoCombustive;
+    ListModelList<Combustive> _listModelCombustive1;
 
 	
 	public void doAfterCompose (Component comp) throws Exception{
 		super.doAfterCompose(comp);
+		
+		_combustiveDao = new CombustiveDAO();
+		_tipoCombustiveDao = new TipoCombustiveDAO();
+		_fornecedorDao = new FornecedorDao();
+		_quantidadeFinalDao = new QuantidadeFinalDAO();
+		
 		visualizaCombustive();
 		listarTipoCombustive();
 		prencherFornecedor();
 		preencherQuantidadeFinal();
-		selectedTipoCombustive = null;
-		selectedCombustive = null;
-		//btn_guardar.setVisible(false); 
+		_selectedTipoCombustive = null;
+		_selectedCombustive = null;
+		 
 	}
 	
-	public CombustiveController (){
-		dao = new CombustiveDAO();
-		d = new TipoCombustiveDAO();
-		daofor = new FornecedorDao();
-		quantidadeFinalDAO = new QuantidadeFinalDAO();
-		
-	}
+	public CombustiveController (){}
 	
-	@Listen ("onClick = #btn_guardar")
-	public void onClickGuardar (){
+	
+    //*************************************************************************EVENTOS*****************************************************************************
+
+	public void onClick$btn_guardar(Event e){
 		
 		QuantidadeFinal quantidadeFinal = new QuantidadeFinal();	
-		quantidadeFinal = quantidadeFinalDAO.findById((long)1);
+		quantidadeFinal = _quantidadeFinalDao.findById((long)1);
 		
-		if(selectedTipoCombustive.getDesignacao().equals("Gasolina")){
-			quantidadeFinal.setQuantidadeGasolina(quantidadeFinal.getQuantidadeGasolina()+db_quantidade.getValue());
+		if(_selectedTipoCombustive.getDesignacao().equals("Gasolina")){
+			quantidadeFinal.setQuantidadeGasolina(quantidadeFinal.getQuantidadeGasolina()+dbx_quantidade.getValue());
 		}
-		else if(selectedTipoCombustive.getDesignacao().equals("Gasoleo")){
-			quantidadeFinal.setQuantidadeGasoleo(quantidadeFinal.getQuantidadeGasoleo()+db_quantidade.getValue());
+		else if(_selectedTipoCombustive.getDesignacao().equals("Gasoleo")){
+			quantidadeFinal.setQuantidadeGasoleo(quantidadeFinal.getQuantidadeGasoleo()+dbx_quantidade.getValue());
 		}
-		else if(selectedTipoCombustive.getDesignacao().equals("Gas")){
-			quantidadeFinal.setQuantidadeGas(quantidadeFinal.getQuantidadeGas()+db_quantidade.getValue());
+		else if(_selectedTipoCombustive.getDesignacao().equals("Gas")){
+			quantidadeFinal.setQuantidadeGas(quantidadeFinal.getQuantidadeGas()+dbx_quantidade.getValue());
 		}
 		
-		quantidadeFinalDAO.update(quantidadeFinal);
+		_quantidadeFinalDao.update(quantidadeFinal);
 		
-		Combustive cb = new Combustive();
-		cb.setQuantidade(db_quantidade.getValue());
-		cb.setTipoCombustive(selectedTipoCombustive);
-		cb.setTcA(selectedTipoCombustive.getDesignacao());
-		cb.setFornecedor(cbb_fornecedor.getText());
+		Combustive combustive= new Combustive();
+		combustive.setQuantidade(dbx_quantidade.getValue());
+		combustive.setTipoCombustive(_selectedTipoCombustive);
+		combustive.setTcA(_selectedTipoCombustive.getDesignacao());
+		combustive.setFornecedor(cbx_fornecedor.getText());
 		
 		Date data = new Date();
 		
-		cb.setData(data);
+		combustive.setData(data);
 		
-		dao.create(cb);
+		_combustiveDao.create(combustive);
 		
 		Messagebox.show("Inserido com sucesso");
-		
+		_selectedTipoCombustive = null;	
 	
 		visualizaCombustive();
-		selectedTipoCombustive = null;
-		onClickCancelar();
+		limparCampos();
 		preencherQuantidadeFinal();
 	}
 	
 
 
-    @Listen ("onClick = #btn_cancelar")
-    public void onClickCancelar(){
-    	db_quantidade.setRawValue(null);
-    	cbb_tipo.setRawValue(null);
-    	cbb_fornecedor.setRawValue(null);
+    public void onClick$btn_cancelar(Event e){
+    	limparCampos();
     }
 	
-    
-    @Listen ("onClick = #btn_actualizar")
-    public void onClickActualizar(){
- 
-    		//selectedCombustive.setQuantidade(db_quantidade.getValue()+selectedCombustive.getQuantidade());
-    		selectedCombustive.setQuantidade(db_quantidade.getValue());
-    		selectedCombustive.setTcA(cbb_tipo.getText());
-    		selectedCombustive.setFornecedor(cbb_fornecedor.getText());
-    		
-    		dao.update(selectedCombustive);
+
+    public void onClick$btn_actualizar(Event e){
+    		_selectedCombustive.setQuantidade(dbx_quantidade.getValue());
+    		_selectedCombustive.setTcA(cbx_tipoCombustive.getText());
+    		_selectedCombustive.setFornecedor(cbx_fornecedor.getText());
+    		_combustiveDao.update(_selectedCombustive);
     		visualizaCombustive();
-    		onClickCancelar();
-    	
+    		limparCampos();	
     }
     
-	@Listen ("onSelect = #lb_combustive")
-	public void doCombustiveSelect () {
-      if(combModel.isSelectionEmpty()){
-    	  
-    	  selectedCombustive = null;
-      }
+    public void onSelect$lbx_combustive(Event e){
+      if(_listModelCombustive.isSelectionEmpty())
+    	  _selectedCombustive = null;
       else{
     	  
-    	  selectedCombustive = combModel.getSelection().iterator().next();  	
-    	  cbb_tipo.setText(selectedCombustive.getTcA());
-    	  cbb_fornecedor.setText(selectedCombustive.getFornecedor());
-    	  db_quantidade.setValue(selectedCombustive.getQuantidade());
+    	  _selectedCombustive = _listModelCombustive.getSelection().iterator().next();  	
+    	  cbx_tipoCombustive.setText(_selectedCombustive.getTcA());
+    	  cbx_fornecedor.setText(_selectedCombustive.getFornecedor());
+    	  dbx_quantidade.setValue(_selectedCombustive.getQuantidade());
       }
 		
    
 	}
 	
-	@Listen("onSelect = #cbb_tipo")
-	public void onSelectTipo(){
-		if(listTipoCombustive.isSelectionEmpty()){
-			selectedTipoCombustive = null;
-		}
-		else{
-			
-			selectedTipoCombustive = listTipoCombustive.getSelection().iterator().next();
-		}
-		
-	}
-	
-	@Listen("onSelect = #cbb_fornecedor")
-	public void onSelectFornecedor(){
-		if(listFornecedor.isSelectionEmpty())
-			selectedFornecedor= null;
+    public void onSelect$cbx_tipoCombustive(Event e){
+		if(_listModelTipoCombustive.isSelectionEmpty())
+			_selectedTipoCombustive = null;
 		else
-			selectedFornecedor = listFornecedor.getSelection().iterator().next();
-		
+			_selectedTipoCombustive = _listModelTipoCombustive.getSelection().iterator().next();
+	}
+	
+    public void onSelect$cbb_fornecedor(Event e){
+		if(_listModelFornecedor.isSelectionEmpty())
+			_selectedFornecedor= null;
+		else
+			_selectedFornecedor = _listModelFornecedor.getSelection().iterator().next();
 	}
 	
 	
-	@Listen("onClick = #btn_novo")
-	public void onClickNovo(){
-		
-		
-		Executions.createComponents("/TipoCombustivell.zul", null,null);
-		
+    public void onClick$btn_novo(Event e){
+		Executions.createComponents("/TipoCombustivell.zul", null,null);	
 	}
 	
 	
-
+    
+    //*************************************************************************METODOS*****************************************************************************
     private void visualizaCombustive() {
-		List <Combustive> categorias = dao.findAll();
-		combModel = new ListModelList<>(categorias);
-		lb_combustive.setModel(combModel);
+		List <Combustive> _listCombustive = _combustiveDao.findAll();
+		_listModelCombustive = new ListModelList<Combustive>(_listCombustive);
+		lbx_combustive.setModel(_listModelCombustive);
 	}
     
     public void listarTipoCombustive(){
-    	
-    	List <TipoCombustive> combs = d.findAll();
-    	listTipoCombustive = new ListModelList <TipoCombustive> (combs);
-    	cbb_tipo.setModel(listTipoCombustive);
-		
-    	
+    	List <TipoCombustive> list =  _tipoCombustiveDao.findAll();
+    	_listModelTipoCombustive = new ListModelList <TipoCombustive> (list);
+    	cbx_tipoCombustive.setModel(_listModelTipoCombustive);	
     }
     
     public void prencherFornecedor(){
-    	List <Fornecedor> forn = daofor.findAll();
-    	listFornecedor = new ListModelList<Fornecedor>(forn);
-    	cbb_fornecedor.setModel(listFornecedor);
+    	List <Fornecedor> _listFornecedor = _fornecedorDao.findAll();
+    	_listModelFornecedor = new ListModelList<Fornecedor>(_listFornecedor);
+    	cbx_fornecedor.setModel(_listModelFornecedor);
     }
     
     public void refresh(){
-    	
-    	db_quantidade.setValue(selectedCombustive.getQuantidade());
-    	cbb_tipo.setText(selectedCombustive.getTcA());
-    	cbb_fornecedor.setText(selectedCombustive.getFornecedor());
+    	dbx_quantidade.setValue(_selectedCombustive.getQuantidade());
+    	cbx_tipoCombustive.setText(_selectedCombustive.getTcA());
+    	cbx_fornecedor.setText(_selectedCombustive.getFornecedor());
     }
     
     
+    private void limparCampos() {
+    	dbx_quantidade.setRawValue(null);
+    	cbx_tipoCombustive.setRawValue(null);
+    	cbx_fornecedor.setRawValue(null);	
+	}
+    
     public void preencherQuantidadeFinal(){
-    	QuantidadeFinal quantidadeFinal = quantidadeFinalDAO.findById((long)1);
-    	tb_quantidadeGasolina.setValue(""+quantidadeFinal.getQuantidadeGasolina());
-    	tb_quantidadeGasoleo.setValue(""+quantidadeFinal.getQuantidadeGasoleo());
-    	tb_quantidadeGas.setValue(""+quantidadeFinal.getQuantidadeGas());
+    	QuantidadeFinal quantidadeFinal = _quantidadeFinalDao.findById((long)1);
+    	txt_quantidadeGasolina.setValue(""+quantidadeFinal.getQuantidadeGasolina());
+    	txt_quantidadeGasoleo.setValue(""+quantidadeFinal.getQuantidadeGasoleo());
+    	txt_quantidadeGas.setValue(""+quantidadeFinal.getQuantidadeGas());
     }
     
 

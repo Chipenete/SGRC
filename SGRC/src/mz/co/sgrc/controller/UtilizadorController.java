@@ -8,149 +8,124 @@ import mz.co.sgrc.model.Orgao;
 import mz.co.sgrc.model.Utilizador;
 
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
-public class UtilizadorController extends SelectorComposer <Component>{
-	
-	
-	@Wire 
-	private Textbox tb_nome;
-	
-	@Wire
-	private Textbox tb_password;
-	
-	@Wire
-	private Listbox lb_utilizador;
-	
-	@Wire
+public class UtilizadorController extends GenericForwardComposer{
+
+	private Textbox tbx_nome;
+	private Textbox tbx_password;
+	private Listbox lbx_utilizador;
 	private Button btn_gravar;
-	
-	@Wire
 	private Button btn_actualizar;
-	
-	@Wire
 	private Button btn_cancelar;
+	private Combobox cbx_orgao;
 	
-	@Wire
-	private Combobox cbb_orgao;
-	
-	private ListModelList <Utilizador> listUtilizador;
-	private ListModelList <Orgao> listOrgao;
+	private ListModelList <Utilizador> _listModelUtilizador;
+	private ListModelList <Orgao> _listModelOrgao;
 
-	Utilizador selectedUtilizador;
-	private UtilizadorDAO dao;
-	private OrgaoDAO d;
+	Utilizador _selectedUtilizador;
+	private UtilizadorDAO _utilizadorDAO;
+	private OrgaoDAO _orgaoDAO;
 
-	 Orgao selectedOrgao;
-	
-	
-	public UtilizadorController (){
-		
-		dao = new UtilizadorDAO();
-		d = new OrgaoDAO();
-	}
-	
+	 Orgao _selectedOrgao;
+	 Window _win;
 	
 	public void doAfterCompose (Component comp) throws Exception{
 		super.doAfterCompose(comp);
+		_utilizadorDAO = new UtilizadorDAO();
+		_orgaoDAO = new OrgaoDAO();
 		preencherOrgaos();
 		visualizarUtilizador();
-	    selectedOrgao = null;
+	   _selectedOrgao = null;
 	}
 	
+	public UtilizadorController (){}
+
 	
-	@Listen("onClick = #btn_gravar")
-	public void onClickGravar(){
-		Utilizador o = new Utilizador();
-		o.setNome(tb_nome.getValue());
-		o.setPassword(tb_password.getValue());
-		o.setOrgao(selectedOrgao);
-		dao.create(o);
+    public void onClick$btn_gravar(Event e){
+		Utilizador user = new Utilizador();
+		user.setNome(tbx_nome.getValue());
+		user.setPassword(tbx_password.getValue());
+		user.setOrgao(_selectedOrgao);
+		_utilizadorDAO.create(user);
 		visualizarUtilizador();
-		 Messagebox.show("Inserido com sucesso.");
-		 limparCampos();
-		 selectedOrgao=null;
-	}
-	
-	@Listen("onClick = #btn_actualizar")
-	public void onclickActualizar(){
-		if(selectedUtilizador != null){
-			selectedUtilizador.setNome(tb_nome.getText());
-			selectedUtilizador.setPassword(tb_password.getText());
-			selectedUtilizador.setOrgao(selectedOrgao);
-			dao.update(selectedUtilizador);
-			limparCampos();
-			Messagebox.show("Actualizado com sucesso");
-		}
-		
-	}
-	
-	@Listen("onClick = #btn_cancelar")
-	public void onclickCancelar(){
-		
+	    Clients.showNotification("Utilizador criado com sucesso", "info",_win, "middle_center", 4000, true);
 		limparCampos();
+	   _selectedOrgao=null;
+	}
+	
+    public void onClick$btn_actualizar(Event e){
+		if(_selectedUtilizador != null){
+			_selectedUtilizador.setNome(tbx_nome.getText());
+			_selectedUtilizador.setPassword(tbx_password.getText());
+			_selectedUtilizador.setOrgao(_selectedOrgao);
+			_utilizadorDAO.update(_selectedUtilizador);
+			limparCampos();
+			 Clients.showNotification("Utilizador actualizado com sucesso", "info",_win, "middle_center", 4000, true);
+		}
+		
+	}
+	
+   public void onClick$btn_cancelar(Event e){
+      limparCampos();
 	}
 	
 	
-	@Listen ("onSelect = #lb_utilizador")
-	public void doOrgaoSelect (){
-		if(listUtilizador.isSelectionEmpty()){
-		selectedUtilizador = null;
-		}
-		
+    public void onSelect$lbx_utilizador(Event e){
+		if(_listModelUtilizador.isSelectionEmpty())
+		_selectedUtilizador = null;
 		else {
-			selectedUtilizador = listUtilizador.getSelection().iterator().next();
+			_selectedUtilizador = _listModelUtilizador.getSelection().iterator().next();
 		}
-		
-		refreshOrgaoDetail();
-		
+		refreshOrgaoDetail();	
 	}
 	
-	@Listen ("onSelect = #cbb_orgao")
-	public void doOrgaoSelected (){
-		if(listOrgao.isSelectionEmpty()){
-			selectedOrgao =null;
+    public void onSelect$cbx_orgao(Event e){
+		if(_listModelOrgao.isSelectionEmpty()){
+			_selectedOrgao =null;
 		}
 		else {
-			selectedOrgao = listOrgao.getSelection().iterator().next();
+			_selectedOrgao = _listModelOrgao.getSelection().iterator().next();
 		}
 	}
 
 	
 	 public void visualizarUtilizador(){
-		 List <Utilizador> ut = dao.findAll();
-		 listUtilizador = new ListModelList <Utilizador> (ut); 
-		 lb_utilizador.setModel(listUtilizador);
+		 List <Utilizador> ut = _utilizadorDAO.findAll();
+		 _listModelUtilizador = new ListModelList <Utilizador> (ut); 
+		 lbx_utilizador.setModel(_listModelUtilizador);
 		
 	 }
 	 
 	 public void limparCampos(){
-		 tb_nome.setRawValue(null);
-		 tb_password.setRawValue(null);
-
-		 selectedUtilizador=null;
-		 
+		 tbx_nome.setRawValue(null);
+		 tbx_password.setRawValue(null);
+         _selectedUtilizador=null;	 
 	 }
 	 
 	 
 	 private void refreshOrgaoDetail() {
-			tb_nome.setValue(selectedUtilizador.getNome());
-			tb_password.setValue(selectedUtilizador.getPassword());
+			tbx_nome.setValue(_selectedUtilizador.getNome());
+			tbx_password.setValue(_selectedUtilizador.getPassword());
 
 		}
 	 
 		public void preencherOrgaos(){
-		  	List <Orgao> org = d.findAll();
-	    	listOrgao = new ListModelList <Orgao> (org);
-	    	cbb_orgao.setModel(listOrgao);
+		  	List <Orgao> org = _orgaoDAO.findAll();
+	    	_listModelOrgao = new ListModelList <Orgao> (org);
+	    	cbx_orgao.setModel(_listModelOrgao);
 		}
 
 }

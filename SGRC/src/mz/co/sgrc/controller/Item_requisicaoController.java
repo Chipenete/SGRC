@@ -13,23 +13,19 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listitem;
 
-public class Item_requisicaoController extends SelectorComposer<Component>{
-	
-	
-	@Wire
+public class Item_requisicaoController extends GenericForwardComposer{
+
 	private Listbox lb_visualizaRequisicoes;
-	
-	@Wire
 	private Item_requisicaoDAO item_requisicaoDAO;
 	
-	private ListModelList listItemRequisicao;
-	
+	private ListModelList listItemRequisicao;	
 	private ListModelList<Item_requisicao> listItemRequi;
 	
 	
@@ -37,9 +33,7 @@ public class Item_requisicaoController extends SelectorComposer<Component>{
 	
 	public void doAfterCompose (Component comp) throws Exception{
 		super.doAfterCompose(comp);
-	
-		item_requisicaoDAO = new Item_requisicaoDAO();
-		//preencher();
+		item_requisicaoDAO = new Item_requisicaoDAO(); 
 		preencher2();
  	}
 	
@@ -79,3 +73,4 @@ public class Item_requisicaoController extends SelectorComposer<Component>{
  	}
 
 }
+

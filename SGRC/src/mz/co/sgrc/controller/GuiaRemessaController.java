@@ -41,6 +41,7 @@ import org.zkoss.zk.ui.event.EventListener;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
@@ -52,187 +53,122 @@ import org.zkoss.zul.Listitem;
 
 import sun.security.action.GetLongAction;
 
-public class GuiaRemessaController extends SelectorComposer<Component> {
+public class GuiaRemessaController extends GenericForwardComposer {
 
-	@Wire
-	private Datebox txt_data;
-	
-	@Wire
-	private Combobox cbb_orgaos;
-	
-	@Wire
-	private Combobox cbb_tipoCombustivel;
-	
-	@Wire
+	private Datebox dtb_data;
+	private Combobox cbx_orgaos;
+	private Combobox cbx_tipoCombustivel;
 	private Button btn_procurar;
-	@Wire
 	private Button btn_remessas;
-	@Wire
 	private Button btn_cancelar;
-
-	@Wire
-	private Listbox lb_remessas;
+	private Listbox lbx_remessas;
+	private Listbox lbx_requisicao; 
 	
-	@Wire
-	private Listbox lb_requisicao; 
+	private Item_requisicaoDAO _item_requisicaoDAO;
+	private GuiaRemessaDAO _guiaRemessaDAO;
+	private ViaturaDAO _viaturaDAO;
+	private RequisicaoDAO _requisicaoDAO;
+	private QuantidadeFinalDAO _quantidadeFinalDAO;
+	private OrgaoDAO _orgaoDAO;
+	private TipoCombustiveDAO _tipoCombustiveDAO;
 	
-	@Wire
-	private Item_requisicaoDAO item_requisicaoDAO;
+	ListModelList <GuiaRemessa> _listModelGuiaRemessa;
+	ListModelList <Item_requisicao> _listModelItemRequisicao;
+	ListModelList <Orgao> _listModelOrgao;
+	ListModelList <TipoCombustive> _listModelTipoCombustive;
+	ListModelList <Requisicao> _listModelRequisicao;
 	
-	@Wire
-	private GuiaRemessaDAO guiaRemessaDAO;
-	
-	@Wire
-	private ViaturaDAO viaturaDAO;
-	
-	@Wire
-	private RequisicaoDAO requisicaoDAO;
-	
-	@Wire
-	private QuantidadeFinalDAO quantidadeFinalDAO;
-	
-	@Wire
-	private OrgaoDAO orgaoDAO;
-	@Wire
-	private TipoCombustiveDAO tipoCombustiveDAO;
-	
-	
-	
-	ListModelList <GuiaRemessa> remessaModel;
-	ListModelList <Item_requisicao> listItemRequisicao;
-	ListModelList <Orgao> orgaoModel;
-	ListModelList <TipoCombustive> tipoCombustiveModel;
-	GuiaRemessa guia;
+	GuiaRemessa guiaRemessa;
 	
 	private Connection con;
 	
 	
 	public void doAfterCompose(Component comp) throws Exception{
 		super.doAfterCompose(comp);
-		//visualizarRequisicoes();
+		_guiaRemessaDAO = new GuiaRemessaDAO();
+		_requisicaoDAO = new RequisicaoDAO();
+		_viaturaDAO = new ViaturaDAO();
+		_item_requisicaoDAO = new Item_requisicaoDAO();
+		_orgaoDAO = new OrgaoDAO();
+		_tipoCombustiveDAO = new TipoCombustiveDAO();
+		_quantidadeFinalDAO = new QuantidadeFinalDAO();
+		
 		preencherRequisicao();
 		preencherOrgaos();
 		preencherTipoCombustivel();
 	}
 
-	public GuiaRemessaController (){
-		
-		guiaRemessaDAO = new GuiaRemessaDAO();
-		requisicaoDAO = new RequisicaoDAO();
-		viaturaDAO = new ViaturaDAO();
-		item_requisicaoDAO = new Item_requisicaoDAO();
-		orgaoDAO = new OrgaoDAO();
-		tipoCombustiveDAO = new TipoCombustiveDAO();
-		quantidadeFinalDAO = new QuantidadeFinalDAO();
-		
-	}
+	public GuiaRemessaController (){}
 	
-	@Listen ("onClick = #btn_procurar")
-	public void onClicProcurar(){
+    public void onClick$btn_procurar(Event e){
 		//visualizarRequisicoes();
 		//preencherItensRemessas();
 	}
 	
 
 
-	    @SuppressWarnings("unchecked")
-		public void preencherRequisicao(){
+	  
+		@SuppressWarnings("unchecked")
+		public void onSelect$lbx_requisicao(Event e){
 			
-	    	List <Requisicao> lrequisicao = requisicaoDAO.findAll();
-			
-			for ( final Requisicao requi : lrequisicao){
-				Listitem lm = new Listitem();
-				new Listcell (""+requi.getData()).setParent(lm);
-				new Listcell (requi.getResponsavel()).setParent(lm);
-				new Listcell (requi.getOrgao().getDesignacao()).setParent(lm);
-				
-				Listcell listcell1 = new Listcell();
-				listcell1.setParent(lm);
-				
-				final Checkbox cbx = new Checkbox();
-				cbx.setDisabled(false);
-				if(requi.getRemessada()){
-					cbx.setChecked(true);
-					cbx.setDisabled(true);
-				}else{
-					cbx.setChecked(false);
-					
-				}
-				cbx.setParent(listcell1);
-				
-				
-				Listcell listcell = new Listcell();
-				listcell.setParent(lm);
-				final Button btn_verItens = new Button("Ver Itens");
-				btn_verItens.setParent(listcell);
-				
-				if(requi.getRemessada()){
-					btn_verItens.setVisible(true);
-				}else{
-					btn_verItens.setVisible(false);
-					
-				}
-				
-				lb_requisicao.appendChild(lm);
-				
-				cbx.addEventListener("onCheck", new EventListener(){
+	    Listitem listitem = lbx_requisicao.getSelectedItem();
+		final Requisicao _requisicao = (Requisicao)listitem.getValue();	
+	   
+		Listcell listcell = (Listcell) listitem.getChildren().get(4);
+		final Checkbox _chbx_remessar = (Checkbox) listcell.getFirstChild();
+		
+		Listcell listcell1 = (Listcell)listitem.getChildren().get(5);
+		final Button _btn_verItens = (Button) listcell1.getFirstChild();
+		
+		 _chbx_remessar.addEventListener("onCheck", new EventListener(){
 
-					@Override
-					public void onEvent(Event arg0) throws Exception {
-						// TODO Auto-generated method stub
-						requi.setRemessada(true);
-						cbx.setDisabled(true);
-						requisicaoDAO.update(requi);
-						btn_verItens.setVisible(true);
-						
-					}
-					
-				});
+			public void onEvent(Event arg0) throws Exception {
+				_requisicao.setRemessada(true);
+				_chbx_remessar.setDisabled(true);
+				_requisicaoDAO.update(_requisicao);
+				_btn_verItens.setVisible(true);
 				
-			  btn_verItens.addEventListener("onClick", new EventListener(){
+			}
+			 
+		 });
+					
+		
+    	  _btn_verItens.addEventListener("onClick", new EventListener(){
 
 			
 				public void onEvent(Event arg0) throws Exception {
 					
-					Requisicao requisicaO = requisicaoDAO.returnar(requi);
+					Requisicao requisicaO = _requisicaoDAO.returnar(_requisicao);
 					
 					Requisicao requisicao = (Requisicao) Executions.getCurrent().getDesktop().getSession().setAttribute("requisicao", requisicaO);
 					Executions.createComponents("/RemessarItens.zul", null, null);
-					
-//					List<Item_requisicao> itemR = requisicaO.getListRequisicao();
-//					listItemRequisicao = new ListModelList<Item_requisicao>(itemR);
-//					listItemRequisicao.setMultiple(true);
-//					lb_remessas.setModel(listItemRequisicao);
-	    	
+
 					
 				}
 				  
 			  });
 			}
 	
-	    	
-	    	
+
+	    public void preencherRequisicao(){
+	    	List <Requisicao> listRequisicao = _requisicaoDAO.findAll();
+	    	_listModelRequisicao = new ListModelList <Requisicao>(listRequisicao);
+	    	lbx_requisicao.setModel(_listModelRequisicao);
 	    }
 	    
-	    
-	    
-	    
 	    public void preencherOrgaos(){
-	    	List<Orgao> listOrg = orgaoDAO.findAll();
-	        orgaoModel = new ListModelList<Orgao>(listOrg);
-	        cbb_orgaos.setModel(orgaoModel);
+	    	List<Orgao> listOrg = _orgaoDAO.findAll();
+	        _listModelOrgao = new ListModelList<Orgao>(listOrg);
+	        cbx_orgaos.setModel(_listModelOrgao);
 	    }
 	    
 	    public void preencherTipoCombustivel(){
-	    	List <TipoCombustive> tipo = tipoCombustiveDAO.findAll();
-	    	tipoCombustiveModel = new ListModelList<TipoCombustive>(tipo);
-	    	cbb_tipoCombustivel.setModel(tipoCombustiveModel);
+	    	List <TipoCombustive> tipo = _tipoCombustiveDAO.findAll();
+	    	_listModelTipoCombustive = new ListModelList<TipoCombustive>(tipo);
+	    	cbx_tipoCombustivel.setModel(_listModelTipoCombustive);
 	    }
 	    
 	    
-	    
-	    
-	    ///////////////////////////
 		public void gerarReports() throws SQLException{
 //			try{
 //				Class.forName("com.mysql.jdbc.Driver");

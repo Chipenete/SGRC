@@ -30,6 +30,7 @@ import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
+import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Doublebox;
@@ -41,466 +42,275 @@ import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Window;
 
-public class CotasController extends SelectorComposer<Component>{
+public class CotasController extends GenericForwardComposer{
 
-	@Wire
-	private Doublebox db_quantidadeGasolina;
 	
-	@Wire 
-	private Doublebox db_quantidadeGasoleo;
-	
+	private Doublebox dbx_quantidadeGasolina;
+	private Doublebox dbx_quantidadeGasoleo;
 	//--------------------------------------------------Visualizar-------------------------------------------------------------
-	@Wire
-	private Listbox lb_orgaosVisualizar;
-	
-	@Wire
+	private Listbox lbx_orgaosVisualizar;
 	private Button btn_procurarVisualizar;
-	
-	@Wire
-	private Textbox tb_designacaoVisualizar;
-	
-	
-	
+	private Textbox tbx_designacaoVisualizar;
 	//-------------------------------------------------------------------------------------------------------------------------
 	
 	//-----------------------------------------------------Criar---------------------------------------------------------------
-	@Wire
 	private Button btn_gravar;
-	
-	@Wire
 	private Button btn_actualizar;
-	
-	@Wire
 	private Button btn_cancelar;
-	
-	@Wire
-	private Listbox lb_cotasExistentes;
-	
-	
-	private Orgao_has_Cota selectedOHC;
-	@Wire
-	private Combobox cbb_tipoCombustivel;
-	@Wire
-	private Doublebox db_quantidade;
-	
+	private Listbox lbx_cotasExistentes;
+	private Combobox cbx_tipoCombustivel;
+	private Doublebox dbx_quantidade;
+	private Orgao_has_Cota _selectedOHC;
 	//----------------------------------------------------------------------------------------------------------------------------
 	
 	//---------------------------------------------------Atribuir--------------------------------------------------------------------
-	@Wire 
 	private Button btn_novo;
-	
-	@Wire 
 	private Button btn1_gravar;
-	
-	@Wire
 	private Button btn1_cancelar;
-	
-	@Wire
 	private Button btn_procurarAtribuir;
-	
-	@Wire 
 	private Button btn1_historico;
-	
-	@Wire 
 	private Button btn1_historico1;
-	
-	@Wire
-	private Combobox cbb_cotasAtribuir;
-	
-	@Wire
-	private Combobox cbb_tipoCombustivelAtribuir;
-	
-	@Wire
-	private Combobox cbb_orgaos;
-	
-	@Wire
-	private Listbox lb_orgaosAtribuir;
-	
-	@Wire
-	private Listbox lb_cotasAtribuir;
-	
-	@Wire 
-	private Listbox lb_historico = new Listbox();
-	
-    @Wire
-    private Textbox tb_designacaoAtribuir;
-	
-	Window win= new Window();
-	
-	
-	
+	private Combobox cbx_cotasAtribuir;
+	private Combobox cbx_tipoCombustivelAtribuir;
+	private Combobox cbx_orgaos;
+	private Listbox lbx_orgaosAtribuir;
+	private Listbox lbx_cotasAtribuir;
+	private Listbox lbx_historico = new Listbox();
+    private Textbox txt_designacaoAtribuir;
 	//---------------------------------------------------------------------------------------------------------------------------
-
-	
-	
-	@Wire
-	private Listbox lb_cotas;
-	
-	@Wire
-	private Listbox lb_orgao;
+	private Listbox lbx_cotas;
+	private Listbox lbx_orgao;
 	
 
-	
+	private CotasDAO _cotasDao;
+	private OrgaoDAO _orgaoDao;
+	private HistoricoDAO _historicoDao;
+	private Orgao_has_CotaDAO _orgao_has_CotaDao;
+	private TipoCombustiveDAO _tipoCombustiveDao;
+	private boolean _novoOrgao;
 
-	@Wire
-	private CotasDAO cotasDAO;
-	
-	@Wire
-	private OrgaoDAO orgaoDAO;
-	
-	@Wire
-	private HistoricoDAO historicoDAO;
-	
-	@Wire
-	private Orgao_has_CotaDAO orgao_has_CotaDAO;
-	
-	@Wire
-	private TipoCombustiveDAO tipoCombustiveDAO;
-	
+	Cotas _selectedCota;
+	Orgao _selectedOrgao;
+	Orgao _selectedOrgao1;
+	TipoCombustive _selectedTipoCombustivelCriar;
+	TipoCombustive _selectedTipoCombustivelAtribuir;
+	Window _win;
 
-	
-	private boolean novoOrgao;
-	
-
-	
-	Cotas selectedCota;
-	
-	Orgao selectedOrgao;
-	
-	Orgao selectedOrgao1;
-	
-	TipoCombustive selectedTipoCombustivelCriar;
-	TipoCombustive selectedTipoCombustivelAtribuir;
-	
-	private List <Cotas> listCot;
-
-	
-	private ListModelList <Cotas> listCotas, listCota;
-	private ListModelList <Orgao> listOrgao, listOrgao1,listOrgaoAtribuir,listOrgaoVisualizar;
-	private ListModelList <Historico> listHistorico;
-	private ListModelList <Orgao_has_Cota> listOrgaoCota;
-	private ListModelList <TipoCombustive> listTipoCombustive, listTipoCombustiveAtribuir;
+	private List <Cotas> _listCota;
+	private ListModelList <Cotas> _listModelCotas, _listModelCota;
+	private ListModelList <Orgao> _listModelOrgao, _listModelOrgao1,_listModelOrgaoAtribuir,_listModelOrgaoVisualizar;
+	private ListModelList <Historico> _listModelHistorico;
+	private ListModelList <Orgao_has_Cota> _listModelOrgaoCota;
+	private ListModelList <TipoCombustive> _listModelTipoCombustive, _listModelTipoCombustiveAtribuir;
 	
 	
 	public void doAfterCompose (Component comp) throws Exception{
 		super.doAfterCompose(comp);
-	
-		cotasDAO = new CotasDAO();
-		orgaoDAO = new OrgaoDAO(); 
-		historicoDAO = new HistoricoDAO();
-		orgao_has_CotaDAO = new Orgao_has_CotaDAO();
-		tipoCombustiveDAO = new TipoCombustiveDAO();
+		_cotasDao = new CotasDAO();
+		_orgaoDao = new OrgaoDAO(); 
+		_historicoDao = new HistoricoDAO();
+		_orgao_has_CotaDao = new Orgao_has_CotaDAO();
+		_tipoCombustiveDao = new TipoCombustiveDAO();
 		
 		preencherOrgaoVisualizar();
-		
 		visualizarCotasCriar();
-		//VisualizarCotasAtribuir();
-		//preencherCotas();
-	//	preencherOrgao();
 	    preencherOrgaoAtribuir();
 	    preenchertipoCombustivelAtribuir();
 	    preenchertipoCombustivel();
-		novoOrgao = false;
-		selectedOrgao1=null;
-		selectedTipoCombustivelCriar=null;
-		selectedTipoCombustivelAtribuir=null;
+	    
+		_novoOrgao = false;
+		_selectedOrgao1=null;
+		_selectedTipoCombustivelCriar=null;
+		_selectedTipoCombustivelAtribuir=null;
 	}
 	
 	
 
 	public CotasController(){}
 	
-
-	
 	//------------------------------------------------------------------Atribuir------------------------------------------------------------
-	
+	//******************************************************************EVENTOS***************************************************************************
 	/*  @Listen ("onClick = #btn_novo")
 		  public void onClickNovo(){
 	
 					novoOrgao =true;
-					Executions.createComponents("/Orgao.zul", null, null);
-				
-					
-					
-				}*/
+					Executions.createComponents("/Orgao.zul", null, null);	
+	    	}*/
 	
-		  
-		  @Listen ("onOpen = #cbb_cotasAtribuir")
-			public void comboAberto(){
-				//alert("fdfgh");
-			}
-		  
-		  
-		 @Listen("onClick = #btn1_gravar")
-		 public void onClickGravar1(){
-			 if(selectedCota!=null){
-			
+		 
+		 public void onClick$btn1_gravar(Event e){
+			 if(_selectedCota!=null){
+				 _selectedOHC = new Orgao_has_Cota();
+				 _selectedOHC.setCotas(_selectedCota);
+				 _selectedOHC.setData(new Date());
+				 _orgao_has_CotaDao.create(_selectedOHC);
+				 
+				 Set<Listitem> listItens = lbx_orgaosAtribuir.getSelectedItems();
 				
-				 selectedOHC = new Orgao_has_Cota();
-				
-				
-				 selectedOHC.setCotas(selectedCota);
-				 
-			
-				 selectedOHC.setData(new Date());
-				 
-				 orgao_has_CotaDAO.create(selectedOHC);
-				 
-				 Set<Listitem> listItens = lb_orgaosAtribuir.getSelectedItems();
-				 
-				 for (Listitem listItem : listItens){
-					
+				 for (Listitem listItem : listItens){	
 					 Orgao org = (Orgao) listItem.getValue(); 
-                     
-					 Orgao orgao = orgaoDAO.returnar(org);
+					 Orgao orgao = _orgaoDao.returnar(org);	
 					 
-					 //orgao.getListOrgaoHasCota().add(selectedOHC);
-					 
-					 orgao.setCota_id(selectedCota.getId());
-					 
-					 if(selectedCota.getTipoCombustive().getDesignacao().equals("Gasoleo")){
-						 orgao.setQuantidadeGasoleo(selectedCota.getQuantidade());
-						 orgao.setCotaGasoleo(selectedCota.getQuantidade());
+					 orgao.setCota_id(_selectedCota.getId());
+				 
+					 if(_selectedCota.getTipoCombustive().getDesignacao().equals("Gasoleo")){
+						 orgao.setQuantidadeGasoleo(_selectedCota.getQuantidade());
+						 orgao.setCotaGasoleo(_selectedCota.getQuantidade());
 					 }
-					 else if(selectedCota.getTipoCombustive().getDesignacao().equals("Gasolina")){
-						 orgao.setQuantidadeGasolina(selectedCota.getQuantidade()); 
-						 orgao.setCotaGasolina(selectedCota.getQuantidade());
+					 else if(_selectedCota.getTipoCombustive().getDesignacao().equals("Gasolina")){
+						 orgao.setQuantidadeGasolina(_selectedCota.getQuantidade()); 
+						 orgao.setCotaGasolina(_selectedCota.getQuantidade()); 
+					 }
+					 else if(_selectedCota.getTipoCombustive().getDesignacao().equals("Gas")){
+						 orgao.setQuantidadeGas(_selectedCota.getQuantidade());
+						 orgao.setCotaGas(_selectedCota.getQuantidade());
 						 
 					 }
-					 else if(selectedCota.getTipoCombustive().getDesignacao().equals("Gas")){
-						 orgao.setQuantidadeGas(selectedCota.getQuantidade());
-						 orgao.setCotaGas(selectedCota.getQuantidade());
-						 
-					 }
-					 orgaoDAO.update(orgao);
-					 selectedOHC.setOrgao(orgao);
-					 orgao_has_CotaDAO.update(selectedOHC);
+					 _orgaoDao.update(orgao);
+					 _selectedOHC.setOrgao(orgao);
+					 _orgao_has_CotaDao.update(_selectedOHC);
 				 }
-				 
-				 
-				 
-				 
-				 
-				
+
 				 preencherOrgaoAtribuir();
-				 Clients.showNotification("Cota atribuida com sucesso", "info", win, "middle_center", 4000);
+				 Clients.showNotification("Cota atribuida com sucesso", "info",_win, "middle_center", 3000, true);
 				 limpar1();
-				
-				 
-			 }
-			 else{
-				 Messagebox.show("Seleccione a cota.");
-				 
-			 }
-			 
-			 selectedCota=null;
-			 
+		   }
+		   else{
+			   Clients.showNotification("Selecione uma cota", "info",_win, "middle_center", 2000, true); 
+			   }
+			 _selectedCota=null;	 
 		 }
+	
 		 
-		 
-		 
-		  
-		/*@Listen("onSelect = #cbb_orgaos")
-		public void selectedOrgaos(){
-			if(listOrgao.isSelectionEmpty()){
-				selectedOrgao = null;
-			}
+		public void onSelect$lbx_cotasAtribuir(Event e){
+			if(_listModelCotas.isSelectionEmpty())
+				_selectedCota = null;	
 			else{
-				selectedOrgao = listOrgao.getSelection().iterator().next();
-				}
-			
-		}*/
-		 
-		 
-		 
-		 
-		@Listen("onSelect=#lb_cotasAtribuir")
-		public void onSelectCotas(){
-			
-			if(listCotas.isSelectionEmpty()){
-				selectedCota = null;
-				
-				
-			}
-			else{
-				selectedCota=listCotas.getSelection().iterator().next();
-				cbb_cotasAtribuir.setValue(""+selectedCota.getId());
-				
-			}
-			
+				_selectedCota=_listModelCotas.getSelection().iterator().next();
+				cbx_cotasAtribuir.setValue(""+_selectedCota.getId());	
+			}	
 		}
 		
 		
-		@Listen("onSelect=#cbb_tipoCombustivelAtribuir")
-		public void onSelectTipoAtribuir(){
-			if(listTipoCombustiveAtribuir.isSelectionEmpty()){
-				selectedTipoCombustivelAtribuir = null;
-			}
+		public void onSelect$cbx_tipoCombustivelAtribuir(Event e){
+			if(_listModelTipoCombustiveAtribuir.isSelectionEmpty())
+				_selectedTipoCombustivelAtribuir = null;
 			else{
-				selectedTipoCombustivelAtribuir = (TipoCombustive) listTipoCombustiveAtribuir.getSelection().iterator().next();
-				
+				_selectedTipoCombustivelAtribuir = (TipoCombustive) _listModelTipoCombustiveAtribuir.getSelection().iterator().next();
 				VisualizarCotasAtribuir();
-			}
-			
-			
+			}	
 		}
 		
 		
-		@Listen("onClick = #btn1_cancelar")
-		public void onClickCancelar1(){
-			
+        public void onClick$btn1_cancelar(Event e){
 			limpar1();
 		}
 		
 		
-		@Listen("onSelect = #lb_orgaos1")
-		public void onClickHistorico(){
-			
-			if(listOrgao1.isSelectionEmpty()){
-				selectedOrgao1=null;
-			}
-			else{
-				
-				selectedOrgao1=listOrgao1.getSelection().iterator().next();
-				Messagebox.show(selectedOrgao1+"");
-				
-			}
-			
-			
+		public void onSelect$lbx_orgaos1(Event e){
+			if(_listModelOrgao1.isSelectionEmpty())
+				_selectedOrgao1=null;
+			else{	
+				_selectedOrgao1=_listModelOrgao1.getSelection().iterator().next();
+				Messagebox.show(_selectedOrgao1+"");	
+			}	
 		}
 
 		
-		@Listen("onClick = #btn_procurarAtribuir")
-		public void onClickProcurar(){
-			List<Orgao> listOrg = orgaoDAO.pesquisaOrgaos(tb_designacaoAtribuir.getText());
-			listOrgaoAtribuir = new ListModelList<Orgao>(listOrg);
-			listOrgaoAtribuir.setMultiple(true);
-			lb_orgaosAtribuir.setModel(listOrgaoAtribuir);
-			
+		public void onClick$btn_procurarAtribuir(Event e){
+			List<Orgao> listOrg = _orgaoDao.pesquisaOrgaos(txt_designacaoAtribuir.getText());
+			_listModelOrgaoAtribuir = new ListModelList<Orgao>(listOrg);
+			_listModelOrgaoAtribuir.setMultiple(true);
+			lbx_orgaosAtribuir.setModel(_listModelOrgaoAtribuir);	
 		}
-		
-		
-		
-		
-		
-		/*  public void preencherCotas(){
-				List <Cotas> cot = cotasDAO.findAll();
-				listCota = new ListModelList<Cotas>(cot);
-				cbb_cotasAtribuir.setModel(listCota);
-				
-			}*/
-			
+
 	
+		//*************************************************************METODOS********************************************************************************************
 		  public void preencherOrgao(){
-				List <Orgao> org = orgaoDAO.findAll();
-				listOrgao = new ListModelList<>(org);
-				cbb_orgaos.setModel(listOrgao);
+				List <Orgao> org = _orgaoDao.findAll();
+				_listModelOrgao = new ListModelList<>(org);
+				cbx_orgaos.setModel(_listModelOrgao);
 				}
 		   
 		  
 		  public void preencherOrgaoAtribuir(){
-				List <Orgao> org = orgaoDAO.findAll();
-				listOrgaoAtribuir = new ListModelList<Orgao>(org);
-				listOrgaoAtribuir.setMultiple(true);
-				lb_orgaosAtribuir.setModel(listOrgaoAtribuir);
+				List <Orgao> org = _orgaoDao.findAll();
+				_listModelOrgaoAtribuir = new ListModelList<Orgao>(org);
+				_listModelOrgaoAtribuir.setMultiple(true);
+				lbx_orgaosAtribuir.setModel(_listModelOrgaoAtribuir);
 				
 				}
 		  
 		  public void limpar1(){
-			  cbb_cotasAtribuir.setValue(null);
-			  cbb_tipoCombustivelAtribuir.setValue(null);
-			  
-			  
-			  
+			  cbx_cotasAtribuir.setValue(null);
+			  cbx_tipoCombustivelAtribuir.setValue(null);  
 		  }
 		  
-			private void VisualizarCotasAtribuir() {
-				 
-				List <Cotas> cotaTemp = cotasDAO.findAll(); 
+			private void VisualizarCotasAtribuir() { 
+				List <Cotas> cotaTemp = _cotasDao.findAll(); 
 				List <Cotas> cota = new ArrayList<Cotas>();
 				for(Cotas c : cotaTemp){
-					if(c.getTipoCombustive().getDesignacao().equals(selectedTipoCombustivelAtribuir.getDesignacao())){
+					if(c.getTipoCombustive().getDesignacao().equals(_selectedTipoCombustivelAtribuir.getDesignacao())){
 						cota.add(c);
 					}
 				}
-				
-				listCotas = new ListModelList <Cotas> (cota);
-				lb_cotasAtribuir.setModel(listCotas);
-				
-			    
+				_listModelCotas = new ListModelList <Cotas> (cota);
+				lbx_cotasAtribuir.setModel(_listModelCotas);    
         	}
 			
 			public void   preenchertipoCombustivelAtribuir(){
-				List <TipoCombustive> listTipo = tipoCombustiveDAO.findAll();
-				listTipoCombustiveAtribuir = new ListModelList <TipoCombustive>(listTipo);
-				cbb_tipoCombustivelAtribuir.setModel(listTipoCombustiveAtribuir);
-				
+				List <TipoCombustive> listTipo = _tipoCombustiveDao.findAll();
+				_listModelTipoCombustiveAtribuir = new ListModelList <TipoCombustive>(listTipo);
+				cbx_tipoCombustivelAtribuir.setModel(_listModelTipoCombustiveAtribuir);	
 			}
 			
-		 /* public void preencherHistorico(){
-				List <Historico> hist = dd.findAll();
-				listHistorico = new ListModelList<Historico>(hist);
-				lb_historico.setModel(listHistorico);
-		  }*/
 		  //---------------------------------------------------------------------------------------------------------------------------
 	
 
 		  
 		  //-------------------------------------------------------Criar---------------------------------------------------------------
-	
-	
 			
-			@Listen ("onClick = #btn_gravar")
-			public void onClickGravar(){
-				
+	//**************************************************************Eventos*************************************************************************
+            public void onClick$btn_gravar(Event e){
 				  Cotas c = new Cotas();
-				  c.setQuantidade(db_quantidade.getValue());
-				  c.setTipoCombustive(selectedTipoCombustivelCriar);
-				  cotasDAO.create(c);
-				  Clients.showNotification("Cota criada com sucesso", "info", win, "middle_center", 4000);
+				  c.setQuantidade(dbx_quantidade.getValue());
+				  c.setTipoCombustive(_selectedTipoCombustivelCriar);
+				  _cotasDao.create(c);
+				  Clients.showNotification("Cota criada com sucesso", "info", _win, "middle_center", 4000, true);
 				  visualizarCotasCriar();
 				  //VisualizarCotasAtribuir();
 				  limpar();
 			}
 			
-			@Listen("onClick = #btn_cancelar")
-			public void onClickCancelar(){
-			   limpar();
-				
+			public void onClick$btn_cancelar(Event e){
+			   limpar();		
 			}
 			
-			@Listen("onSelect=#cbb_tipoCombustivel")
-			public void onSelectTipo(){
-				if(listTipoCombustive.isSelectionEmpty()){
-					selectedTipoCombustivelCriar = null;
-				}
-				else{
-					selectedTipoCombustivelCriar = (TipoCombustive) listTipoCombustive.getSelection().iterator().next();
-					
-				}
-				
-				
+            public void onSelect$cbx_tipoCombustivel(Event e){
+				if(_listModelTipoCombustive.isSelectionEmpty())
+					_selectedTipoCombustivelCriar = null;
+				else
+					_selectedTipoCombustivelCriar = (TipoCombustive) _listModelTipoCombustive.getSelection().iterator().next();	
 			}
 				
-			
+			//***************************************************************METODOS*********************************************************8
 			  public void visualizarCotasCriar(){
-					List <Cotas> cota = cotasDAO.findAll(); 
-					listCotas = new ListModelList <Cotas> (cota);
-					lb_cotasExistentes.setModel(listCotas);
+					List <Cotas> cota = _cotasDao.findAll(); 
+					_listModelCotas = new ListModelList <Cotas> (cota);
+					lbx_cotasExistentes.setModel(_listModelCotas);
 					
 			      	}
 				
-						public void limpar(){
-							db_quantidade.setRawValue(null);
-							cbb_tipoCombustivel.setRawValue(null);
-							
-						}
+		    	public void limpar(){
+					dbx_quantidade.setRawValue(null);
+					cbx_tipoCombustivel.setRawValue(null);	
+					}
 						
 			
 			public void   preenchertipoCombustivel(){
-				List <TipoCombustive> listTipo = tipoCombustiveDAO.findAll();
-				listTipoCombustive = new ListModelList <TipoCombustive>(listTipo);
-				cbb_tipoCombustivel.setModel(listTipoCombustive);
+				List <TipoCombustive> listTipo = _tipoCombustiveDao.findAll();
+				_listModelTipoCombustive = new ListModelList <TipoCombustive>(listTipo);
+				cbx_tipoCombustivel.setModel(_listModelTipoCombustive);
 				
 			}
 			
@@ -511,7 +321,7 @@ public class CotasController extends SelectorComposer<Component>{
 			
 			public void preencherOrgaoVisualizar(){
 			
-				List <Orgao> listOrgaoV = orgaoDAO.findAll();
+				List <Orgao> listOrgaoV = _orgaoDao.findAll();
 			
 	           for(final Orgao selectedOrgao1 : listOrgaoV){
 				Listitem listItem = new Listitem();
@@ -527,7 +337,7 @@ public class CotasController extends SelectorComposer<Component>{
 				Button btn_verHistorico = new Button("Ver historico");
 				btn_verHistorico.setParent(listcell1);
 				
-				lb_orgaosVisualizar.appendChild(listItem);
+				lbx_orgaosVisualizar.appendChild(listItem);
 				
 			
 				btn_verHistorico.addEventListener("onClick", new EventListener() {
@@ -561,16 +371,6 @@ public class CotasController extends SelectorComposer<Component>{
 			   }
 	        
 		}
-			
-			
-//			@Listen("onClick = #btn_procurarVisualizar")
-//			public void onClickProcurarV(){
-//				List <Orgao> listOrgVisualizar = orgaoDAO.pesquisaOrgaos(tb_designacaoAtribuir.getText());
-//				listOrgaoVisualizar = new ListModelList<Orgao>(listOrgVisualizar);
-//				listOrgaoVisualizar.setMultiple(true);
-//				lb_orgaosVisualizar.setModel(listOrgaoVisualizar);
-//				
-//			}
 			
 	   //----------------------------------------------------------------------------------------------------------------------------------
 

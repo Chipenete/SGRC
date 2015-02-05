@@ -9,29 +9,28 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Textbox;
 
-public class VerCotas extends SelectorComposer<Component>{
+public class VerCotas extends GenericForwardComposer{
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Wire
+	
 	private Textbox tb_orgao;
-	@Wire
 	private Listbox lb_cotas;
-	@Wire
+	
 	private OrgaoDAO orgaoDAO;
 	
 	Orgao orgao = (Orgao) Executions.getCurrent().getDesktop().getSession().getAttribute("orgao");
 	
 	public void doAfterCompose (Component comp) throws Exception{
 		super.doAfterCompose(comp);
-		
 		orgaoDAO = new OrgaoDAO();
 		preencherCotas();
 		
