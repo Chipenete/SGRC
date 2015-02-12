@@ -66,6 +66,7 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Listcell;
 import org.zkoss.zul.Listitem;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
 public class RequisicaoController extends GenericForwardComposer{
@@ -136,7 +137,7 @@ public class RequisicaoController extends GenericForwardComposer{
 		selectedTipocombustive=null;
     	preencherDados();
 		preencherRequisicao();
-	
+		btn_requisitar.setDisabled(true);
 		
 		
 	}
@@ -189,12 +190,14 @@ public class RequisicaoController extends GenericForwardComposer{
 			
 				public void onEvent(Event arg0) throws Exception {
 					
+					btn_requisitar.setDisabled(false);
 					final Listitem l = new Listitem();
 					new Listcell(v.getMarca()).setParent(l);
 					new Listcell(v.getMatricula()).setParent(l);
 					Listcell l1 = new Listcell();
 					cbb = new Combobox();
 					cbb.setWidth("130px");
+					//cbb.setConstraint("no empty:este campo nao deve estar vazio");
 					preencherTipoCombustive(cbb);
 					cbb.setParent(l1);
 				    l1.setParent(l);
@@ -242,9 +245,11 @@ public class RequisicaoController extends GenericForwardComposer{
 						public void onEvent(Event arg0) throws Exception {
 							// TODO Auto-generated method stub
 							
+							Item item = new Item();
+							
 							if(cb_selecionar.isChecked()){
 								
-								Item item = new Item();
+								
 								item.setMarca(v.getMarca());
 								item.setMatricula(v.getMatricula());
 								item.setCombustive(selectedTipocombustive.getCombustive());
@@ -253,7 +258,32 @@ public class RequisicaoController extends GenericForwardComposer{
 								l.setDisabled(true);
 								btn_remover.setDisabled(true);
 								
+								int controla= 0;
+								int cont= 0;
+								boolean parar= true;
+								
+								
+							if (lista.size()!= 0){	
+								while(parar){
+									
+										if (lista.get(cont).getMatricula() == item.getMatricula()){
+											controla=1;
+											parar= false;
+										}
+										
+										cont++;
+										if (cont==lista.size())
+											parar= false;
+								}
+							}	
+								
+							
+							
+							if (controla != 1){
 								lista.add(item);
+							}
+							
+								
 								
 								
 								if(selectedTipocombustive.getDesignacao().equals("Gasoleo")){
@@ -274,6 +304,8 @@ public class RequisicaoController extends GenericForwardComposer{
 							}
 							else{
 								
+								
+								lista.remove(item);
 								l.setDisabled(false);
 								btn_remover.setDisabled(false);
 								
@@ -306,9 +338,13 @@ public class RequisicaoController extends GenericForwardComposer{
 						
 						@Override
 						public void onEvent (Event arg0) throws Exception{
-							
 							lb_viaturaRequisitar.removeChild(l);
 							btn_adicionar.setDisabled(false);
+//							for(int i=0; i<lista.size(); i++){
+//								if((lista.get(i).getMatricula()).equals(v.getMatricula())){
+//									lista.remove(i);
+//								}
+//							}
 						}
 					});
 				}
@@ -324,6 +360,8 @@ public class RequisicaoController extends GenericForwardComposer{
 	
 	
 	public void onClick$btn_requisitar(){
+		
+		btn_requisitar.setDisabled(true);
 		
 		Requisicao requisicao = new Requisicao();
 	
@@ -367,7 +405,10 @@ public class RequisicaoController extends GenericForwardComposer{
 		itemDAO.deleteAll();
 	
 		   Clients.showNotification("Requisicao feita com sucesso", "info", win, "middle_center", 4000);
-		
+		   lista.clear();
+		   lb_viaturaRequisitar.getItems().clear();
+		   lb_requisicao.getItems().clear();
+		   preencherRequisicao();
 	
 		}
 		
@@ -375,7 +416,7 @@ public class RequisicaoController extends GenericForwardComposer{
 		
 	@SuppressWarnings("unchecked")
 	public void preencherRequisicao(){
-		List <Requisicao> lrequisicao = requisicaoDAO.findAll();
+		List <Requisicao> lrequisicao = requisicaoDAO.findAllInverso();
 		
 		for (final Requisicao requi : lrequisicao){
 			Listitem lm = new Listitem();

@@ -38,7 +38,7 @@ import com.sun.corba.se.impl.protocol.giopmsgheaders.Message;
 public class RemessarItensController extends GenericForwardComposer{
 
 	
-	private Listbox lbx_remessa;
+	private Listbox lb_remessa;
 	private Button btn_remessas;
 	private Button btn_cancelar;
 	
@@ -69,7 +69,7 @@ public class RemessarItensController extends GenericForwardComposer{
 	
 	
     public void onClick$btn_remessas(Event e){
-    	Set <Listitem> listItems =  lbx_remessa.getSelectedItems();
+    	Set <Listitem> listItems =  lb_remessa.getSelectedItems();
     	QuantidadeFinal quantidadeFinal = new QuantidadeFinal();	
     	quantidadeFinal = _quantidadeFinalDAO.findById((long)1);
   
@@ -88,8 +88,8 @@ public class RemessarItensController extends GenericForwardComposer{
     
     
     @SuppressWarnings({ "unchecked", "rawtypes" })
-	public void onSelect$lbx_remessa(Event e){
-    	Listitem listItem = lbx_remessa.getSelectedItem();
+	public void onSelect$lb_remessa(Event e){
+    	Listitem listItem = lb_remessa.getSelectedItem();
     	final Item_requisicao item_requisicao = (Item_requisicao)listItem.getValue();
     
     	Listcell listCell1 = (Listcell) listItem.getChildren().get(5);
@@ -217,7 +217,7 @@ public class RemessarItensController extends GenericForwardComposer{
     	List <Item_requisicao> listItemRequisicao = requisicao.getListRequisicao();
     	_listModellistItem_requisicao = new ListModelList <Item_requisicao> (listItemRequisicao);
     	//listItem_requisicao.setMultiple(true);
-    	lbx_remessa.setModel(_listModellistItem_requisicao);
+    	lb_remessa.setModel(_listModellistItem_requisicao);
     	
     }
 	

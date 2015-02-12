@@ -205,7 +205,13 @@ public class Orgao implements Serializable{
 	public void setCotaGas(double cotaGas) {
 		this.cotaGas = cotaGas;
 	}
-
-
 	
+	
+	@Override
+	public String toString(){
+		return designacao;
+	}
+	
+
+
 }

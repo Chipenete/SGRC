@@ -1,9 +1,17 @@
 package mz.co.sgrc.controller;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import mz.co.sgrc.dao.ConectandoBanco;
 import mz.co.sgrc.dao.FornecedorDao;
 import mz.co.sgrc.dao.ItemRequisicaoFornecedorDAO;
 import mz.co.sgrc.dao.OrgaoDAO;
@@ -19,6 +27,13 @@ import mz.co.sgrc.model.Requisicao;
 import mz.co.sgrc.model.RequisicaoFornecedor;
 import mz.co.sgrc.model.TipoCombustive;
 import mz.co.sgrc.model.Utilizador;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
@@ -43,13 +58,15 @@ import org.zkoss.zul.Window;
 
 public class RequisicaoFornecedorController extends GenericForwardComposer {
 
-	
+	ConectandoBanco conecta = new ConectandoBanco();
+	private Connection con;
 	
 	private Doublebox dbx_quantidade;
 	
 	private Button btn_adicionar;
 	private Button btn_requisitar;
 	private Button btn_pesquisar;
+	private Button btn_imprimir;
 	
 	private Textbox txt_responsavel;
 	private Textbox txt_fornecedor;
@@ -97,6 +114,7 @@ public class RequisicaoFornecedorController extends GenericForwardComposer {
 		prencherComboboxFornecedor();
 		prencherRequisicoes();
 		btn_requisitar.setDisabled(true);	
+		//conecta.conexao();
 	}
 	
 	public RequisicaoFornecedorController(){
@@ -253,6 +271,10 @@ public class RequisicaoFornecedorController extends GenericForwardComposer {
 		limparCampos();
 	
 		Clients.showNotification("Requisicao feita com sucesso", "info", win, "middle_center", 4000);
+		
+		btn_requisitar.setDisabled(true);
+		lb_requisicao.getItems().clear();
+		prencherRequisicoes();
 	}
 	
 
@@ -271,7 +293,7 @@ public class RequisicaoFornecedorController extends GenericForwardComposer {
 		
 		
 		
-		List <RequisicaoFornecedor> lRequisicaoFornecedor = rqDAO.findAll();
+		List <RequisicaoFornecedor> lRequisicaoFornecedor = rqDAO.findAllInverso();
 		
 		for (final RequisicaoFornecedor reqFornecedor: lRequisicaoFornecedor){
 		
@@ -411,5 +433,49 @@ public class RequisicaoFornecedorController extends GenericForwardComposer {
 		}
 		
 	}
+	
+	public void onClick$btn_imprimir(Event e) throws SQLException, JRException{
+		
+        
+		try{
+		Class.forName("com.mysql.jdbc.Driver");
+	    con = DriverManager.getConnection("jdbc:mysql://localhost/vendas","root",null);
+		
+	} catch(ClassNotFoundException e1){
+		e1.printStackTrace();
+		
+	}
+	
+	try{
+		
+		String reporte = "C:/Users/Marcelo/RequisicaoFornecedor.jrxml";
+        //param.put("varStatus","E");
+		JasperReport jasperReport = JasperCompileManager.compileReport(reporte);
+		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, con);
+		JasperViewer.viewReport(jasperPrint);
+		con.close();
+		
+	}catch(JRException ex){
+		ex.printStackTrace();
+	}
+}
+		
+//        Statement stmt = (Statement) DriverManager.getConnection("jdbc:mysql://localhost/vendas","root",null);
+//        
+//        String query = "Select * from RequisicaoFornecedor";
+//        
+//        
+//			ResultSet rs = (ResultSet) stmt.executeQuery(query);
+//		
+//			JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
+//        
+//			JasperPrint jpPrint = JasperFillManager.fillReport("C:/Users/Marcelo/RequisicaoFornecedor.jasper", ( new HashMap() ), jrRS);
+//			
+//			JasperViewer jv = new JasperViewer(jpPrint);
+//			
+//	        jv.setVisible(true);
+//        
+
+	
 	
 }

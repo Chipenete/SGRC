@@ -48,18 +48,18 @@ public class CotasController extends GenericForwardComposer{
 	private Doublebox dbx_quantidadeGasolina;
 	private Doublebox dbx_quantidadeGasoleo;
 	//--------------------------------------------------Visualizar-------------------------------------------------------------
-	private Listbox lbx_orgaosVisualizar;
+	private Listbox lb_orgaosVisualizar;
 	private Button btn_procurarVisualizar;
-	private Textbox tbx_designacaoVisualizar;
+	private Textbox tb_designacaoVisualizar;
 	//-------------------------------------------------------------------------------------------------------------------------
 	
 	//-----------------------------------------------------Criar---------------------------------------------------------------
 	private Button btn_gravar;
 	private Button btn_actualizar;
 	private Button btn_cancelar;
-	private Listbox lbx_cotasExistentes;
-	private Combobox cbx_tipoCombustivel;
-	private Doublebox dbx_quantidade;
+	private Listbox lb_cotasExistentes;
+	private Combobox cbb_tipoCombustivel;
+	private Doublebox db_quantidade;
 	private Orgao_has_Cota _selectedOHC;
 	//----------------------------------------------------------------------------------------------------------------------------
 	
@@ -70,13 +70,13 @@ public class CotasController extends GenericForwardComposer{
 	private Button btn_procurarAtribuir;
 	private Button btn1_historico;
 	private Button btn1_historico1;
-	private Combobox cbx_cotasAtribuir;
-	private Combobox cbx_tipoCombustivelAtribuir;
+	private Combobox cbb_cotasAtribuir;
+	private Combobox cbb_tipoCombustivelAtribuir;
 	private Combobox cbx_orgaos;
-	private Listbox lbx_orgaosAtribuir;
-	private Listbox lbx_cotasAtribuir;
-	private Listbox lbx_historico = new Listbox();
-    private Textbox txt_designacaoAtribuir;
+	private Listbox lb_orgaosAtribuir;
+	private Listbox lb_cotasAtribuir;
+	private Listbox lb_historico = new Listbox();
+    private Textbox tb_designacaoAtribuir;
 	//---------------------------------------------------------------------------------------------------------------------------
 	private Listbox lbx_cotas;
 	private Listbox lbx_orgao;
@@ -145,7 +145,7 @@ public class CotasController extends GenericForwardComposer{
 				 _selectedOHC.setData(new Date());
 				 _orgao_has_CotaDao.create(_selectedOHC);
 				 
-				 Set<Listitem> listItens = lbx_orgaosAtribuir.getSelectedItems();
+				 Set<Listitem> listItens = lb_orgaosAtribuir.getSelectedItems();
 				
 				 for (Listitem listItem : listItens){	
 					 Orgao org = (Orgao) listItem.getValue(); 
@@ -187,7 +187,7 @@ public class CotasController extends GenericForwardComposer{
 				_selectedCota = null;	
 			else{
 				_selectedCota=_listModelCotas.getSelection().iterator().next();
-				cbx_cotasAtribuir.setValue(""+_selectedCota.getId());	
+				cbb_cotasAtribuir.setValue(""+_selectedCota.getId());	
 			}	
 		}
 		
@@ -218,10 +218,10 @@ public class CotasController extends GenericForwardComposer{
 
 		
 		public void onClick$btn_procurarAtribuir(Event e){
-			List<Orgao> listOrg = _orgaoDao.pesquisaOrgaos(txt_designacaoAtribuir.getText());
+			List<Orgao> listOrg = _orgaoDao.pesquisaOrgaos(tb_designacaoAtribuir.getText());
 			_listModelOrgaoAtribuir = new ListModelList<Orgao>(listOrg);
 			_listModelOrgaoAtribuir.setMultiple(true);
-			lbx_orgaosAtribuir.setModel(_listModelOrgaoAtribuir);	
+			lb_orgaosAtribuir.setModel(_listModelOrgaoAtribuir);	
 		}
 
 	
@@ -237,13 +237,13 @@ public class CotasController extends GenericForwardComposer{
 				List <Orgao> org = _orgaoDao.findAll();
 				_listModelOrgaoAtribuir = new ListModelList<Orgao>(org);
 				_listModelOrgaoAtribuir.setMultiple(true);
-				lbx_orgaosAtribuir.setModel(_listModelOrgaoAtribuir);
+				lb_orgaosAtribuir.setModel(_listModelOrgaoAtribuir);
 				
 				}
 		  
 		  public void limpar1(){
-			  cbx_cotasAtribuir.setValue(null);
-			  cbx_tipoCombustivelAtribuir.setValue(null);  
+			  cbb_cotasAtribuir.setValue(null);
+			  cbb_tipoCombustivelAtribuir.setValue(null);  
 		  }
 		  
 			private void VisualizarCotasAtribuir() { 
@@ -255,13 +255,13 @@ public class CotasController extends GenericForwardComposer{
 					}
 				}
 				_listModelCotas = new ListModelList <Cotas> (cota);
-				lbx_cotasAtribuir.setModel(_listModelCotas);    
+				lb_cotasAtribuir.setModel(_listModelCotas);    
         	}
 			
 			public void   preenchertipoCombustivelAtribuir(){
 				List <TipoCombustive> listTipo = _tipoCombustiveDao.findAll();
 				_listModelTipoCombustiveAtribuir = new ListModelList <TipoCombustive>(listTipo);
-				cbx_tipoCombustivelAtribuir.setModel(_listModelTipoCombustiveAtribuir);	
+				cbb_tipoCombustivelAtribuir.setModel(_listModelTipoCombustiveAtribuir);	
 			}
 			
 		  //---------------------------------------------------------------------------------------------------------------------------
@@ -273,7 +273,7 @@ public class CotasController extends GenericForwardComposer{
 	//**************************************************************Eventos*************************************************************************
             public void onClick$btn_gravar(Event e){
 				  Cotas c = new Cotas();
-				  c.setQuantidade(dbx_quantidade.getValue());
+				  c.setQuantidade(db_quantidade.getValue());
 				  c.setTipoCombustive(_selectedTipoCombustivelCriar);
 				  _cotasDao.create(c);
 				  Clients.showNotification("Cota criada com sucesso", "info", _win, "middle_center", 4000, true);
@@ -286,7 +286,7 @@ public class CotasController extends GenericForwardComposer{
 			   limpar();		
 			}
 			
-            public void onSelect$cbx_tipoCombustivel(Event e){
+            public void onSelect$cbb_tipoCombustivel(Event e){
 				if(_listModelTipoCombustive.isSelectionEmpty())
 					_selectedTipoCombustivelCriar = null;
 				else
@@ -297,20 +297,20 @@ public class CotasController extends GenericForwardComposer{
 			  public void visualizarCotasCriar(){
 					List <Cotas> cota = _cotasDao.findAll(); 
 					_listModelCotas = new ListModelList <Cotas> (cota);
-					lbx_cotasExistentes.setModel(_listModelCotas);
+					lb_cotasExistentes.setModel(_listModelCotas);
 					
 			      	}
 				
 		    	public void limpar(){
-					dbx_quantidade.setRawValue(null);
-					cbx_tipoCombustivel.setRawValue(null);	
+		    		db_quantidade.setRawValue(null);
+					cbb_tipoCombustivel.setRawValue(null);	
 					}
 						
 			
 			public void   preenchertipoCombustivel(){
 				List <TipoCombustive> listTipo = _tipoCombustiveDao.findAll();
 				_listModelTipoCombustive = new ListModelList <TipoCombustive>(listTipo);
-				cbx_tipoCombustivel.setModel(_listModelTipoCombustive);
+				cbb_tipoCombustivel.setModel(_listModelTipoCombustive);
 				
 			}
 			
@@ -337,7 +337,7 @@ public class CotasController extends GenericForwardComposer{
 				Button btn_verHistorico = new Button("Ver historico");
 				btn_verHistorico.setParent(listcell1);
 				
-				lbx_orgaosVisualizar.appendChild(listItem);
+				lb_orgaosVisualizar.appendChild(listItem);
 				
 			
 				btn_verHistorico.addEventListener("onClick", new EventListener() {

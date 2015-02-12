@@ -2,7 +2,9 @@ package mz.co.sgrc.dao;
 
 
 import java.util.List;
+
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -68,6 +70,9 @@ public class GenericDAO<T> {
 	}
 
 
+	
+	
+
 	@SuppressWarnings("unchecked")
 	public List<T> findAll() {
 		Session sess = getSession();
@@ -81,6 +86,8 @@ public class GenericDAO<T> {
 		return items;
 		
 	}
+	
+	
 	
 	
 	

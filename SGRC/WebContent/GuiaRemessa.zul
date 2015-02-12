@@ -55,12 +55,21 @@
     <caption label="Requisicao"></caption>
     <listbox id="lb_requisicao"  mold="paging" rows="4" pageSize="5">
     <listhead>
-    <listheader sort="auto">Data</listheader>
-    <listheader>Responsavel</listheader>
-    <listheader>Orgao</listheader>
-    <listheader>Remessar</listheader>
-    <listheader width="7%">Ver itens</listheader>
+	    <listheader sort="auto">Data</listheader>
+	    <listheader>Responsavel</listheader>
+	    <listheader>Orgao</listheader>
+	    <listheader>Remessar</listheader>
+	    <listheader width="7%">Ver itens</listheader>
     </listhead>
+    <template name="model">
+    <listitem >
+    <listcell><label value="${each.data}"></label></listcell>
+    <listcell><label value="${each.responsavel}"></label></listcell>
+    <listcell><label value="${each.orgao.designacao}"></label></listcell>
+    <listcell><checkbox checked="${each.remessada}" disabled="${each.remessada}"></checkbox></listcell>
+     <listcell><button label="Ver Itens" visible="${each.remessada}"></button></listcell>
+    </listitem>
+    </template>
     </listbox>
     </groupbox>
 	 

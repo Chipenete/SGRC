@@ -47,6 +47,14 @@ public class Combustive implements Serializable{
 	@JoinColumn(name="fornecedor_id")
 	private Fornecedor fornecedor1;
     
+	public Fornecedor getFornecedor1() {
+		return fornecedor1;
+	}
+
+	public void setFornecedor1(Fornecedor fornecedor1) {
+		this.fornecedor1 = fornecedor1;
+	}
+
 	private double quantidade;
 	
 	private String tcA;

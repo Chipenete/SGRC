@@ -55,14 +55,14 @@ import sun.security.action.GetLongAction;
 
 public class GuiaRemessaController extends GenericForwardComposer {
 
-	private Datebox dtb_data;
-	private Combobox cbx_orgaos;
-	private Combobox cbx_tipoCombustivel;
+	private Datebox cbx_data;
+	private Combobox cbb_orgaos;
+	private Combobox cbb_tipoCombustivel;
 	private Button btn_procurar;
 	private Button btn_remessas;
 	private Button btn_cancelar;
-	private Listbox lbx_remessas;
-	private Listbox lbx_requisicao; 
+	private Listbox lb_remessas;
+	private Listbox lb_requisicao; 
 	
 	private Item_requisicaoDAO _item_requisicaoDAO;
 	private GuiaRemessaDAO _guiaRemessaDAO;
@@ -109,15 +109,15 @@ public class GuiaRemessaController extends GenericForwardComposer {
 
 	  
 		@SuppressWarnings("unchecked")
-		public void onSelect$lbx_requisicao(Event e){
+		public void onSelect$lb_requisicao(Event e){
 			
-	    Listitem listitem = lbx_requisicao.getSelectedItem();
+	    Listitem listitem = lb_requisicao.getSelectedItem();
 		final Requisicao _requisicao = (Requisicao)listitem.getValue();	
 	   
-		Listcell listcell = (Listcell) listitem.getChildren().get(4);
+		Listcell listcell = (Listcell) listitem.getChildren().get(3);
 		final Checkbox _chbx_remessar = (Checkbox) listcell.getFirstChild();
 		
-		Listcell listcell1 = (Listcell)listitem.getChildren().get(5);
+		Listcell listcell1 = (Listcell)listitem.getChildren().get(4);
 		final Button _btn_verItens = (Button) listcell1.getFirstChild();
 		
 		 _chbx_remessar.addEventListener("onCheck", new EventListener(){
@@ -151,21 +151,21 @@ public class GuiaRemessaController extends GenericForwardComposer {
 	
 
 	    public void preencherRequisicao(){
-	    	List <Requisicao> listRequisicao = _requisicaoDAO.findAll();
+	    	List <Requisicao> listRequisicao = _requisicaoDAO.findAllInverso();
 	    	_listModelRequisicao = new ListModelList <Requisicao>(listRequisicao);
-	    	lbx_requisicao.setModel(_listModelRequisicao);
+	    	lb_requisicao.setModel(_listModelRequisicao);
 	    }
 	    
 	    public void preencherOrgaos(){
 	    	List<Orgao> listOrg = _orgaoDAO.findAll();
 	        _listModelOrgao = new ListModelList<Orgao>(listOrg);
-	        cbx_orgaos.setModel(_listModelOrgao);
+	        cbb_orgaos.setModel(_listModelOrgao);
 	    }
 	    
 	    public void preencherTipoCombustivel(){
 	    	List <TipoCombustive> tipo = _tipoCombustiveDAO.findAll();
 	    	_listModelTipoCombustive = new ListModelList<TipoCombustive>(tipo);
-	    	cbx_tipoCombustivel.setModel(_listModelTipoCombustive);
+	    	cbb_tipoCombustivel.setModel(_listModelTipoCombustive);
 	    }
 	    
 	    

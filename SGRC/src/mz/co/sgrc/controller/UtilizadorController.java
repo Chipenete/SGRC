@@ -24,13 +24,13 @@ import org.zkoss.zul.Window;
 
 public class UtilizadorController extends GenericForwardComposer{
 
-	private Textbox tbx_nome;
-	private Textbox tbx_password;
-	private Listbox lbx_utilizador;
+	private Textbox tb_nome;
+	private Textbox tb_password;
+	private Listbox lb_utilizador;
 	private Button btn_gravar;
 	private Button btn_actualizar;
 	private Button btn_cancelar;
-	private Combobox cbx_orgao;
+	private Combobox cbb_orgao;
 	
 	private ListModelList <Utilizador> _listModelUtilizador;
 	private ListModelList <Orgao> _listModelOrgao;
@@ -56,8 +56,8 @@ public class UtilizadorController extends GenericForwardComposer{
 	
     public void onClick$btn_gravar(Event e){
 		Utilizador user = new Utilizador();
-		user.setNome(tbx_nome.getValue());
-		user.setPassword(tbx_password.getValue());
+		user.setNome(tb_nome.getValue());
+		user.setPassword(tb_password.getValue());
 		user.setOrgao(_selectedOrgao);
 		_utilizadorDAO.create(user);
 		visualizarUtilizador();
@@ -68,8 +68,8 @@ public class UtilizadorController extends GenericForwardComposer{
 	
     public void onClick$btn_actualizar(Event e){
 		if(_selectedUtilizador != null){
-			_selectedUtilizador.setNome(tbx_nome.getText());
-			_selectedUtilizador.setPassword(tbx_password.getText());
+			_selectedUtilizador.setNome(tb_nome.getText());
+			_selectedUtilizador.setPassword(tb_password.getText());
 			_selectedUtilizador.setOrgao(_selectedOrgao);
 			_utilizadorDAO.update(_selectedUtilizador);
 			limparCampos();
@@ -105,27 +105,27 @@ public class UtilizadorController extends GenericForwardComposer{
 	 public void visualizarUtilizador(){
 		 List <Utilizador> ut = _utilizadorDAO.findAll();
 		 _listModelUtilizador = new ListModelList <Utilizador> (ut); 
-		 lbx_utilizador.setModel(_listModelUtilizador);
+		 lb_utilizador.setModel(_listModelUtilizador);
 		
 	 }
 	 
 	 public void limparCampos(){
-		 tbx_nome.setRawValue(null);
-		 tbx_password.setRawValue(null);
+		 tb_nome.setRawValue(null);
+		 tb_password.setRawValue(null);
          _selectedUtilizador=null;	 
 	 }
 	 
 	 
 	 private void refreshOrgaoDetail() {
-			tbx_nome.setValue(_selectedUtilizador.getNome());
-			tbx_password.setValue(_selectedUtilizador.getPassword());
+			tb_nome.setValue(_selectedUtilizador.getNome());
+			tb_password.setValue(_selectedUtilizador.getPassword());
 
 		}
 	 
 		public void preencherOrgaos(){
 		  	List <Orgao> org = _orgaoDAO.findAll();
 	    	_listModelOrgao = new ListModelList <Orgao> (org);
-	    	cbx_orgao.setModel(_listModelOrgao);
+	    	cbb_orgao.setModel(_listModelOrgao);
 		}
 
 }

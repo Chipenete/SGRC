@@ -109,6 +109,11 @@
  	
  	</groupbox>
  	
+ 	<div align="right">
+ 		<button id="btn_imprimir" >imprimir</button>
+ 	
+ 	
+ 	</div>
  	
 
 
