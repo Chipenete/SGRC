@@ -25,7 +25,7 @@
 		<listcell><label value="${each.viatura.matricula }"></label></listcell>
 		<listcell><label value="${each.combustivelString}"></label></listcell>
 		<listcell><label value="${each.quantidade_requisitada}"></label></listcell>
-		<listcell><doublebox constraint="no empty:Este Campo nao deve estar vazio"></doublebox><checkbox ></checkbox></listcell>
+		<listcell><doublebox disabled="${each.remessada}" constraint="no empty:Este Campo nao deve estar vazio"></doublebox><checkbox disabled="${each.remessada}"></checkbox></listcell>
 		
 		<listcell><checkbox checked="${each.remessada}" disabled="${each.remessada}" ></checkbox></listcell>
 		

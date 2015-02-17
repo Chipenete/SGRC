@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GuiaRemessa" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5f20cb4c-5c3e-4720-a6ed-99e85669dea5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="codigo_requisicao" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Reports\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     requisicao.`id` AS requisicao_id,
+     requisicao.`data` AS requisicao_data,
+     requisicao.`remessada` AS requisicao_remessada,
+     requisicao.`responsavel` AS requisicao_responsavel,
+     requisicao.`org_id` AS requisicao_org_id,
+     orgao.`id` AS orgao_id,
+     orgao.`cotaGas` AS orgao_cotaGas,
+     orgao.`cotaGasoleo` AS orgao_cotaGasoleo,
+     orgao.`cotaGasolina` AS orgao_cotaGasolina,
+     orgao.`cota_id` AS orgao_cota_id,
+     orgao.`designacao` AS orgao_designacao,
+     orgao.`quantidadeGas` AS orgao_quantidadeGas,
+     orgao.`quantidadeGasoleo` AS orgao_quantidadeGasoleo,
+     orgao.`quantidadeGasolina` AS orgao_quantidadeGasolina
+FROM
+     `orgao` orgao INNER JOIN `requisicao` requisicao ON orgao.`id` = requisicao.`org_id`
+where requisicao.id=$P{codigo_requisicao}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cotaGas" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cotaGasoleo" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cotaGasolina" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cota_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="designacao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantidadeGas" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantidadeGasoleo" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantidadeGasolina" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="remessada" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="responsavel" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="org_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisicao_id" class="java.lang.Long"/>
+	<field name="requisicao_data" class="java.sql.Date"/>
+	<field name="requisicao_remessada" class="java.lang.Boolean"/>
+	<field name="requisicao_responsavel" class="java.lang.String"/>
+	<field name="requisicao_org_id" class="java.lang.Long"/>
+	<field name="orgao_id" class="java.lang.Long"/>
+	<field name="orgao_cotaGas" class="java.lang.Double"/>
+	<field name="orgao_cotaGasoleo" class="java.lang.Double"/>
+	<field name="orgao_cotaGasolina" class="java.lang.Double"/>
+	<field name="orgao_cota_id" class="java.lang.Long"/>
+	<field name="orgao_designacao" class="java.lang.String"/>
+	<field name="orgao_quantidadeGas" class="java.lang.Double"/>
+	<field name="orgao_quantidadeGasoleo" class="java.lang.Double"/>
+	<field name="orgao_quantidadeGasolina" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="179" splitType="Stretch">
+			<staticText>
+				<reportElement x="165" y="65" width="228" height="34" forecolor="#009735" uuid="e7e83222-c40b-4d3f-ab50-21c833d78735"/>
+				<textElement>
+					<font fontName="Calibri" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Eduardo Mondlane]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="165" y="31" width="208" height="34" forecolor="#009933" uuid="da2965f7-43a3-453f-9684-62ea2e27e628"/>
+				<textElement>
+					<font fontName="Calibri" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Universidade]]></text>
+			</staticText>
+			<image>
+				<reportElement x="417" y="10" width="143" height="108" uuid="ed710e4b-492a-499d-a131-bc398129538f"/>
+				<imageExpression><![CDATA["C:\\Fakul\\CIUEM\\img\\index4.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="21" y="14" width="186" height="104" uuid="3e9535ef-5369-4a33-99e7-ade6ff895ab1"/>
+				<imageExpression><![CDATA["C:\\Fakul\\CIUEM\\img\\index2.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="18" y="118" width="542" height="24" forecolor="#009735" uuid="0fa85af1-8d17-4339-ab68-c7070b48bd02"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Direccao de Administracao e Patrimonio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="154" width="542" height="24" forecolor="#009735" uuid="3a4ebcf0-f3d4-449f-ba00-49338d8d6c30"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Guia de Remessa]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="56" splitType="Stretch">
+			<rectangle>
+				<reportElement x="18" y="8" width="542" height="24" forecolor="#FFFFFF" backcolor="#F0F0E8" uuid="c46cffa8-be16-4914-9909-d0b7bbc30087"/>
+			</rectangle>
+			<line>
+				<reportElement x="18" y="7" width="542" height="1" forecolor="#CCCCCC" uuid="7176751d-cc0a-4212-bf3f-b68e134ac55d"/>
+			</line>
+			<line>
+				<reportElement x="18" y="31" width="542" height="1" forecolor="#999999" uuid="5a69bba9-3231-43ce-a595-ed7d13a259db"/>
+			</line>
+			<staticText>
+				<reportElement x="18" y="8" width="542" height="23" forecolor="#666666" uuid="fa6efd09-c4b6-4b87-aae6-d64646827df0"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Orgao a debitar]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="32" width="103" height="23" forecolor="#666666" uuid="2ce739ba-7c0b-4478-bf85-03287d9e679a"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome do orgao:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="440" y="32" width="47" height="23" forecolor="#666666" uuid="1b3902c5-6c37-4139-8025-518c867cf506"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="121" y="32" width="308" height="23" uuid="05eb1953-cf20-482a-b268-c556bb88b7be"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{orgao_designacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="487" y="35" width="73" height="20" uuid="07e700bb-c1d5-4aa6-bfac-299c35d661c1"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{orgao_id}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="18" y="54" width="542" height="1" forecolor="#999999" uuid="1f0503fc-5827-4f1f-9d2d-654abd97b0fe"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="200" height="23" uuid="17e1e99c-51d6-42cc-ae81-96d774b72851"/>
+				<subreportParameter name="requisicao">
+					<subreportParameterExpression><![CDATA[$F{requisicao_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "Item_remessa.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="91" splitType="Stretch">
+			<staticText>
+				<reportElement x="23" y="19" width="121" height="20" uuid="ce76751e-036f-44d4-b176-c751e38464f3"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Data:___/___/20___]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="207" y="19" width="121" height="20" uuid="21b5a3a7-5dbf-461a-b2f3-d059a8863540"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Data:___/___/20___]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="417" y="19" width="121" height="20" uuid="72d83cfb-d921-40eb-8ffd-79d374ff278c"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Data:___/___/20___]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="39" width="123" height="20" uuid="5e1e5417-a8fc-4333-8578-d932bcd4f743"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[O aprovisionamento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="207" y="39" width="123" height="20" uuid="0117677b-f03c-4fc9-b88e-c3efbbe921b1"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[O bombeiro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="417" y="39" width="123" height="20" uuid="cfd50591-b875-493c-85a6-6d3a6a23548f"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[O condutor]]></text>
+			</staticText>
+			<line>
+				<reportElement x="10" y="83" width="144" height="1" uuid="55eb7a95-bf14-4638-9317-d637d885e8fb"/>
+			</line>
+			<line>
+				<reportElement x="186" y="84" width="169" height="1" uuid="07b295d3-f96e-4b73-a496-21e13dd44e2f"/>
+			</line>
+			<line>
+				<reportElement x="396" y="82" width="169" height="1" uuid="31cb3fdb-5416-4ffb-9259-4bee39373b79"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="45" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="102" y="18" width="100" height="20" uuid="bcaa226b-dfce-40e5-a725-2fc71ffda48b"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="440" y="18" width="80" height="20" uuid="e418966f-4767-4267-a27e-218ff5a17800"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pag.: "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="520" y="18" width="52" height="20" uuid="f64e8dc4-aff5-452e-9144-fa5659bd41bd"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="18" width="92" height="20" uuid="1cc5163c-e253-43e5-8040-17b581935077"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Data de impressao:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -98,6 +98,7 @@
  				<listheader label="Fornecedor"></listheader>
  				<listheader label="Remessada"></listheader>
  				<listheader label="Items"></listheader>
+ 				<listheader label="Imprimir"></listheader>
  				
  			</listhead>
  			
@@ -108,13 +109,6 @@
  		
  	
  	</groupbox>
- 	
- 	<div align="right">
- 		<button id="btn_imprimir" >imprimir</button>
- 	
- 	
- 	</div>
- 	
 
 
 

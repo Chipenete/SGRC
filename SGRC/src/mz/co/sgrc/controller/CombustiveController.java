@@ -211,9 +211,16 @@ public class CombustiveController extends GenericForwardComposer{
     
     public void preencherQuantidadeFinal(){
     	QuantidadeFinal quantidadeFinal = _quantidadeFinalDao.findById((long)1);
+    	if (quantidadeFinal== null){
+    		tb_quantidadeGasolina.setValue("0");
+    		tb_quantidadeGasoleo.setValue("0");
+    		tb_quantidadeGas.setValue("0");	
+    	}
+    	else{
     	tb_quantidadeGasolina.setValue(""+quantidadeFinal.getQuantidadeGasolina());
     	tb_quantidadeGasoleo.setValue(""+quantidadeFinal.getQuantidadeGasoleo());
     	tb_quantidadeGas.setValue(""+quantidadeFinal.getQuantidadeGas());
+    	}
     }
     
 

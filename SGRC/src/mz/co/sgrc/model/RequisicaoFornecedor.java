@@ -29,6 +29,7 @@ import javax.persistence.OneToOne;
 	private Date data;
 	private String responsavel;
 	private boolean remessada;
+	private double custo;
 	
 	@ManyToOne(cascade =CascadeType.ALL)
 	@JoinColumn(name = "orgao_id")
@@ -86,5 +87,13 @@ import javax.persistence.OneToOne;
 	public void setData(Date data) {
 		this.data = data;
 	}
+	public double getCusto() {
+		return custo;
+	}
+	public void setCusto(double custo) {
+		this.custo = custo;
+	}
+	
+	
 	
 }

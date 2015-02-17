@@ -26,6 +26,8 @@ public class TipoCombustive {
 	
 	private String descricao;
 	
+	private double custo;
+	
 	@OneToOne
 	@JoinColumn(name="combustive_id")
 	private Combustive combustive;
@@ -75,6 +77,15 @@ public class TipoCombustive {
 
 	public void setListCotas(List<Cotas> listCotas) {
 		this.listCotas = listCotas;
+	}
+	
+
+	public double getCusto() {
+		return custo;
+	}
+
+	public void setCusto(double custo) {
+		this.custo = custo;
 	}
 
 	@Override

@@ -128,7 +128,7 @@ public class RequisicaoFornecedorController extends GenericForwardComposer {
 		
 		
 		ut = u.findById((long)1);
-		orgao = orgaoDAO.findById(ut.getOrgao().getId());
+		
 	}
 
 	
@@ -183,6 +183,8 @@ public class RequisicaoFornecedorController extends GenericForwardComposer {
 		
 		final RequisicaoFornecedor reqFornecedor = new RequisicaoFornecedor();
 	
+		orgao = orgaoDAO.findById(ut.getOrgao().getId());
+		
 		reqFornecedor.setData(new Date());
 		reqFornecedor.setResponsavel(ut.getNome());
 		reqFornecedor.setOrgao(orgao);
@@ -310,14 +312,17 @@ public class RequisicaoFornecedorController extends GenericForwardComposer {
 		cb_remessar.setParent(listcell);
 		listcell.setParent(listitem);
 		
-		
-		
-		
 		Listcell listcell1 = new Listcell();
 		final Button btn_VErItens = new Button("Ver items");
 		btn_VErItens.setVisible(reqFornecedor.isRemessada());
 		btn_VErItens.setParent(listcell1);
 		listcell1.setParent(listitem);
+		
+		Listcell listcell2 = new Listcell();
+		final Button btn_Imprimir = new Button ("Imprimir");
+		btn_Imprimir.setVisible(reqFornecedor.isRemessada());
+		btn_Imprimir.setParent(listcell2);
+		listcell2.setParent(listitem);
 
 		lb_requisicao.appendChild(listitem);
 		
@@ -362,6 +367,41 @@ public class RequisicaoFornecedorController extends GenericForwardComposer {
 				
 			}
 			
+			
+		});
+		
+		btn_Imprimir.addEventListener("onClick", new EventListener(){
+			
+			@Override
+			public void onEvent(Event arg0) throws Exception{
+				
+				Map<String, Object> param = new HashMap<String,Object>();
+				
+				try{
+				Class.forName("com.mysql.jdbc.Driver");
+			    con = DriverManager.getConnection("jdbc:mysql://localhost/vendas","root",null);
+				
+			} catch(ClassNotFoundException e1){
+				e1.printStackTrace();
+				
+			}
+			
+			try{
+				
+				String reporte = "C:/Users/Marcelo/report/RequisicaoFornecedor.jrxml";
+		        
+				param.put("codigo_requisicao",reqFornecedor.getId());
+				
+				JasperReport jasperReport = JasperCompileManager.compileReport(reporte);
+				JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, param, con);
+				JasperViewer.viewReport(jasperPrint);
+				con.close();
+				
+			}catch(JRException ex){
+				ex.printStackTrace();
+			}
+				
+			}
 			
 		});
 		
@@ -436,7 +476,8 @@ public class RequisicaoFornecedorController extends GenericForwardComposer {
 	
 	public void onClick$btn_imprimir(Event e) throws SQLException, JRException{
 		
-        
+		//Map<String, Object> param = new HashMap<String,Object>();
+		
 		try{
 		Class.forName("com.mysql.jdbc.Driver");
 	    con = DriverManager.getConnection("jdbc:mysql://localhost/vendas","root",null);
@@ -448,8 +489,10 @@ public class RequisicaoFornecedorController extends GenericForwardComposer {
 	
 	try{
 		
-		String reporte = "C:/Users/Marcelo/RequisicaoFornecedor.jrxml";
-        //param.put("varStatus","E");
+		String reporte = "C:/Users/Marcelo/report/RequisicaoFornecedor.jrxml";
+        
+		//param.put("id_requisicaoFornecedor",((Long))1);
+		
 		JasperReport jasperReport = JasperCompileManager.compileReport(reporte);
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, con);
 		JasperViewer.viewReport(jasperPrint);
@@ -459,22 +502,7 @@ public class RequisicaoFornecedorController extends GenericForwardComposer {
 		ex.printStackTrace();
 	}
 }
-		
-//        Statement stmt = (Statement) DriverManager.getConnection("jdbc:mysql://localhost/vendas","root",null);
-//        
-//        String query = "Select * from RequisicaoFornecedor";
-//        
-//        
-//			ResultSet rs = (ResultSet) stmt.executeQuery(query);
-//		
-//			JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
-//        
-//			JasperPrint jpPrint = JasperFillManager.fillReport("C:/Users/Marcelo/RequisicaoFornecedor.jasper", ( new HashMap() ), jrRS);
-//			
-//			JasperViewer jv = new JasperViewer(jpPrint);
-//			
-//	        jv.setVisible(true);
-//        
+		 
 
 	
 	

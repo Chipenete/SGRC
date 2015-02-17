@@ -14,6 +14,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Doublebox;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
@@ -27,6 +28,7 @@ public class TipoCombustiveController extends GenericForwardComposer{
 	 
 	private Textbox tb_designacao; 
 	private Textbox tb_descricao;
+	private Doublebox db_custo;
 	private Listbox lb_tipoCombustive;
 	private Button btn_gravar;
 	private Button btn_actualizar;
@@ -56,9 +58,10 @@ public class TipoCombustiveController extends GenericForwardComposer{
 		TipoCombustive tc = new TipoCombustive();
 		tc.setDesignacao(tb_designacao.getText());
 		tc.setDescricao(tb_descricao.getText());
+		tc.setCusto(db_custo.getValue());
 		tipoCombustiveDAO.create(tc);
 		visualizarTipoCombustive();
-		Clients.showNotification("Inserido com sucesso", "info", win, "middle_center", 4000);
+		Clients.showNotification("Combustivel criado com sucesso", "info", win, "middle_center", 4000);
 		 limparCampos();
 	}
 	
@@ -67,9 +70,10 @@ public class TipoCombustiveController extends GenericForwardComposer{
 		if(selectedTipoCombustive != null){
 			selectedTipoCombustive.setDesignacao(tb_designacao.getText());
 			selectedTipoCombustive.setDescricao(tb_descricao.getText());
+			selectedTipoCombustive.setCusto(db_custo.getValue());
 			tipoCombustiveDAO.update(selectedTipoCombustive);
 			limparCampos();
-			Clients.showNotification("Actualizado com sucesso", "info", win, "middle_center", 2000);
+			Clients.showNotification("Combustivel actualizado com sucesso", "info", win, "middle_center", 2000);
 			visualizarTipoCombustive();
 		}
 		
@@ -107,6 +111,7 @@ public class TipoCombustiveController extends GenericForwardComposer{
 	 public void limparCampos(){
 		 tb_designacao.setRawValue(null);
 		 tb_descricao.setRawValue(null);
+		 db_custo.setRawValue(null);
 		 selectedTipoCombustive=null;
 		 
 	 }
@@ -115,6 +120,7 @@ public class TipoCombustiveController extends GenericForwardComposer{
 	 private void refreshOrgaoDetail() {
 			tb_designacao.setValue(selectedTipoCombustive.getDesignacao());
 			tb_descricao.setValue(selectedTipoCombustive.getDescricao());	
+			db_custo.setValue(selectedTipoCombustive.getCusto());
 		
 		}
 

@@ -53,24 +53,30 @@
 	
 	<groupbox>
     <caption label="Requisicao"></caption>
-    <listbox id="lb_requisicao"  mold="paging" rows="4" pageSize="5">
+   <listbox id="lb_requisicao"  mold="paging" rows="7" pageSize="7"  checkmark="true" multiple="true">
     <listhead>
-	    <listheader sort="auto">Data</listheader>
-	    <listheader>Responsavel</listheader>
-	    <listheader>Orgao</listheader>
-	    <listheader>Remessar</listheader>
-	    <listheader width="7%">Ver itens</listheader>
+    <listheader width="30px"></listheader>
+    <listheader sort="auto">Data</listheader>
+    <listheader>Responsavel</listheader>
+    <listheader>Orgao</listheader>
+    <listheader>Remessar</listheader>
+    <listheader width="7%">Ver itens</listheader>
+    <listheader width="7%">Visualizar</listheader>
     </listhead>
     <template name="model">
     <listitem >
+    <listcell/>
     <listcell><label value="${each.data}"></label></listcell>
     <listcell><label value="${each.responsavel}"></label></listcell>
     <listcell><label value="${each.orgao.designacao}"></label></listcell>
-    <listcell><checkbox checked="${each.remessada}" disabled="${each.remessada}"></checkbox></listcell>
+    <listcell><checkbox checked="${each.remessada}" disabled="true"></checkbox></listcell>
      <listcell><button label="Ver Itens" visible="${each.remessada}"></button></listcell>
+     <listcell><button label="Visualizar" visible="${each.remessada}"></button></listcell>
     </listitem>
     </template>
+    
     </listbox>
+
     </groupbox>
 	 
 	<separator></separator>

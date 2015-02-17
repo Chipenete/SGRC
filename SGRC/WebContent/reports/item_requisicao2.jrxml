@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="item_requisicao2" language="groovy" pageWidth="565" pageHeight="842" columnWidth="525" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="65409a49-7293-4615-98f2-a8d2e3525839">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="requisicao" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     viatura.`marca` AS viatura_marca,
+     viatura.`matricula` AS viatura_matricula,
+     item_requisicao.`id` AS item_requisicao_id,
+     item_requisicao.`combustivelString` AS item_requisicao_combustivelString,
+     item_requisicao.`quantidade_remessada` AS item_requisicao_quantidade_remessada,
+     item_requisicao.`quantidade_requisitada` AS item_requisicao_quantidade_requisitada,
+     item_requisicao.`remessada` AS item_requisicao_remessada,
+     item_requisicao.`viatura` AS item_requisicao_viatura,
+     viatura.`id` AS viatura_id,
+     requisicao.`id` AS requisicao_id
+FROM
+     `item_requisicao` item_requisicao INNER JOIN `viatura` viatura ON item_requisicao.`viatura` = viatura.`id`
+     INNER JOIN `requisicao` requisicao ON item_requisicao.`requisicao_id` = requisicao.`id`
+WHERE
+     item_requisicao.requisicao_id = $P{requisicao}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="combustivelString" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantidade_remessada" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantidade_requisitada" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="remessada" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="combustive_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisicao_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="viatura" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="marca" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="matricula" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="item_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="item_requisicaoID" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="orgao_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="responsavel" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="org_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="viatura_marca" class="java.lang.String"/>
+	<field name="viatura_matricula" class="java.lang.String"/>
+	<field name="item_requisicao_id" class="java.lang.Long"/>
+	<field name="item_requisicao_combustivelString" class="java.lang.String"/>
+	<field name="item_requisicao_quantidade_remessada" class="java.lang.Double"/>
+	<field name="item_requisicao_quantidade_requisitada" class="java.lang.Double"/>
+	<field name="item_requisicao_remessada" class="java.lang.Boolean"/>
+	<field name="item_requisicao_viatura" class="java.lang.Long"/>
+	<field name="viatura_id" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Prevent">
+			<rectangle>
+				<reportElement x="448" y="0" width="74" height="20" backcolor="#33F277" uuid="311171ae-db20-4264-963e-a53dd312eacc"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="327" y="0" width="104" height="20" backcolor="#33F277" uuid="5e063890-7ac4-470b-babb-b04efe4a526a"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="64" y="0" width="110" height="20" backcolor="#33F277" uuid="7c224444-1a2f-459e-b397-c01bdd69cb60"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="0" width="52" height="20" backcolor="#33F277" uuid="6f54e89f-0b53-4877-8b93-fa1d8e97f78d"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="52" height="20" uuid="29374519-83a2-44eb-ae71-04b898446f5d"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Item]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="63" y="0" width="111" height="20" uuid="f013660b-984e-400c-b2f0-245ddfe87ba8"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Marca da viatura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="0" width="104" height="20" backcolor="#33CC00" uuid="98657a03-7518-4d9d-8271-e9a23c2b54ad"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Combustivel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="448" y="0" width="74" height="20" uuid="9def103b-8c00-414a-97ef-a21dfc568279"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="22" width="522" height="1" uuid="104cf68d-8cb4-42cb-8fa3-9914004d62d0"/>
+			</line>
+			<rectangle>
+				<reportElement x="187" y="0" width="124" height="20" backcolor="#33F277" uuid="e0c2506b-d42b-4887-80c6-e3db062bc566"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="187" y="0" width="124" height="20" uuid="a8ee4ddd-ae07-498f-901a-9dc81efe3741"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Matricula]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="52" height="20" uuid="3ef216b2-57b3-4995-86cb-4dd9b5ea2004"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{item_requisicao_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="63" y="0" width="110" height="20" uuid="3d767b43-1822-4a6a-b017-b16ed9fd489c"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{viatura_marca}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="187" y="0" width="124" height="20" uuid="72405f93-41f8-4567-a593-6dca3d1a0ba7"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{viatura_matricula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="327" y="0" width="104" height="20" uuid="65a4d2a9-8c48-4fde-9b29-ca979d01790e"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{item_requisicao_combustivelString}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="448" y="0" width="74" height="20" uuid="45bdd881-9747-44be-a31f-36c07401120a"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{item_requisicao_quantidade_requisitada}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="20" width="522" height="1" uuid="dd3132f6-0d2f-4063-ad33-575a57254c83"/>
+			</line>
+			<line>
+				<reportElement x="57" y="0" width="1" height="20" uuid="535267f3-e2cc-4eeb-838e-bd6d67bcfb64"/>
+			</line>
+			<line>
+				<reportElement x="180" y="0" width="1" height="20" uuid="7e6cbf79-f887-4b10-8c5e-b26fe936c0b6"/>
+			</line>
+			<line>
+				<reportElement x="318" y="0" width="1" height="20" uuid="82919a5c-42ea-48fe-8c1e-b0640daa034f"/>
+			</line>
+			<line>
+				<reportElement x="440" y="0" width="1" height="20" uuid="a2b2b6b9-fa62-430b-8cf2-b54d23377f48"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="327" y="0" width="195" height="20" forecolor="#666666" uuid="523fd04a-184f-4ee5-b949-7beb470969cb"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Requisicao numero:  "+ $F{requisicao_id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

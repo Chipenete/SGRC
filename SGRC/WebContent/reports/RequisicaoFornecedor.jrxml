@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RequisicaoFornecedor" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="080ef1da-b854-4925-b9fa-6dc9c38c618d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="77"/>
+	<parameter name="codigo_requisicao" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Marcelo\\report\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     requisicaofornecedor.`id` AS requisicaofornecedor_id,
+     requisicaofornecedor.`data` AS requisicaofornecedor_data,
+     requisicaofornecedor.`remessada` AS requisicaofornecedor_remessada,
+     requisicaofornecedor.`responsavel` AS requisicaofornecedor_responsavel,
+     requisicaofornecedor.`fornecedor_id` AS requisicaofornecedor_fornecedor_id,
+     requisicaofornecedor.`orgao_id` AS requisicaofornecedor_orgao_id,
+     orgao.`id` AS orgao_id,
+     orgao.`cotaGas` AS orgao_cotaGas,
+     orgao.`cotaGasoleo` AS orgao_cotaGasoleo,
+     orgao.`cotaGasolina` AS orgao_cotaGasolina,
+     orgao.`cota_id` AS orgao_cota_id,
+     orgao.`designacao` AS orgao_designacao,
+     orgao.`quantidadeGas` AS orgao_quantidadeGas,
+     orgao.`quantidadeGasoleo` AS orgao_quantidadeGasoleo,
+     orgao.`quantidadeGasolina` AS orgao_quantidadeGasolina,
+     fornecedor.`id` AS fornecedor_id,
+     fornecedor.`descricao` AS fornecedor_descricao,
+     fornecedor.`designacao` AS fornecedor_designacao,
+     fornecedor.`email` AS fornecedor_email,
+     fornecedor.`endereco` AS fornecedor_endereco,
+     fornecedor.`telefone1` AS fornecedor_telefone1,
+     fornecedor.`telefone2` AS fornecedor_telefone2
+FROM
+     `requisicaofornecedor` requisicaofornecedor INNER JOIN `orgao` orgao ON requisicaofornecedor.`orgao_id` = orgao.`id`
+     INNER JOIN `fornecedor` fornecedor ON requisicaofornecedor.`fornecedor_id` = fornecedor.`id`
+	Where requisicaofornecedor.id = $P{codigo_requisicao}]]>
+	</queryString>
+	<field name="requisicaofornecedor_id" class="java.lang.Long"/>
+	<field name="requisicaofornecedor_data" class="java.sql.Timestamp"/>
+	<field name="requisicaofornecedor_remessada" class="java.lang.Boolean"/>
+	<field name="requisicaofornecedor_responsavel" class="java.lang.String"/>
+	<field name="requisicaofornecedor_fornecedor_id" class="java.lang.Integer"/>
+	<field name="requisicaofornecedor_orgao_id" class="java.lang.Long"/>
+	<field name="orgao_id" class="java.lang.Long"/>
+	<field name="orgao_cotaGas" class="java.lang.Double"/>
+	<field name="orgao_cotaGasoleo" class="java.lang.Double"/>
+	<field name="orgao_cotaGasolina" class="java.lang.Double"/>
+	<field name="orgao_cota_id" class="java.lang.Long"/>
+	<field name="orgao_designacao" class="java.lang.String"/>
+	<field name="orgao_quantidadeGas" class="java.lang.Double"/>
+	<field name="orgao_quantidadeGasoleo" class="java.lang.Double"/>
+	<field name="orgao_quantidadeGasolina" class="java.lang.Double"/>
+	<field name="fornecedor_id" class="java.lang.Integer"/>
+	<field name="fornecedor_descricao" class="java.lang.String"/>
+	<field name="fornecedor_designacao" class="java.lang.String"/>
+	<field name="fornecedor_email" class="java.lang.String"/>
+	<field name="fornecedor_endereco" class="java.lang.String"/>
+	<field name="fornecedor_telefone1" class="java.lang.Integer"/>
+	<field name="fornecedor_telefone2" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="74" splitType="Stretch">
+			<staticText>
+				<reportElement x="171" y="18" width="259" height="46" uuid="5567db5d-6e8e-41f9-80fc-8c7982c0b152"/>
+				<textElement>
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Requisicao Fornecedor]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="36" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="160" splitType="Stretch">
+			<rectangle>
+				<reportElement x="25" y="10" width="505" height="15" forecolor="#666666" backcolor="#F0F0E8" uuid="8f994372-3b22-4e54-a4ff-4799347268fb"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="215" y="10" width="100" height="25" forecolor="#7F7F7F" uuid="eba512eb-4dd1-4032-928e-d333950bdb35"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[        ORGAO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="25" width="100" height="20" forecolor="#666666" uuid="1e417fd8-c8ca-403f-865c-916ba3d71d29"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome do orgao:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="60" width="72" height="20" forecolor="#666666" uuid="9abc863c-8aca-4774-a06d-e8c813e9e4bf"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="25" y="81" width="505" height="1" forecolor="#666666" uuid="29a1d8df-366d-45da-a5e8-99768aecfc72"/>
+			</line>
+			<staticText>
+				<reportElement x="331" y="25" width="49" height="20" forecolor="#666666" uuid="2675480b-5b81-4399-a03f-3e69fa4efb78"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="25" y="45" width="505" height="15" forecolor="#666666" backcolor="#F0F0E8" uuid="702f88f7-3a06-438f-8d36-6665bb10ac53"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="231" y="46" width="100" height="25" forecolor="#7F7F7F" uuid="95b80fc9-3b3e-4b6a-9a04-3c8119243826"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REQUISICAO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="82" width="72" height="20" forecolor="#666666" uuid="63ff384b-ff7d-49b1-94f3-fdb527c9a142"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fornecedor:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="331" y="61" width="49" height="20" forecolor="#666666" uuid="fdd39345-96cd-433b-95b4-9e759891fab1"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Codigo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="331" y="82" width="79" height="20" forecolor="#666666" uuid="215123ab-7384-4b50-b6fa-fe30c2e412c3"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Responsavel:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="125" y="26" width="90" height="20" uuid="65d77a60-4864-44e5-b169-ea20a7a04368"/>
+				<textFieldExpression><![CDATA[$F{orgao_designacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="26" width="150" height="20" uuid="e51c9df7-9c79-4cf3-aa21-609a0d8c8ddd"/>
+				<textFieldExpression><![CDATA[$F{orgao_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="97" y="62" width="118" height="20" uuid="a5134ebf-5ce0-4449-994e-b8f7d8f0a409"/>
+				<textFieldExpression><![CDATA[$F{requisicaofornecedor_data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="97" y="82" width="118" height="20" uuid="5da6bf51-6ef8-40f8-86e3-6e2b456cfb98"/>
+				<textFieldExpression><![CDATA[$F{fornecedor_designacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="82" width="120" height="20" uuid="731d2600-dc73-46e2-8c81-bbfa85bafb37"/>
+				<textFieldExpression><![CDATA[$F{requisicaofornecedor_responsavel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="62" width="150" height="20" uuid="952a35f5-f8e9-4bcd-87f7-cbbcad0668aa"/>
+				<textFieldExpression><![CDATA[$F{requisicaofornecedor_id}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-132" y="118" width="1" height="23" forecolor="#666666" uuid="178406b0-b9d5-4abe-83c1-0321142dfe12"/>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="351" y="151" width="180" height="1" uuid="8fffb5e6-37ae-4ff0-82fc-07951fd05d7e"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="25" y="150" width="180" height="1" uuid="fb3eb0c8-f74f-49a3-92a8-c34c5530f017"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="205" y="137" width="1" height="23" uuid="3b40e128-4417-49c7-b433-3db1ff428a01"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="350" y="137" width="1" height="23" uuid="e5fc8862-788c-4779-9a70-e875a2aa6f00"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="206" y="138" width="144" height="22" forecolor="#666666" uuid="117834dd-924c-4523-a297-abc6f3c4aa79"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[      Items da requisicao]]></text>
+			</staticText>
+			<line>
+				<reportElement x="25" y="138" width="505" height="1" forecolor="#666666" uuid="1e4bcdb1-ca94-46ee-a1ae-374454c64ecd"/>
+			</line>
+			<line>
+				<reportElement x="531" y="138" width="1" height="22" forecolor="#666666" uuid="f0b90c2a-12cc-4003-ba10-6ddac1264362"/>
+			</line>
+			<line>
+				<reportElement x="25" y="138" width="1" height="22" forecolor="#666666" uuid="b8bfc84b-f99c-400c-ab2a-be464b384cc5"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="1" width="267" height="22" uuid="38952235-f5fc-4546-8c02-49de64a2766c"/>
+				<subreportParameter name="requisicao">
+					<subreportParameterExpression><![CDATA[$F{requisicaofornecedor_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "ItemRequisicaoFornecedor.jasper"]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement x="24" y="0" width="505" height="1" forecolor="#666666" uuid="2b5daca3-cfae-4920-a8b5-7286cad8a554"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="111" splitType="Stretch">
+			<staticText>
+				<reportElement x="331" y="73" width="213" height="20" forecolor="#666666" uuid="586702a6-3937-4c90-ab9f-fffc6d24aae5"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[O responsavel pelas requisicoes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="362" y="10" width="142" height="20" forecolor="#666666" uuid="7caad4cc-bbb4-4075-80f2-2ef63644072c"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATA: ___/___/20___]]></text>
+			</staticText>
+			<line>
+				<reportElement x="331" y="60" width="202" height="1" uuid="a0e5b315-40b1-43c9-a249-bbee37ceb820"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="86" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -27,8 +27,12 @@ public class Requisicao implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-
 	
+	private double custo;
+	
+	private double custoRemessado;
+
+	private double total;
 
 	@Temporal(TemporalType.DATE)
 	private Date data;
@@ -98,6 +102,33 @@ public class Requisicao implements Serializable {
 		this.remessada = remessada;
 	}
 
+	public double getCusto() {
+		return custo;
+	}
+
+	public void setCusto(double custo) {
+		this.custo = custo;
+	}
+
+	public double getTotal() {
+		return total;
+	}
+
+	public void setTotal(double total) {
+		this.total = total;
+	}
+
+	public double getCustoRemessado() {
+		return custoRemessado;
+	}
+
+	public void setCustoRemessado(double custoRemessado) {
+		this.custoRemessado = custoRemessado;
+	}
+	
+	
+
+	
 	
 
 }

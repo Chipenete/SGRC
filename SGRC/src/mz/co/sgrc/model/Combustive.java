@@ -35,6 +35,8 @@ public class Combustive implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 	
+	private double custo;
+	
 
     @OneToOne(mappedBy="combustive")
     @Cascade(CascadeType.ALL)
@@ -114,6 +116,22 @@ public class Combustive implements Serializable{
 
 	public void setQuantidade(double double1) {
 		this.quantidade = double1;
+	}
+
+	public double getCusto() {
+		return custo;
+	}
+
+	public void setCusto(double custo) {
+		this.custo = custo;
+	}
+
+	public List<Item> getListItem() {
+		return listItem;
+	}
+
+	public void setListItem(List<Item> listItem) {
+		this.listItem = listItem;
 	}
 
 	

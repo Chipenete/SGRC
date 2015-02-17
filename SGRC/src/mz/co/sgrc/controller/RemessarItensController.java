@@ -7,10 +7,12 @@ import mz.co.sgrc.dao.Item_requisicaoDAO;
 import mz.co.sgrc.dao.OrgaoDAO;
 import mz.co.sgrc.dao.QuantidadeFinalDAO;
 import mz.co.sgrc.dao.RequisicaoDAO;
+import mz.co.sgrc.dao.TipoCombustiveDAO;
 import mz.co.sgrc.model.Item_requisicao;
 import mz.co.sgrc.model.Orgao;
 import mz.co.sgrc.model.QuantidadeFinal;
 import mz.co.sgrc.model.Requisicao;
+import mz.co.sgrc.model.TipoCombustive;
 
 import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
@@ -45,6 +47,7 @@ public class RemessarItensController extends GenericForwardComposer{
 	private RequisicaoDAO _requisicaoDAO;
 	private QuantidadeFinalDAO _quantidadeFinalDAO;
 	private Item_requisicaoDAO _item_requisicaoDAO;
+	private TipoCombustiveDAO _tipoCombustiveDAO;
 	private OrgaoDAO _orgaoDAO;
 	private double _temp;
 	
@@ -61,6 +64,7 @@ public class RemessarItensController extends GenericForwardComposer{
 		_requisicaoDAO = new RequisicaoDAO(); 
 		_item_requisicaoDAO = new Item_requisicaoDAO();
 		_quantidadeFinalDAO = new QuantidadeFinalDAO();
+		_tipoCombustiveDAO = new TipoCombustiveDAO();
 		preencherItensRemessas();
 	
  	}
@@ -135,10 +139,17 @@ public class RemessarItensController extends GenericForwardComposer{
 					
 			    	quantidadeFinal = _quantidadeFinalDAO.findById((long)1);
 			
-					if(item_requisicao.getCombustivelString().equals("Gasolina") && quantidadeFinal.getQuantidadeGasolina()>=item_requisicao.getQuantidade_remessada()){
+					if(item_requisicao.getCombustivelString().equals("Gasolina") && 
+							quantidadeFinal.getQuantidadeGasolina()>=item_requisicao.getQuantidade_remessada()){
 					
 						item_requisicao.setRemessada(true);
-					    _item_requisicaoDAO.update(item_requisicao);
+						TipoCombustive tc = _tipoCombustiveDAO.returnar("Gasolina");
+						item_requisicao.setCustoRemessado(item_requisicao.getQuantidade_remessada()*tc.getCusto());
+					    requisicao.setCustoRemessado(item_requisicao.getCustoRemessado()+requisicao.getCustoRemessado());
+						requisicao.setTotal(item_requisicao.getQuantidade_remessada()+requisicao.getTotal());
+						_item_requisicaoDAO.update(item_requisicao);
+						_requisicaoDAO.update(requisicao);
+					    
 					    
 					    quantidadeFinal.setQuantidadeGasolina(quantidadeFinal.getQuantidadeGasolina()-item_requisicao.getQuantidade_remessada());
 					    _quantidadeFinalDAO.update(quantidadeFinal);
@@ -153,15 +164,24 @@ public class RemessarItensController extends GenericForwardComposer{
 					    cb_remessar.setDisabled(true);
 					
 				}
-				else if(item_requisicao.getCombustivelString().equals("Gasolina") && quantidadeFinal.getQuantidadeGasolina()<item_requisicao.getQuantidade_remessada()){
+				else if(item_requisicao.getCombustivelString().equals("Gasolina") && 
+						quantidadeFinal.getQuantidadeGasolina()<item_requisicao.getQuantidade_remessada()){
 		
 				   Clients.showNotification("Quantidade de Gasolina indisponivel", "info",_win,"middle_center",4000, true);
 					
 				}
-				else  if(item_requisicao.getCombustivelString().equals("Gasoleo") && quantidadeFinal.getQuantidadeGasoleo()>=item_requisicao.getQuantidade_remessada()){
-					
+				else  if(item_requisicao.getCombustivelString().equals("Gasoleo") && 
+						quantidadeFinal.getQuantidadeGasoleo()>=item_requisicao.getQuantidade_remessada()){
+				
 					item_requisicao.setRemessada(true);
+					TipoCombustive tc = _tipoCombustiveDAO.returnar("Gasoleo");
+					item_requisicao.setCustoRemessado(item_requisicao.getQuantidade_remessada()*tc.getCusto());
+				    requisicao.setCustoRemessado(item_requisicao.getCustoRemessado()+requisicao.getCustoRemessado());
+					requisicao.setTotal(item_requisicao.getQuantidade_remessada()+requisicao.getTotal());
 					_item_requisicaoDAO.update(item_requisicao);
+					_requisicaoDAO.update(requisicao);
+					
+					
 					quantidadeFinal.setQuantidadeGasoleo(quantidadeFinal.getQuantidadeGasoleo()-item_requisicao.getQuantidade_remessada());
 				    _quantidadeFinalDAO.update(quantidadeFinal);
 				    
@@ -174,14 +194,23 @@ public class RemessarItensController extends GenericForwardComposer{
 				    
 				    cb_remessar.setDisabled(true);
 				}
-				else if(item_requisicao.getCombustivelString().equals("Gasoleo") && quantidadeFinal.getQuantidadeGasoleo()<item_requisicao.getQuantidade_remessada()){
+				else if(item_requisicao.getCombustivelString().equals("Gasoleo") &&
+						quantidadeFinal.getQuantidadeGasoleo()<item_requisicao.getQuantidade_remessada()){
 	
 					   Clients.showNotification("Quantidade de gasoleo indisponivel", "info",_win,"middle_center",4000, true);
 				}
 				
-				else  if(item_requisicao.getCombustivelString().equals("Gas") && quantidadeFinal.getQuantidadeGas()>=item_requisicao.getQuantidade_remessada()){
+				else  if(item_requisicao.getCombustivelString().equals("Gas") && 
+						quantidadeFinal.getQuantidadeGas()>=item_requisicao.getQuantidade_remessada()){
+					
 					item_requisicao.setRemessada(true);
+					TipoCombustive tc = _tipoCombustiveDAO.returnar("Gas");
+					item_requisicao.setCustoRemessado(item_requisicao.getQuantidade_remessada()*tc.getCusto());
+				    requisicao.setCustoRemessado(item_requisicao.getCustoRemessado()+requisicao.getCustoRemessado());						requisicao.setTotal(item_requisicao.getQuantidade_remessada()+requisicao.getTotal());
+					requisicao.setTotal(item_requisicao.getQuantidade_remessada()+requisicao.getTotal());
 					_item_requisicaoDAO.update(item_requisicao);
+					_requisicaoDAO.update(requisicao);
+					
 					quantidadeFinal.setQuantidadeGas(quantidadeFinal.getQuantidadeGas()-item_requisicao.getQuantidade_remessada());
 				    _quantidadeFinalDAO.update(quantidadeFinal);
 				    
@@ -194,7 +223,8 @@ public class RemessarItensController extends GenericForwardComposer{
 				    
 				    cb_remessar.setDisabled(true);
 				}
-				else if(item_requisicao.getCombustivelString().equals("Gas") && quantidadeFinal.getQuantidadeGas()<item_requisicao.getQuantidade_remessada()){
+				else if(item_requisicao.getCombustivelString().equals("Gas") && 
+						quantidadeFinal.getQuantidadeGas()<item_requisicao.getQuantidade_remessada()){
 		
 					   Clients.showNotification("Quantidade de gas indisponivel", "info",_win,"middle_center",4000, true);
 				}

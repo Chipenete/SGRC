@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Requisicao" language="groovy" pageWidth="620" pageHeight="842" columnWidth="580" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0257c4f7-0842-4eb7-ab07-3e8840ab2e19">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="140"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#ACE673">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#DAE6CF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="2527fd44-4dec-4c51-a99d-afbc67beb86f"/>
+	<parameter name="codigo_requisicao" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="a" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Reports\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     requisicao.`id` AS requisicao_id,
+     requisicao.`data` AS requisicao_data,
+     requisicao.`remessada` AS requisicao_remessada,
+     requisicao.`responsavel` AS requisicao_responsavel,
+     requisicao.`org_id` AS requisicao_org_id,
+     orgao.`id` AS orgao_id,
+     orgao.`cotaGas` AS orgao_cotaGas,
+     orgao.`cotaGasoleo` AS orgao_cotaGasoleo,
+     orgao.`cotaGasolina` AS orgao_cotaGasolina,
+     orgao.`cota_id` AS orgao_cota_id,
+     orgao.`designacao` AS orgao_designacao,
+     orgao.`quantidadeGas` AS orgao_quantidadeGas,
+     orgao.`quantidadeGasoleo` AS orgao_quantidadeGasoleo,
+     orgao.`quantidadeGasolina` AS orgao_quantidadeGasolina
+FROM
+     `orgao` orgao INNER JOIN `requisicao` requisicao ON orgao.`id` = requisicao.`org_id`
+where requisicao.id=$P{codigo_requisicao}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cotaGas" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cotaGasoleo" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cotaGasolina" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cota_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="designacao" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantidadeGas" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantidadeGasoleo" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantidadeGasolina" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="remessada" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="responsavel" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="org_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisicao_id" class="java.lang.Long"/>
+	<field name="requisicao_data" class="java.sql.Date"/>
+	<field name="requisicao_remessada" class="java.lang.Boolean"/>
+	<field name="requisicao_responsavel" class="java.lang.String"/>
+	<field name="requisicao_org_id" class="java.lang.Long"/>
+	<field name="orgao_id" class="java.lang.Long"/>
+	<field name="orgao_cotaGas" class="java.lang.Double"/>
+	<field name="orgao_cotaGasoleo" class="java.lang.Double"/>
+	<field name="orgao_cotaGasolina" class="java.lang.Double"/>
+	<field name="orgao_cota_id" class="java.lang.Long"/>
+	<field name="orgao_designacao" class="java.lang.String"/>
+	<field name="orgao_quantidadeGas" class="java.lang.Double"/>
+	<field name="orgao_quantidadeGasoleo" class="java.lang.Double"/>
+	<field name="orgao_quantidadeGasolina" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="145" splitType="Stretch">
+			<image>
+				<reportElement x="417" y="0" width="138" height="108" uuid="4fa7701f-9eb8-4aec-ad38-eb15e3e9dd7f"/>
+				<imageExpression><![CDATA["C:\\Fakul\\CIUEM\\img\\index4.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="21" y="4" width="176" height="104" uuid="7a37ed99-d7f6-4190-946b-91235adfee31"/>
+				<imageExpression><![CDATA["C:\\Fakul\\CIUEM\\img\\index2.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="165" y="21" width="198" height="34" forecolor="#009933" uuid="36815e6a-9f91-4aa0-8731-dd6249976050"/>
+				<textElement>
+					<font fontName="Calibri" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Universidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="165" y="55" width="218" height="34" forecolor="#009735" uuid="4b55a657-3569-43c0-9e1e-6ec0ce650310"/>
+				<textElement>
+					<font fontName="Calibri" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Eduardo Mondlane]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="121" width="553" height="24" forecolor="#009735" uuid="11ec2bfa-0ebd-4f12-8aeb-81284534d975"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Requisicao de Combustivel]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="165" splitType="Stretch">
+			<rectangle>
+				<reportElement x="21" y="21" width="517" height="22" forecolor="#FFFFFF" backcolor="#F0F0E8" uuid="db019ffd-2366-4083-8424-4460df18bfc4"/>
+			</rectangle>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="21" y="21" width="517" height="3" uuid="bfebdc93-3b1a-412c-8085-81672c8881f4"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="21" y="50" width="96" height="22" uuid="ec10131e-042a-4934-8a73-fbee27862b1a"/>
+				<text><![CDATA[Nome do orgao:]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="21" y="43" width="517" height="3" uuid="52e10a6a-65a7-45e7-95cd-7a9cd7016078"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="407" y="50" width="46" height="22" uuid="06731acf-b567-44d1-9a45-eb042aa3e1a3"/>
+				<text><![CDATA[Codigo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="21" y="22" width="517" height="24" uuid="e87621f2-8725-4b9a-bacf-f27edba6aed6"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Orgao]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="117" y="50" width="225" height="22" uuid="ca6dbde1-4e70-40cc-865c-40761d93cea3"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{orgao_designacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="453" y="50" width="85" height="22" uuid="d2c0afab-15c4-4675-a62b-0c7f16c36f5b"/>
+				<textFieldExpression><![CDATA[$F{orgao_id}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="21" y="72" width="517" height="18" forecolor="#FFFFFF" backcolor="#F0F0E8" uuid="c0714603-403e-47ed-b58d-1321bb2a20b6"/>
+			</rectangle>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="21" y="90" width="517" height="1" uuid="d8f36a6a-1415-446b-9935-9b64dbb02a0e"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="21" y="72" width="517" height="19" uuid="4488a981-cff9-403d-b658-440c0d4feec8"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Combustivel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="21" y="90" width="120" height="20" uuid="0682d7b9-3bc8-4535-9e2f-27b90519be36"/>
+				<text><![CDATA[Quota gasolina mes:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="313" y="91" width="120" height="20" uuid="dcd094cd-cb00-43c6-a93b-479b8d45bb99"/>
+				<text><![CDATA[Quota gasoleo mes:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="21" y="116" width="120" height="20" uuid="c502802e-e9c4-4bbf-9f08-839fe48256b9"/>
+				<text><![CDATA[Saldo gasolina final:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="313" y="117" width="120" height="19" uuid="786391ed-bb07-44be-9513-b3e3503361b7"/>
+				<text><![CDATA[Saldo gasoleo final:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="141" y="90" width="39" height="20" uuid="ad9cafda-7221-45b6-b6a5-3409a22b3857"/>
+				<textFieldExpression><![CDATA[$F{orgao_cotaGasolina}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="433" y="91" width="44" height="20" uuid="45f27035-4ed1-4b86-8086-b9a18e7c9a85"/>
+				<textFieldExpression><![CDATA[$F{orgao_cotaGasoleo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="141" y="116" width="39" height="20" uuid="918a3424-a052-45ff-ac91-94e184ebb303"/>
+				<textFieldExpression><![CDATA[$F{orgao_quantidadeGasolina}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="433" y="116" width="44" height="20" uuid="94cc9ed2-8bab-4080-8d7d-3c557414d2b1"/>
+				<textFieldExpression><![CDATA[$F{orgao_quantidadeGasoleo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="180" y="91" width="27" height="20" uuid="276ac822-290d-4124-bf30-98da75906a90"/>
+				<text><![CDATA[Lts]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="477" y="91" width="27" height="20" uuid="642809ca-cc48-4131-881a-8cb6460e19f9"/>
+				<text><![CDATA[Lts]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="180" y="116" width="27" height="20" uuid="a62584cf-d5eb-4c36-95d7-4bcfa87c7ffd"/>
+				<text><![CDATA[Lts]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="477" y="116" width="27" height="20" uuid="0ee1770d-31dc-4563-9fc5-afec6eb6b6c9"/>
+				<text><![CDATA[Lts]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="21" y="111" width="517" height="1" uuid="af9bb143-0754-4d4b-ad6a-c78b323fb8e9"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="21" y="136" width="517" height="1" uuid="ff9c5360-874b-431d-8adc-9c9513b06a7f"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="21" y="145" width="517" height="18" uuid="02330dec-845d-49b2-a37b-0066c791412d"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Itens da requisicao]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="21" y="154" width="186" height="1" uuid="d00e2053-31f2-4ce2-98b8-d4ee64d9021a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="352" y="155" width="186" height="1" uuid="584b0122-cd56-4e10-a8f1-565246c4d971"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="207" y="145" width="1" height="18" uuid="1adbebf9-b0be-44c1-a51e-01e86141367f"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="352" y="145" width="1" height="18" uuid="b42b38d2-44f7-40ba-b0ad-889cf6cef469"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="1" width="261" height="19" uuid="3685ede9-a792-40d5-aac2-8e1d0723376c"/>
+				<subreportParameter name="requisicao">
+					<subreportParameterExpression><![CDATA[$F{requisicao_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "item_requisicao2.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="97" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="60" y="13" width="137" height="20" uuid="6c38c04b-81b6-4792-8391-cb3b73cd8efb"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Data:___/___/20___]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="383" y="13" width="120" height="20" uuid="d706d7fd-6bac-49df-ba95-2584136ad3c9"/>
+				<text><![CDATA[Data:___/___/20___]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="21" y="33" width="226" height="20" uuid="64f4ee66-d043-47ae-aa26-61df1df36d17"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[O responsavel dos tranportes do orgao]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="352" y="33" width="186" height="20" uuid="c9045ea1-271a-486c-8ae1-0154b7ee1b66"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[O aprovisionamento]]></text>
+			</staticText>
+			<line>
+				<reportElement x="353" y="73" width="185" height="1" uuid="9496f4b3-33d8-419c-a6ce-1c4c74bf9a13"/>
+			</line>
+			<line>
+				<reportElement x="41" y="74" width="185" height="1" uuid="d69823da-20ff-48ef-a590-4867a542a806"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="d8cc9672-8a17-4dc2-b238-1ce289bf01fa"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Pag.:"+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="916401a6-3dfb-4283-928e-7feb3562ddf4"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="55" y="0" width="100" height="20" uuid="c176ddf7-cfea-423f-ac13-92c3907806d7"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="21" y="0" width="34" height="20" uuid="170f3607-d076-41b8-aab8-8557cb295208"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Data:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

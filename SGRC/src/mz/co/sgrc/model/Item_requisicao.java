@@ -33,6 +33,10 @@ public class Item_requisicao implements Serializable {
 	
 	private double quantidade_remessada;
 	
+	private double custo;
+	
+	private double custoRemessado;
+	
 	@ManyToOne
 	@JoinColumn(name="viatura", insertable=true, updatable=true)
 	private Viatura viatura;
@@ -125,6 +129,24 @@ public class Item_requisicao implements Serializable {
 
 	public void setCombustivelString(String combustivelString) {
 		this.combustivelString = combustivelString;
+	}
+
+	
+	public double getCusto() {
+		return custo;
+	}
+
+	public void setCusto(double custo) {
+		this.custo = custo;
+	}
+
+	
+	public double getCustoRemessado() {
+		return custoRemessado;
+	}
+
+	public void setCustoRemessado(double custoRemessado) {
+		this.custoRemessado = custoRemessado;
 	}
 
 	@Override

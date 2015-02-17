@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ItemRequisicaoFornecedor" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="54d34f6f-b528-4fad-8664-d613658cb591">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="requisicao" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     *,
+     requisicaofornecedor.`id` AS requisicaofornecedor_id,
+     requisicaofornecedor.`data` AS requisicaofornecedor_data,
+     requisicaofornecedor.`remessada` AS requisicaofornecedor_remessada,
+     requisicaofornecedor.`responsavel` AS requisicaofornecedor_responsavel,
+     requisicaofornecedor.`fornecedor_id` AS requisicaofornecedor_fornecedor_id,
+     requisicaofornecedor.`orgao_id` AS requisicaofornecedor_orgao_id,
+     ItemRequisicaoFornecedor.`requisicaoFornecedor_id` AS ItemRequisicaoFornecedor_requisicaoFornecedor_id,
+     ItemRequisicaoFornecedor.`combustive_id` AS ItemRequisicaoFornecedor_combustive_id,
+     ItemRequisicaoFornecedor.`remessada` AS ItemRequisicaoFornecedor_remessada,
+     ItemRequisicaoFornecedor.`quantidade` AS ItemRequisicaoFornecedor_quantidade,
+     ItemRequisicaoFornecedor.`combustivelString` AS ItemRequisicaoFornecedor_combustivelString,
+     ItemRequisicaoFornecedor.`id` AS ItemRequisicaoFornecedor_id
+FROM
+     `requisicaofornecedor` requisicaofornecedor INNER JOIN `ItemRequisicaoFornecedor` ItemRequisicaoFornecedor ON requisicaofornecedor.`id` = ItemRequisicaoFornecedor.`requisicaoFornecedor_id`
+WHERE
+     RequisicaoFornecedor.id = $P{requisicao}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="data" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="remessada" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="responsavel" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fornecedor_id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="orgao_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="combustivelString" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantidade" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="combustive_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisicaoFornecedor_id" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="requisicaofornecedor_data" class="java.sql.Timestamp"/>
+	<field name="requisicaofornecedor_remessada" class="java.lang.Boolean"/>
+	<field name="requisicaofornecedor_responsavel" class="java.lang.String"/>
+	<field name="requisicaofornecedor_fornecedor_id" class="java.lang.Integer"/>
+	<field name="requisicaofornecedor_orgao_id" class="java.lang.Long"/>
+	<field name="ItemRequisicaoFornecedor_requisicaoFornecedor_id" class="java.lang.Long"/>
+	<field name="ItemRequisicaoFornecedor_combustive_id" class="java.lang.Long"/>
+	<field name="ItemRequisicaoFornecedor_remessada" class="java.lang.Boolean"/>
+	<field name="ItemRequisicaoFornecedor_quantidade" class="java.lang.Double"/>
+	<field name="ItemRequisicaoFornecedor_combustivelString" class="java.lang.String"/>
+	<field name="ItemRequisicaoFornecedor_id" class="java.lang.Long"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="1" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="33" y="-2" width="55" height="20" backcolor="#33F277" uuid="7b573084-4aee-4a86-baca-1d9af4cbeee7"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="107" y="-2" width="104" height="20" backcolor="#33F277" uuid="e13ba971-95d7-457e-94a1-d2c1218b1448"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="251" y="-2" width="110" height="20" backcolor="#33F277" uuid="5d0225f8-27d4-4ab9-ba8d-0875d11684ca"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="402" y="-2" width="104" height="20" backcolor="#33F277" uuid="2fa88711-51c7-43a0-b244-38a867b0f1ff"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="421" y="0" width="64" height="20" uuid="daa6c694-d7e2-4aac-9bdc-65e1503f24f8"/>
+				<text><![CDATA[Remessada?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="274" y="-2" width="60" height="20" uuid="753e099e-8f6d-4f57-848d-afe3fedee7b7"/>
+				<text><![CDATA[Quantidade]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="118" y="0" width="76" height="20" uuid="cb4cd909-b392-47c5-8449-75d1cbe9e259"/>
+				<text><![CDATA[Combustivel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="-2" width="40" height="20" uuid="8714f237-3e4e-4b8d-a07d-7d85835678cb"/>
+				<text><![CDATA[Item]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<line>
+				<reportElement x="33" y="25" width="473" height="1" uuid="d5c43177-d896-4d81-ac96-36f959cb555a"/>
+			</line>
+			<line>
+				<reportElement x="33" y="1" width="472" height="1" uuid="18391acc-54b5-4848-a573-4664be2c6ab1"/>
+			</line>
+			<line>
+				<reportElement x="32" y="1" width="1" height="24" uuid="99a269f5-bcb7-4bf8-8270-05681eeab566"/>
+			</line>
+			<line>
+				<reportElement x="380" y="1" width="1" height="24" uuid="cc35b468-4c04-4fa7-a867-feef639807d5"/>
+			</line>
+			<line>
+				<reportElement x="98" y="2" width="1" height="22" uuid="54fdd353-6127-430b-bf2d-4710294894a7"/>
+			</line>
+			<line>
+				<reportElement x="233" y="0" width="1" height="24" uuid="a79a1e11-5d7f-40f2-a5da-f877d7f9ebf7"/>
+			</line>
+			<textField>
+				<reportElement x="118" y="2" width="76" height="20" uuid="c21bc7e3-4751-4b06-9219-4b37c8b89175"/>
+				<textFieldExpression><![CDATA[$F{combustivelString}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="261" y="2" width="100" height="20" uuid="da653b51-e3ed-4e22-8cac-d97c642b01b0"/>
+				<textFieldExpression><![CDATA[$F{quantidade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="421" y="6" width="84" height="20" uuid="70037a7f-5163-4f87-8088-9b2da1a2946e"/>
+				<textFieldExpression><![CDATA[$F{remessada}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="47" y="0" width="51" height="20" uuid="499aaf77-b099-4363-839a-7bee0b87cf17"/>
+				<textFieldExpression><![CDATA[$F{ItemRequisicaoFornecedor_id}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="506" y="0" width="1" height="25" uuid="23a0b343-34aa-4fad-a381-f999c122c42b"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="17" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="15" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="10" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -8,6 +8,10 @@
 				<cell width="20%"><div align="right"> <label value="Designacao:"></label></div> </cell>
 				<cell> <textbox id="tb_designacao" placeholder="designacao do orgao" width="500px" constraint="no empty:Este campo nao deve estar vazio"></textbox> </cell>
 				</row>
+					<row>
+					<cell width="20%"> <div align="right"><label value="Custo"></label> </div></cell>
+				<cell> <doublebox id="db_custo" placeholder="Custo do combustivel" width="500px" constraint="no empty:Este campo nao deve estar vazio"></doublebox> </cell>
+			</row>
 				<row>
 					<cell width="20%"> <div align="right"><label value="Descricao:"></label> </div></cell>
 				<cell> <textbox id="tb_descricao" placeholder="descricao do orgao" width="500px" constraint="no empty:Este campo nao deve estar vazio"></textbox> </cell>
@@ -22,6 +26,9 @@
 			<listheader>
 				Designacao
 			</listheader>
+			<listheader>
+				Custo
+			</listheader>
 		</listhead>
 		<template name="model">
 		<listitem value="${each}">
@@ -30,6 +37,9 @@
 			</listcell>
 			<listcell>
 				<label value="${each.designacao}"></label>
+			</listcell>
+			<listcell>
+				<label value="${each.custo}"></label>
 			</listcell>
 		</listitem>
 		</template>

@@ -6,7 +6,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JFrame;
@@ -29,8 +31,10 @@ import mz.co.sgrc.model.Requisicao;
 import mz.co.sgrc.model.TipoCombustive;
 import mz.co.sgrc.model.Viatura;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.view.JRViewer;
 
 import org.zkoss.zhtml.Messagebox;
@@ -61,6 +65,7 @@ public class GuiaRemessaController extends GenericForwardComposer {
 	private Button btn_procurar;
 	private Button btn_remessas;
 	private Button btn_cancelar;
+	private Button _btn_visualizar;
 	private Listbox lb_remessas;
 	private Listbox lb_requisicao; 
 	
@@ -108,48 +113,99 @@ public class GuiaRemessaController extends GenericForwardComposer {
 
 
 	  
-		@SuppressWarnings("unchecked")
-		public void onSelect$lb_requisicao(Event e){
-			
-	    Listitem listitem = lb_requisicao.getSelectedItem();
-		final Requisicao _requisicao = (Requisicao)listitem.getValue();	
-	   
-		Listcell listcell = (Listcell) listitem.getChildren().get(3);
-		final Checkbox _chbx_remessar = (Checkbox) listcell.getFirstChild();
-		
-		Listcell listcell1 = (Listcell)listitem.getChildren().get(4);
-		final Button _btn_verItens = (Button) listcell1.getFirstChild();
-		
-		 _chbx_remessar.addEventListener("onCheck", new EventListener(){
 
+	  
+	@SuppressWarnings("unchecked")
+	public void onSelect$lb_requisicao(Event e){
+		
+    Listitem listitem = lb_requisicao.getSelectedItem();
+	final Requisicao _requisicao = (Requisicao)listitem.getValue();	
+   
+	Listcell listcell = (Listcell) listitem.getChildren().get(4);
+	final Checkbox _chbx_remessar = (Checkbox) listcell.getFirstChild();
+	  if(!_requisicao.getRemessada()){
+		  _chbx_remessar.setDisabled(false);
+	  }
+	
+	Listcell listcell1 = (Listcell)listitem.getChildren().get(5);
+	final Button _btn_verItens = (Button) listcell1.getFirstChild();
+	
+	Listcell listcell2 = (Listcell)listitem.getChildren().get(6);
+	final Button _btn_visualizar = (Button)listcell2.getFirstChild();
+	
+	 _chbx_remessar.addEventListener("onCheck", new EventListener(){
+
+		public void onEvent(Event arg0) throws Exception {
+			_requisicao.setRemessada(true);
+			_chbx_remessar.setDisabled(true);
+			_requisicaoDAO.update(_requisicao);
+			_btn_verItens.setVisible(true);
+			_btn_visualizar.setVisible(true);
+			
+		}
+		 
+	 });
+				
+	
+	  _btn_verItens.addEventListener("onClick", new EventListener(){
+
+		
 			public void onEvent(Event arg0) throws Exception {
-				_requisicao.setRemessada(true);
-				_chbx_remessar.setDisabled(true);
-				_requisicaoDAO.update(_requisicao);
-				_btn_verItens.setVisible(true);
+				
+				Requisicao requisicaO = _requisicaoDAO.returnar(_requisicao);
+				
+				Requisicao requisicao = (Requisicao) Executions.getCurrent().getDesktop().getSession().setAttribute("requisicao", requisicaO);
+				Executions.createComponents("/RemessarItens.zul", null, null);
+
 				
 			}
-			 
-		 });
-					
-		
-    	  _btn_verItens.addEventListener("onClick", new EventListener(){
+			  
+		  });
+	  
+	  _btn_visualizar.addEventListener("onClick", new EventListener(){
 
-			
-				public void onEvent(Event arg0) throws Exception {
-					
-					Requisicao requisicaO = _requisicaoDAO.returnar(_requisicao);
-					
-					Requisicao requisicao = (Requisicao) Executions.getCurrent().getDesktop().getSession().setAttribute("requisicao", requisicaO);
-					Executions.createComponents("/RemessarItens.zul", null, null);
-
-					
-				}
-				  
-			  });
-			}
+			@Override
+			public void onEvent(Event arg0) throws Exception , SQLException, JRException{
+				// TODO Auto-generated method stub
 	
+				Map<String, Object> param = new HashMap<String,Object>();
+				try{
+					Class.forName("com.mysql.jdbc.Driver");
+				    con = DriverManager.getConnection("jdbc:mysql://localhost/vendas","root","");
+					
+				} catch(ClassNotFoundException e1){
+					e1.printStackTrace();
+				}
+				try{	
+					String reporte = "C:/Reports/GuiaRemessa.jrxml";
+		            param.put("codigo_requisicao",(Long)_requisicao.getId());
+					JasperReport jasperReport = JasperCompileManager.compileReport(reporte);
+					JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, param, con);
+					//JasperViewer.viewReport(jasperPrint);
+				      JRViewer jv = new JRViewer(jasperPrint);
+			          JFrame jf = new JFrame();
+					  jf.getContentPane().add(jv);
+					  jf.validate();
+					  jf.setVisible(true);
+					  jf.setSize(new Dimension(900,700));
+					  jf.setLocation(300,100);
+					  jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					con.close();
+					
+				}catch(JRException e){
+					e.printStackTrace();
+				}
+		
 
+				
+			}
+			  
+		  });
+		}
+
+
+		
+		
 	    public void preencherRequisicao(){
 	    	List <Requisicao> listRequisicao = _requisicaoDAO.findAllInverso();
 	    	_listModelRequisicao = new ListModelList <Requisicao>(listRequisicao);
@@ -169,76 +225,76 @@ public class GuiaRemessaController extends GenericForwardComposer {
 	    }
 	    
 	    
-		public void gerarReports() throws SQLException{
-//			try{
-//				Class.forName("com.mysql.jdbc.Driver");
-//			    con = DriverManager.getConnection("jdbc:mysql://localhost/vendas","root","huo");
-//				
-//			} catch(ClassNotFoundException e1){
-//				e1.printStackTrace();
-//				
-//			}
+//		public void gerarReports() throws SQLException{
+////			try{
+////				Class.forName("com.mysql.jdbc.Driver");
+////			    con = DriverManager.getConnection("jdbc:mysql://localhost/vendas","root","huo");
+////				
+////			} catch(ClassNotFoundException e1){
+////				e1.printStackTrace();
+////				
+////			}
+////			
+////			try{
+////				
+////				String reporte = "C:/Reports/report3.jrxml";
+////	            param.put("varStatus","E");
+////				JasperReport jasperReport = JasperCompileManager.compileReport(reporte);
+////				JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, con);
+////				JasperViewer.viewReport(jasperPrint);
+////				con.close();
+////				
+////			}catch(JRException e){
+////				e.printStackTrace();
+////			}
 //			
-//			try{
-//				
-//				String reporte = "C:/Reports/report3.jrxml";
-//	            param.put("varStatus","E");
-//				JasperReport jasperReport = JasperCompileManager.compileReport(reporte);
-//				JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, con);
-//				JasperViewer.viewReport(jasperPrint);
-//				con.close();
-//				
-//			}catch(JRException e){
-//				e.printStackTrace();
-//			}
-			
-			   String HOST = "jdbc:mysql://localhost:3306/vendas";
-		        String USERNAME = "root";
-		        String PASSWORD = "huo";
-		        try {
-		            Class.forName("com.mysql.jdbc.Driver");
-		        } catch (ClassNotFoundException ex) {
-		            ex.printStackTrace();
-		        }
-		 
-		        try {
-		            con = DriverManager.getConnection(HOST, USERNAME, PASSWORD);
-		        } catch (SQLException ex) {
-		            ex.printStackTrace();
-		        }
-		      
-		        //Path to your .jasper file in your package
-		        //pasta/caminho pra teu ficheiro .jasper dentro do pacote
-		        String reportName = "mz/co/venda/report/report3.jasper";
-		         
-		        //Get a stream to read the file
-		        //Streaming é a tecnologia que permite o envio de informação multimídia através de pacotes
-		        //Obtendo o stream para ler o ficheiro
-		        InputStream is = this.getClass().getClassLoader().getResourceAsStream(reportName);
-		 
-		        try {
-		            //Fill the report with parameter, connection and the stream reader    
-		            //Completar o report com parametro, conexao e o leitor stream
-		        	//param.put("identificador","1");
-		            JasperPrint jp = JasperFillManager.fillReport(is, null, con);
-		         
-		     //Viewer for JasperReport
-		     //Visualizador para o JasperReport       
-		            JRViewer jv = new JRViewer(jp);
-		     
-		     //Insert viewer to a JFrame to make it showable
-		     //Inserindo o visualizador num JFrame para torna lo visualizavel        
-		            JFrame jf = new JFrame();
-		            jf.getContentPane().add(jv);
-		            jf.validate();
-		            jf.setVisible(true);
-		            jf.setSize(new Dimension(800,600));
-		            jf.setLocation(300,100);
-		            jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		        } catch (JRException ex) {
-		            ex.printStackTrace();
-		        }
-		}
-	
+//			   String HOST = "jdbc:mysql://localhost:3306/vendas";
+//		        String USERNAME = "root";
+//		        String PASSWORD = "huo";
+//		        try {
+//		            Class.forName("com.mysql.jdbc.Driver");
+//		        } catch (ClassNotFoundException ex) {
+//		            ex.printStackTrace();
+//		        }
+//		 
+//		        try {
+//		            con = DriverManager.getConnection(HOST, USERNAME, PASSWORD);
+//		        } catch (SQLException ex) {
+//		            ex.printStackTrace();
+//		        }
+//		      
+//		        //Path to your .jasper file in your package
+//		        //pasta/caminho pra teu ficheiro .jasper dentro do pacote
+//		        String reportName = "mz/co/venda/report/report3.jasper";
+//		         
+//		        //Get a stream to read the file
+//		        //Streaming é a tecnologia que permite o envio de informação multimídia através de pacotes
+//		        //Obtendo o stream para ler o ficheiro
+//		        InputStream is = this.getClass().getClassLoader().getResourceAsStream(reportName);
+//		 
+//		        try {
+//		            //Fill the report with parameter, connection and the stream reader    
+//		            //Completar o report com parametro, conexao e o leitor stream
+//		        	//param.put("identificador","1");
+//		            JasperPrint jp = JasperFillManager.fillReport(is, null, con);
+//		         
+//		     //Viewer for JasperReport
+//		     //Visualizador para o JasperReport       
+//		            JRViewer jv = new JRViewer(jp);
+//		     
+//		     //Insert viewer to a JFrame to make it showable
+//		     //Inserindo o visualizador num JFrame para torna lo visualizavel        
+//		            JFrame jf = new JFrame();
+//		            jf.getContentPane().add(jv);
+//		            jf.validate();
+//		            jf.setVisible(true);
+//		            jf.setSize(new Dimension(800,600));
+//		            jf.setLocation(300,100);
+//		            jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		        } catch (JRException ex) {
+//		            ex.printStackTrace();
+//		        }
+//		}
+//	
 }
 

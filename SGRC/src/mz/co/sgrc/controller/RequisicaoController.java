@@ -154,8 +154,17 @@ public class RequisicaoController extends GenericForwardComposer{
 		
 		
 		ut = utilizadorDAO.findById((long)1);
-		orgao = orgaoDAO.findById(ut.getOrgao().getId());
-		cotas = cotasDAO.findById(orgao.getCota_id());
+		if (ut == null) {
+
+
+			orgao = new Orgao();
+			cotas = new Cotas();
+			
+		} else {
+			orgao = orgaoDAO.findById(ut.getOrgao().getId());
+			cotas = cotasDAO.findById(orgao.getCota_id());
+		}
+		
 		
 		preencherDados();
 		
@@ -255,6 +264,8 @@ public class RequisicaoController extends GenericForwardComposer{
 								item.setCombustive(selectedTipocombustive.getCombustive());
 								item.setQuantidade(db_quantidade.getValue());
 								item.setViatura(v);
+								item.setCusto(db_quantidade.getValue()*selectedTipocombustive.getCusto());
+								item.setCustoRemessado(0);
 								l.setDisabled(true);
 								btn_remover.setDisabled(true);
 								
@@ -376,6 +387,12 @@ public class RequisicaoController extends GenericForwardComposer{
 		
 		requisicao.setRemessada(false);
 		
+		requisicao.setCusto(0);
+		
+		requisicao.setCustoRemessado(0);
+		
+		requisicao.setTotal(0);
+		
 		requisicaoDAO.create(requisicao);
 		
 		
@@ -395,6 +412,10 @@ public class RequisicaoController extends GenericForwardComposer{
 			itemReq.setCombustivelString(cbb.getText());
 			itemReq.setRemessada(false);
 			itemReq.setRequisicao(requisicao);
+			itemReq.setCusto(lista.get(i).getCusto());
+			itemReq.setCustoRemessado(lista.get(i).getCustoRemessado());
+			requisicao.setCusto(requisicao.getCusto()+itemReq.getCusto());
+		
 			item_requisicaoDAO.create(itemReq);	
 			listItemRequisicao.add(itemReq);
 			
@@ -469,13 +490,44 @@ public class RequisicaoController extends GenericForwardComposer{
 		  
 		  btn_imprimir.addEventListener("onClick", new EventListener(){
 
-			@Override
-			public void onEvent(Event arg0) throws Exception {
-				// TODO Auto-generated method stub
-				gerarReports();
-			}
-			  
-		  });
+				
+
+				@Override
+				public void onEvent(Event arg0) throws Exception , SQLException, JRException{
+					// TODO Auto-generated method stub
+		
+					Map<String, Object> param = new HashMap<String,Object>();
+					try{
+						Class.forName("com.mysql.jdbc.Driver");
+					    con = DriverManager.getConnection("jdbc:mysql://localhost/vendas","root","");
+						
+					} catch(ClassNotFoundException e1){
+						e1.printStackTrace();
+					}
+					try{	
+						String reporte = "C:/Reports/Requisicao.jrxml";
+			            param.put("codigo_requisicao",(Long)requi.getId());
+						JasperReport jasperReport = JasperCompileManager.compileReport(reporte);
+						JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, param, con);
+						//JasperViewer.viewReport(jasperPrint);
+					      JRViewer jv = new JRViewer(jasperPrint);
+				          JFrame jf = new JFrame();
+						  jf.getContentPane().add(jv);
+						  jf.validate();
+						  jf.setVisible(true);
+						  jf.setSize(new Dimension(900,700));
+						  jf.setLocation(300,100);
+						  jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+						con.close();
+						
+					}catch(JRException e){
+						e.printStackTrace();
+					}		
+				}
+			  });
+		  
+		  
+		  
 		}
 		
 	}
@@ -561,7 +613,7 @@ public class RequisicaoController extends GenericForwardComposer{
 		 final Execution exc = Executions.getCurrent();
 
 		JasperReport report = JasperCompileManager
-				.compileReport(exc.getDesktop().getWebApp().getRealPath("/reports/report3.jrxml"));
+				.compileReport(exc.getDesktop().getWebApp().getRealPath("C:/Users/Marcelo/report/Requisicao.jrxml"));
 		
 //		Map<String, Object> params = new HashMap<String,Object>();
 //		params.put("emblema",  exc.getDesktop().getWebApp().getRealPath("/reports/emblema.png")); 	

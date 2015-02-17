@@ -27,6 +27,10 @@ public class Item implements Serializable{
 	
 	private String matricula;
 	
+	private double custo;
+	
+	private double custoRemessado;
+	
 	// Atributos de apoio ao Requisicao do fornecedor
 	private double quantidadeForn;
 	
@@ -123,6 +127,26 @@ public class Item implements Serializable{
 
 	public void setQuantidade(double quantidade) {
 		this.quantidade = quantidade;
+	}
+
+
+	public double getCusto() {
+		return custo;
+	}
+
+
+	public void setCusto(double custo) {
+		this.custo = custo;
+	}
+
+
+	public double getCustoRemessado() {
+		return custoRemessado;
+	}
+
+
+	public void setCustoRemessado(double custoRemessado) {
+		this.custoRemessado = custoRemessado;
 	}
 	
     
