@@ -78,8 +78,8 @@ public class CotasController extends GenericForwardComposer{
 	private Listbox lb_historico = new Listbox();
     private Textbox tb_designacaoAtribuir;
 	//---------------------------------------------------------------------------------------------------------------------------
-	private Listbox lbx_cotas;
-	private Listbox lbx_orgao;
+	private Listbox lb_cotas;
+	private Listbox lb_orgao;
 	
 
 	private CotasDAO _cotasDao;
@@ -148,10 +148,10 @@ public class CotasController extends GenericForwardComposer{
 				 Set<Listitem> listItens = lb_orgaosAtribuir.getSelectedItems();
 				
 				 for (Listitem listItem : listItens){	
-					 Orgao org = (Orgao) listItem.getValue(); 
-					 Orgao orgao = _orgaoDao.returnar(org);	
-					 
-					 orgao.setCota_id(_selectedCota.getId());
+					 Orgao orgao= (Orgao) listItem.getValue(); 
+					 //Orgao orgao = _orgaoDao.returnar(org);	
+					
+					orgao.setCota_id(_selectedCota.getId());
 				 
 					 if(_selectedCota.getTipoCombustive().getDesignacao().equals("Gasoleo")){
 						 orgao.setQuantidadeGasoleo(_selectedCota.getQuantidade());
@@ -182,17 +182,18 @@ public class CotasController extends GenericForwardComposer{
 		 }
 	
 		 
-		public void onSelect$lbx_cotasAtribuir(Event e){
+		public void onSelect$lb_cotasAtribuir(Event e){
 			if(_listModelCotas.isSelectionEmpty())
 				_selectedCota = null;	
 			else{
 				_selectedCota=_listModelCotas.getSelection().iterator().next();
 				cbb_cotasAtribuir.setValue(""+_selectedCota.getId());	
+				
 			}	
 		}
 		
 		
-		public void onSelect$cbx_tipoCombustivelAtribuir(Event e){
+		public void onSelect$cbb_tipoCombustivelAtribuir(Event e){
 			if(_listModelTipoCombustiveAtribuir.isSelectionEmpty())
 				_selectedTipoCombustivelAtribuir = null;
 			else{
@@ -207,7 +208,7 @@ public class CotasController extends GenericForwardComposer{
 		}
 		
 		
-		public void onSelect$lbx_orgaos1(Event e){
+		public void onSelect$lb_orgaos1(Event e){
 			if(_listModelOrgao1.isSelectionEmpty())
 				_selectedOrgao1=null;
 			else{	

@@ -27,6 +27,7 @@ import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
+import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
@@ -35,6 +36,7 @@ import org.zkoss.zul.Intbox;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 public class CombustiveController extends GenericForwardComposer{
 	
@@ -57,6 +59,8 @@ public class CombustiveController extends GenericForwardComposer{
 	private QuantidadeFinalDAO _quantidadeFinalDao;
 	private boolean _novoCombustive;
 	
+	Window win;
+	QuantidadeFinal quantidadeFinal;
 	Fornecedor _selectedFornecedor;
     Combustive _selectedCombustive;
     TipoCombustive _selectedTipoCombustive;
@@ -74,10 +78,13 @@ public class CombustiveController extends GenericForwardComposer{
 		_fornecedorDao = new FornecedorDao();
 		_quantidadeFinalDao = new QuantidadeFinalDAO();
 		
+		
+		
 		visualizaCombustive();
 		listarTipoCombustive();
 		prencherFornecedor();
 		preencherQuantidadeFinal();
+		
 		_selectedTipoCombustive = null;
 		_selectedCombustive = null;
 		 
@@ -103,6 +110,7 @@ public class CombustiveController extends GenericForwardComposer{
 			quantidadeFinal.setQuantidadeGas(quantidadeFinal.getQuantidadeGas()+db_quantidade.getValue());
 		}
 		
+		
 		_quantidadeFinalDao.update(quantidadeFinal);
 		
 		Combustive combustive= new Combustive();
@@ -118,7 +126,7 @@ public class CombustiveController extends GenericForwardComposer{
 		
 		_combustiveDao.create(combustive);
 		
-		Messagebox.show("Inserido com sucesso");
+		 Clients.showNotification("Inserido com sucesso", "info", win, "middle_center", 4000);
 		_selectedTipoCombustive = null;	
 	
 		visualizaCombustive();
@@ -210,16 +218,18 @@ public class CombustiveController extends GenericForwardComposer{
 	}
     
     public void preencherQuantidadeFinal(){
-    	QuantidadeFinal quantidadeFinal = _quantidadeFinalDao.findById((long)1);
+    	quantidadeFinal = _quantidadeFinalDao.findById((long)1);
     	if (quantidadeFinal== null){
-    		tb_quantidadeGasolina.setValue("0");
-    		tb_quantidadeGasoleo.setValue("0");
-    		tb_quantidadeGas.setValue("0");	
-    	}
-    	else{
+    		quantidadeFinal = new QuantidadeFinal();
+    		quantidadeFinal.setQuantidadeGas(0);
+    		quantidadeFinal.setQuantidadeGasoleo(0);
+    		quantidadeFinal.setQuantidadeGasolina(0);
+    		_quantidadeFinalDao.create(quantidadeFinal);
+    	}else{
+    
     	tb_quantidadeGasolina.setValue(""+quantidadeFinal.getQuantidadeGasolina());
     	tb_quantidadeGasoleo.setValue(""+quantidadeFinal.getQuantidadeGasoleo());
-    	tb_quantidadeGas.setValue(""+quantidadeFinal.getQuantidadeGas());
+    	tb_quantidadeGas.setValue(""+quantidadeFinal.getQuantidadeGas());	
     	}
     }
     

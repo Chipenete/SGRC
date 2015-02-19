@@ -92,12 +92,15 @@ public class UtilizadorController extends GenericForwardComposer{
 		refreshOrgaoDetail();	
 	}
 	
-    public void onSelect$cbx_orgao(Event e){
+    public void onSelect$cbb_orgao(Event e){
 		if(_listModelOrgao.isSelectionEmpty()){
 			_selectedOrgao =null;
 		}
 		else {
 			_selectedOrgao = _listModelOrgao.getSelection().iterator().next();
+			Clients.showNotification(_selectedOrgao.getDesignacao(), "info",_win, "middle_center", 4000, true);
+			
+			
 		}
 	}
 
