@@ -154,16 +154,36 @@ public class CotasController extends GenericForwardComposer{
 					orgao.setCota_id(_selectedCota.getId());
 				 
 					 if(_selectedCota.getTipoCombustive().getDesignacao().equals("Gasoleo")){
-						 orgao.setQuantidadeGasoleo(_selectedCota.getQuantidade());
-						 orgao.setCotaGasoleo(_selectedCota.getQuantidade());
+						 Double quantidade = orgao.getQuantidadeGasoleo();
+						 if (quantidade < 0 )
+							 orgao.setQuantidadeGasoleo(_selectedCota.getQuantidade() + quantidade);
+						 
+						 else{
+							 orgao.setQuantidadeGasoleo(_selectedCota.getQuantidade());
+							 orgao.setCotaGasoleo(_selectedCota.getQuantidade());
+						 }
 					 }
 					 else if(_selectedCota.getTipoCombustive().getDesignacao().equals("Gasolina")){
-						 orgao.setQuantidadeGasolina(_selectedCota.getQuantidade()); 
-						 orgao.setCotaGasolina(_selectedCota.getQuantidade()); 
+						 Double quantidade = orgao.getQuantidadeGasolina();
+						 if (quantidade < 0 )
+							 orgao.setQuantidadeGasolina(_selectedCota.getQuantidade() + quantidade); 
+						 
+						 else{
+							 orgao.setQuantidadeGasolina(_selectedCota.getQuantidade());
+							 orgao.setCotaGasolina(_selectedCota.getQuantidade());
+							 }
+						 
+						 
 					 }
 					 else if(_selectedCota.getTipoCombustive().getDesignacao().equals("Gas")){
-						 orgao.setQuantidadeGas(_selectedCota.getQuantidade());
-						 orgao.setCotaGas(_selectedCota.getQuantidade());
+						 Double quantidade = orgao.getQuantidadeGas();
+						 if (quantidade < 0 )
+							 orgao.setQuantidadeGas(_selectedCota.getQuantidade() + quantidade);
+						 
+						 else{
+							 orgao.setQuantidadeGas(_selectedCota.getQuantidade());
+							 orgao.setCotaGas(_selectedCota.getQuantidade());
+						 }
 						 
 					 }
 					 _orgaoDao.update(orgao);
